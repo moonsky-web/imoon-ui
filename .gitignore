@@ -2,8 +2,11 @@
 node_modules
 .idea
 .idea/
+.idea/**
 /.idea
+**/.idea
 /.idea/
+**/.idea/**
 /dist
 
 # local env files
