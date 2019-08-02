@@ -1,0 +1,189 @@
+@mixin set-prop($property, $value, $important: false) {
+  @if ($important) {
+    #{$property}: #{$value} !important;
+  } @else {
+    #{$property}: #{$value};
+  }
+}
+
+@mixin set-mouse-style($important: false, $value: pointer) {
+  @include set-prop(cursor, $value, $important);
+}
+
+@mixin set-transition-duration($duration: $transition-duration-base) {
+  transition-duration: $duration;
+}
+
+@mixin set-border-radius($size: $default-border-radius, $important: false) {
+  @include set-prop($border-radius, $size, $important);
+}
+
+@mixin set-border-box($value: border-box) {
+  @include set-prop($box-sizing, $value);
+}
+
+@mixin set-liner-height(
+  $height: map_get(map_get($size-map, $default-size-name), 'height'),
+   $border-width: 0, $important: false
+) {
+  @include set-prop(height, $height, $important);
+  @include set-prop(line-height, $height - $border-width * 2, $important);
+}
+
+@mixin set-absolute-center() {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/*
+ * set text color
+ */
+@mixin set-color-white($important: false) {
+  @include set-prop(color, #f2f2f2, $important);
+}
+
+@mixin set-color-black($important: false) {
+  @include set-prop(color, #000, $important);
+}
+
+/*
+ * set margin and padding
+ */
+@mixin set-margin-h($size: .9em, $important: false) {
+  @include set-prop($margin, 0 $size, $important);
+}
+
+@mixin set-margin-v($size: .9em, $important: false) {
+  @include set-prop($margin, $size 0, $important);
+}
+
+@mixin set-padding-h($size: .9em, $important: false) {
+  @include set-prop($padding, 0 $size, $important);
+}
+
+@mixin set-padding-v($size: .9em, $important: false) {
+  @include set-prop($padding, $size 0, $important);
+}
+
+/*
+ * display
+ */
+@mixin set-display($value: block, $important: false) {
+  @include set-prop($display, $value, $important);
+}
+
+@mixin set-block($important: false) {
+  @include set-display(block, $important);
+}
+
+@mixin set-inline-block($important: false) {
+  @include set-display(inline-block, $important);
+}
+
+/*
+ * none select
+ */
+@mixin set-none-select($important: false, $value: none) {
+  @include set-prop(-webkit-user-select, $value, $important);
+  @include set-prop(-moz-user-select, $value, $important);
+  @include set-prop(-ms-user-select, $value, $important);
+  @include set-prop(user-select, $value, $important);
+}
+
+/*
+ * aligns
+ */
+
+@mixin set-align-center($important: false) {
+  @include set-prop($text-align, center, $important);
+}
+
+@mixin set-align-left($important: false) {
+  @include set-prop($text-align, left, $important);
+}
+
+@mixin set-align-right($important: false) {
+  @include set-prop($text-align, right, $important);
+}
+
+@mixin set-align-top($important: false) {
+  @include set-prop($vertical-align, top, $important);
+}
+
+@mixin set-align-middle($important: false) {
+  @include set-prop($vertical-align, middle, $important);
+}
+
+@mixin set-align-bottom($important: false) {
+  @include set-prop($vertical-align, bottom, $important);
+}
+
+/*
+ * clear padding
+ */
+
+@mixin clear-padding($important: false) {
+  @include set-prop($padding, 0, $important);
+}
+
+@mixin clear-padding-h($important: false) {
+  @include set-prop($padding-left, 0, $important);
+  @include set-prop($padding-right, 0, $important);
+}
+
+@mixin clear-padding-v($important: false) {
+  @include set-prop($padding-top, 0, $important);
+  @include set-prop($padding-bottom, 0, $important);
+}
+
+@mixin clear-padding-left($important: false) {
+  @include set-prop($padding-left, 0, $important);
+}
+
+@mixin clear-padding-right($important: false) {
+  @include set-prop($padding-right, 0, $important);
+}
+
+@mixin clear-padding-top($important: false) {
+  @include set-prop($padding-top, 0, $important);
+}
+
+@mixin clear-padding-bottom($important: false) {
+  @include set-prop($padding-bottom, 0, $important);
+}
+
+/*
+ * clear margin
+ */
+
+@mixin clear-margin($important: false) {
+  @include set-prop($margin, 0, $important);
+}
+
+@mixin clear-margin-h($important: false) {
+  @include set-prop($margin-left, 0, $important);
+  @include set-prop($margin-right, 0, $important);
+}
+
+@mixin clear-margin-v($important: false) {
+  @include set-prop($margin-top, 0, $important);
+  @include set-prop($margin-bottom, 0, $important);
+}
+
+@mixin clear-margin-left($important: false) {
+  @include set-prop($margin-left, 0, $important);
+}
+
+@mixin clear-margin-right($important: false) {
+  @include set-prop($margin-right, 0, $important);
+}
+
+@mixin clear-margin-top($important: false) {
+  @include set-prop($margin-top, 0, $important);
+}
+
+@mixin clear-margin-bottom($important: false) {
+  @include set-prop($margin-bottom, 0, $important);
+}

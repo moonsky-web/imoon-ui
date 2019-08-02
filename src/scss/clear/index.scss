@@ -1,0 +1,21 @@
+.clear-border {
+  @include set-prop($border, none, true);
+}
+
+.clear-gaps {
+  font-size: 0; // 清除空文本节点
+}
+
+.clear-radius {
+  border-radius: 0;
+}
+
+@each $key in $direction-names {
+  .clear-bd-#{$key} {
+    border-#{$key}: none;
+  }
+
+  .keep-clear-bd-#{$key} {
+    @include set-prop(border-#{$key}, none, true);
+  }
+}

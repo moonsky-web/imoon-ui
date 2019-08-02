@@ -1,0 +1,10 @@
+$position-values: (relative, absolute, fixed);
+
+@each $value in $position-values {
+  .position-#{$value} {
+    position: $value;
+  }
+  .keep-position-#{$value} {
+    position: $value;
+  }
+}

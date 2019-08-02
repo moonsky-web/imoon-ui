@@ -1,0 +1,59 @@
+/*
+这儿用导入顺序覆盖
+im 认为常用最多的是center，故将其放在第一个，方便被覆盖
+默认最多的是：left，需要用到手动左对齐的都是已经居中或居右的，故放在最后强制居左
+right 居于他们之间，频率比 center 低，一般用于数字或输入框标签
+
+垂直对齐同样按照这个道理，但垂直对齐通常是基线对齐
+ */
+.align-center {
+  @include set-align-center();
+}
+
+.align-right {
+  @include set-align-right();
+}
+
+.align-left {
+  @include set-align-left();
+}
+
+.align-middle {
+  @include set-align-middle();
+}
+
+.align-bottom {
+  @include set-align-bottom();
+}
+
+.align-top {
+  @include set-align-top();
+}
+
+/*
+use important
+ */
+
+.keep-align-center {
+  @include set-align-center(true);
+}
+
+.keep-align-right {
+  @include set-align-right(true);
+}
+
+.keep-align-left {
+  @include set-align-left(true);
+}
+
+.keep-align-middle {
+  @include set-align-middle(true);
+}
+
+.keep-align-bottom {
+  @include set-align-bottom(true);
+}
+
+.keep-align-top {
+  @include set-align-top(true);
+}

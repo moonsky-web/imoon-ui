@@ -1,0 +1,31 @@
+/*
+ * namespace
+ */
+$namespace: 'im';
+
+// 色号定义
+$color-primary: #008080; // 主色
+$color-success: #008B45; // 成功提示
+$color-base: #849ba1; // 基础
+$color-info: #4169E1; // 信息
+$color-warn: #f59926; // 警告
+$color-danger: #dc3d3c; // 严重、危险、错误等
+
+// 动画时长
+$transition-duration-fast: .2s;
+$transition-duration-base: .3s;
+$transition-duration-slow: .4s;
+
+// 圆角半径默认尺寸
+$default-border-radius: 3px;
+// 页面窗口控制器默认尺寸
+$default-win-ctrl-size: 14px;
+$default-loading-size: 32px;
+// one of: lg、md、sm、xs
+$default-size-name: 'md';
+// 颜色变换步长
+$hover-color-step: 4;
+$active-color-step: 4;
+// 不透明度
+$hover-opacity: .2;
+$active-opacity: .4;

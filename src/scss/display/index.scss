@@ -1,0 +1,14 @@
+$display-values: (inline, inline-block, block, flex, grid, none);
+
+@each $value in $display-values {
+  .display-#{$value} {
+    @include set-display($value);
+  }
+  .keep-display-#{$value} {
+    @include set-display($value, true);
+  }
+}
+
+.display-hide, .keep-display-hide {
+  display: none !important;
+}

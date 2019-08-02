@@ -1,0 +1,64 @@
+.#{$ns-auto-complete} {
+  position: relative;
+  display: inline-block;
+}
+
+.#{$ns-auto-complete}-outer {
+  position: absolute;
+  display: none;
+  padding: 12px 0;
+  min-width: 100%;
+  background: #fff;
+  font-size: .9em;
+  @include set-border-radius();
+  box-shadow: 0 0 25px #666;
+  z-index: 1;
+
+  &.#{$ns-auto-complete}-show {
+    display: block;
+  }
+
+  .#{$ns-auto-complete}-inner {
+    max-height: 30em;
+    overflow-y: auto;
+  }
+}
+
+.#{$ns-auto-complete}-ul {
+  margin: 0;
+  padding: 0;
+  @include set-mouse-style();
+
+  & > .#{$ns-auto-complete}-li {
+    padding: 0 12px 0 10px;
+    list-style: none;
+    white-space: nowrap;
+    @include set-liner-height(2em);
+
+    &.#{$ns-auto-complete}-option {
+      transition-duration: $transition-duration-fast;
+
+      &:hover {
+        background: #eee;
+      }
+    }
+
+    &.#{$ns-auto-complete}-hover {
+      background: #eee;
+    }
+
+    &.#{$ns-auto-complete}-none {
+      text-align: center;
+    }
+  }
+
+  & .#{$ns-auto-complete}-serial {
+    display: inline-block;
+    min-width: 1.4em;
+    @include set-align-right();
+  }
+
+  & .#{$ns-auto-complete}-content {
+    padding-left: .6em;
+  }
+}

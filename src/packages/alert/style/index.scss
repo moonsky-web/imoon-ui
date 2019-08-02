@@ -1,0 +1,87 @@
+.#{$ns-alert} {
+  position: relative;
+  @include set-display();
+  width: 100%;
+  padding: .8em 2.5em .8em 1.2em;
+  border: 1px solid;
+  @include set-border-box();
+  @include set-border-radius();
+
+  &.#{$ns-alert}-with-icon {
+    padding-left: 2.5em;
+  }
+
+  & + #{&} {
+    margin-top: 8px;
+  }
+
+  &.#{$ns-alert}-dashed {
+    border-style: dashed;
+  }
+
+  &.#{$ns-alert}-radius {
+    @include set-border-radius(999px);
+  }
+
+  & > .#{$ns-alert}-title {
+    margin-bottom: .3em;
+    font-size: 1.1em;
+    font-weight: bolder;
+  }
+
+  & > .#{$ns-alert}-close {
+    position: absolute;
+    top: 50%;
+    right: 2em;
+    height: 1em;
+    line-height: 1em;
+    transform: translateY(-50%);
+    @include set-align-center();
+    @include set-border-radius(999px);
+    @include set-mouse-style();
+
+    & > .#{$ns-alert}-close-icon {
+      position: absolute;
+      display: block;
+      top: 50%;
+      transform: translateY(-50%);
+      @include set-transition-duration();
+
+      &:hover {
+        transform: translateY(-50%) scale(1.3);
+      }
+
+      &:active {
+        transform: translateY(-50%) scale(1.1);
+      }
+    }
+  }
+
+  @mixin size-of-alert($name: $default-size-name) {
+    font-size: map_get(map_get($size-map, $name), 'fontSize');
+  }
+
+  @include size-of-alert();
+  @each $name in map_keys($size-map) {
+    @if ($name != $default-size-name) {
+      &.#{$ns-alert}-#{$name} {
+        @include size-of-alert($name);
+      }
+    }
+  }
+
+  @mixin color-of-alert($name: $default-color-name) {
+    $color: map_get($color-map, $name);
+    color: $color;
+    background: rgba($color, .01);
+  }
+
+  @include color-of-alert();
+  @each $name in map_keys($color-map) {
+    @if ($name != $default-color-name) {
+      &.#{$ns-alert}-#{$name} {
+        @include color-of-alert($name);
+      }
+    }
+  }
+}

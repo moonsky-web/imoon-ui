@@ -1,0 +1,109 @@
+.#{$ns-input} {
+  border: 1px solid #aaa;
+  width: 14em;
+  @include set-display(inline-block);
+  @include set-transition-duration();
+  @include set-align-middle();
+  @include set-border-box();
+  @include set-border-radius();
+  @include set-mouse-style(false, text);
+  font-weight: normal;
+  outline: none;
+
+  &.#{$ns-input}-ghost:not([disabled]) {
+    background: transparent;
+
+    &:hover {
+      background: rgba(#fff, .4);
+    }
+
+    &:active, &:focus {
+      background: #fff;
+    }
+  }
+
+  &.#{$ns-input}-dashed {
+    border-style: dashed;
+  }
+
+  &.#{$ns-input}-radius {
+    @include set-border-radius(999px);
+  }
+
+  & + #{&} {
+    margin-left: 8px;
+  }
+
+  &.#{$ns-input}-block {
+    @include set-display();
+    width: 100%;
+
+    & + #{&} {
+      margin-left: 0;
+      margin-top: 8px;
+    }
+  }
+
+  // size setting
+  @mixin size-of-input($name: $default-size-name) {
+    $setting: map_get($size-map, $name);
+    font-size: map_get($setting, 'fontSize');
+    @include set-liner-height(map_get($setting, $height), 1px);
+    @include set-padding-h(map_get($setting, 'inputPadding'));
+  }
+
+  @include size-of-input();
+  @each $name in map_keys($size-map) {
+    @if ($name != $default-size-name) {
+      &.#{$ns-input}-#{$name} {
+        @include size-of-input($name);
+      }
+    }
+  }
+
+  // color setting
+  @mixin color-of-input($name: null) {
+    $color: map_get($color-map, $name);
+    @if($color != null) {
+      border-color: $color;
+      &.#{$ns-input}-ghost {
+        color: $color;
+      }
+    } @else {
+      $color: map_get($color-map, $default-color-name);
+    }
+    &.#{$ns-input}-ghost:hover,
+    &.#{$ns-input}-ghost:active,
+    &.#{$ns-input}-ghost:focus {
+      color: #000;
+    }
+
+
+
+    &:hover {
+      z-index: 1;
+      border-color: hover-color($color);
+      box-shadow: 0 0 0 3px rgba(hover-color($color), $hover-opacity);
+    }
+    &:active, &:focus {
+      border-color: active-color($color);
+      box-shadow: 0 0 0 3px rgba(active-color($color), $active-opacity);
+    }
+  }
+
+  @include color-of-input();
+  @each $name in map_keys($color-map) {
+    &.#{$ns-input}-#{$name} {
+      @include color-of-input($name);
+    }
+  }
+
+  // other setting
+  &[disabled], &[readonly], &.#{$ns-input}-viewonly {
+    box-shadow: none !important;
+  }
+
+  &.#{$ns-input}-viewonly {
+    border-color: transparent !important;
+  }
+}

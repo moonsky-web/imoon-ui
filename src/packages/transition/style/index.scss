@@ -1,0 +1,111 @@
+@keyframes #{$ns}animFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes #{$ns}animFadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.#{$ns}-anim-fade-enter-active {
+  animation: #{$ns}animFadeIn $transition-duration-base ease-in;
+}
+
+.#{$ns}-anim-fade-leave-active {
+  animation: #{$ns}animFadeOut $transition-duration-base ease-in;
+}
+
+$slide-value: 20px;
+
+@keyframes #{$ns}animSlideDownIn {
+  from {
+    opacity: 0;
+    transform: translate(0, -$slide-value);
+  }
+  to {
+    opacity: 1;
+    transform: translate(0);
+  }
+}
+
+@keyframes #{$ns}animSlideDownOut {
+  from {
+    opacity: 1;
+    transform: translate(0);
+  }
+  to {
+    opacity: 0;
+    transform: translate(0, -$slide-value);
+  }
+}
+
+.#{$ns}-anim-slide-down-enter-active {
+  animation: #{$ns}animSlideDownIn $transition-duration-base ease-in;
+}
+
+.#{$ns}-anim-slide-down-leave-active {
+  animation: #{$ns}animSlideDownOut $transition-duration-base ease-in;
+}
+
+@keyframes #{$ns}animSlideUpIn {
+  from {
+    opacity: 0;
+    transform: translate(0, $slide-value);
+  }
+  to {
+    opacity: 1;
+    transform: translate(0);
+  }
+}
+
+@keyframes #{$ns}animSlideUpOut {
+  from {
+    opacity: 1;
+    transform: translate(0);
+  }
+  to {
+    opacity: 0;
+    transform: translate(0, $slide-value);
+  }
+}
+
+.#{$ns}-anim-slide-up-enter-active {
+  animation: #{$ns}animSlideUpIn $transition-duration-base ease-in;
+}
+
+.#{$ns}-anim-slide-up-leave-active {
+  animation: #{$ns}animSlideUpOut $transition-duration-base ease-in;
+}
+
+/**
+ * 旋转
+ */
+@keyframes defaultRotate {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(180deg);
+  }
+}
+
+/**
+ * 中心旋转
+ */
+@keyframes defaultTransformCenterRotate {
+  from {
+    transform: translate(-50%, -50%) rotate(0);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(180deg);
+  }
+}

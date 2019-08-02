@@ -1,0 +1,139 @@
+@mixin set-color-white-btn() {
+  @include set-color-white();
+}
+
+.#{$ns-btn} {
+  position: relative;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  @include set-color-white-btn();
+  @include set-inline-block();
+  @include set-transition-duration();
+  @include set-align-center();
+  @include set-align-middle();
+  @include set-border-box();
+  @include set-mouse-style();
+  @include set-border-radius();
+  @include set-none-select();
+
+  outline: none;
+  text-decoration: none;
+
+  & + #{&} {
+    margin-left: 8px;
+  }
+
+  &.#{$ns-btn}-block {
+    @include set-display();
+    width: 100%;
+
+    & + #{&} {
+      margin-left: 0;
+      margin-top: 8px;
+    }
+  }
+
+  @mixin size-of-btn($name: $default-size-name) {
+    $setting: map_get($size-map, $name);
+    font-size: map_get($setting, 'fontSize');
+    @include set-padding-h(map_get($setting, 'btnPadding'));
+    @include set-liner-height(map_get($setting, $height), 1px);
+  }
+
+  @include size-of-btn();
+  @each $name in map_keys($size-map) {
+    @if ($name != $default-size-name) {
+      &.#{$ns-btn}-#{$name} {
+        @include size-of-btn($name);
+      }
+    }
+  }
+
+  @mixin color-of-btn($name: $default-color-name) {
+    $color: get-color($name);
+    background: $color;
+    border-color: $color;
+    @include set-color-white-btn();
+    &:hover {
+      z-index: 1;
+      background: hover-color($color);
+      border-color: hover-color($color);
+      box-shadow: 0 0 0 1px rgba(hover-color($color), $hover-opacity);
+    }
+    &:active {
+      background: active-color($color);
+      border-color: active-color($color);
+      box-shadow: 0 0 0 3px rgba(active-color($color), $active-opacity);
+    }
+    &.#{$ns-btn}-auto:hover {
+      box-shadow: 0 0 0 .1em rgba(hover-color($color), $hover-opacity);
+    }
+    &.#{$ns-btn}-auto:active {
+      box-shadow: 0 0 0 .2em rgba(active-color($color), $active-opacity);
+    }
+  }
+
+  @include color-of-btn();
+  @each $name in map_keys($color-map) {
+    @if ($name != $default-color-name) {
+      &.#{$ns-btn}-#{$name} {
+        @include color-of-btn($name);
+      }
+    }
+  }
+
+  @mixin color-on-white-bg($name: $default-color-name,$important: false) {
+    $color: get-color($name);
+    @include set-prop(color, $color, $important);
+    &:hover {
+      @include set-color-white-btn();
+      background: hover-color($color);
+    }
+  }
+
+  &.#{$ns-btn}-dashed {
+    border-style: dashed;
+  }
+
+  &.#{$ns-btn}-outline, &.#{$ns-btn}-dashed {
+    background: #fff;
+  }
+
+  &.#{$ns-btn}-ghost {
+    background: transparent;
+  }
+
+  &.#{$ns-btn}-outline, &.#{$ns-btn}-dashed, &.#{$ns-btn}-ghost {
+    @include color-on-white-bg();
+    @each $name in map_keys($color-map) {
+      @if ($name != $default-color-name) {
+        &.#{$ns-btn}-#{$name} {
+          @include color-on-white-bg($name);
+        }
+      }
+    }
+  }
+
+  &.#{$ns-btn}-radius {
+    @include set-border-radius(999px);
+  }
+
+  &.#{$ns-btn}-circle {
+    @include set-border-radius(999px);
+  }
+
+  &.#{$ns-btn}[disabled] {
+    background: #f2f2f2 !important;
+    border: 1px solid #aaa !important;
+    color: #aaa !important;
+    box-shadow: none !important;
+    @include set-mouse-style(false, not-allowed);
+  }
+
+  &.#{$ns-btn}-auto {
+    $important: false;
+    @include set-padding-h(1em, $important);
+    @include set-prop(border-width, .1em, $important);
+    @include set-liner-height(2.4em, .1em, $important);
+  }
+}

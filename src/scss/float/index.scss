@@ -1,0 +1,10 @@
+$float-values: (left, right, none);
+
+@each $value in $float-values {
+  .float-#{$value} {
+    @include set-prop(float, $value);
+  }
+  .keep-float-#{$value} {
+    @include set-prop(float, $value, true);
+  }
+}

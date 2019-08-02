@@ -1,0 +1,29 @@
+.#{$ns}-loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(170, 170, 170, .3);
+
+  &.#{$ns}-loading-fixed {
+    position: fixed;
+  }
+}
+
+.#{$ns}-loading-main {
+  @include set-absolute-center();
+}
+
+.#{$ns}-loading-icon {
+  display: block;
+  @include set-absolute-center();
+  width: $default-loading-size;
+  height: $default-loading-size;
+  border: 2px solid get-color($base);
+  border-top-color: transparent;
+  border-bottom-color: transparent;
+  @include set-border-radius(999px);
+  animation: defaultTransformCenterRotate .4s infinite linear;
+  z-index: -1;
+}

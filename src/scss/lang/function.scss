@@ -1,0 +1,23 @@
+@function namespace($ns: $ns) {
+  @if (str_length($ns) > 0 and str_index($ns, '-') == null) {
+    @return $ns + '-';
+  } @else {
+    @return $ns;
+  }
+}
+
+@function toClassName($name: '') {
+  @return namespace() + $name;
+}
+
+@function get-color($name: $default-color-name) {
+  @return map_get($color-map, $name);
+}
+
+@function hover-color($colorVal, $step: $hover-color-step) {
+  @return lighten($colorVal, $step);
+}
+
+@function active-color($colorVal, $step: $active-color-step) {
+  @return darken($colorVal, $step);
+}

@@ -1,0 +1,17 @@
+@charset "UTF-8";
+@import "./default";
+@import "./scss/index";
+
+// components
+@import "./packages/icon/style/index";
+@import "./packages/win-ctrl/style/index";
+@import "./packages/button/style/index";
+@import "./packages/input/style/index";
+@import "./packages/input-item/style/index";
+@import "./packages/auto-complete/style/index";
+@import "./packages/alert/style/index";
+@import "./packages/transition/style/index";
+@import "./packages/loading/style/index";
+@import "./packages/modal/style/index";
+
+@import "./scss/preset";
