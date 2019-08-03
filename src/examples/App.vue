@@ -1,14 +1,16 @@
 <template>
   <div id="app">
-    <div :style="currentStyle">
-      <span>列表：</span>
-      <router-link
-        class="router-link"
-        v-for="(route) of currentRoutes"
-        :to="route.path"
-        :key="route.path">
-        {{route.name}}
-      </router-link>
+    <div :style="currentStyle" class="nav-header">
+      <div class="nav-label">列表：</div>
+      <div class="nav-main">
+        <router-link
+          class="router-link"
+          v-for="(route) of currentRoutes"
+          :to="route.path"
+          :key="route.path">
+          {{route.name}}
+        </router-link>
+      </div>
     </div>
     <router-view/>
   </div>
@@ -38,21 +40,34 @@
     /*-webkit-font-smoothing: antialiased;*/
     /*-moz-osx-font-smoothing: grayscale;*/
     color: #2C3E50;
-    padding: 60px 10px;
-    margin-top: 60px;
+    padding: 30px 10px;
+    margin-top: 30px;
+  }
+
+  .nav-header {
+    display: flex;
+  }
+
+  .nav-label {
+    width: 60px;
+  }
+
+  .nav-main {
+    flex: 1;
   }
 
   .router-link {
-    padding: 5px 8px;
+    display: inline-block;
+    padding: 0 8px;
     border-radius: 3px;
+    height: 32px;
+    line-height: 32px;
     color: teal;
     border: 1px solid rgba(0, 128, 128, .5);
     transition-duration: .3s;
     text-decoration: none;
-
-    & + #{&} {
-      margin-left: 16px;
-    }
+    margin-right: 12px;
+    margin-bottom: 8px;
 
     &:hover {
       background: rgba(0, 128, 128, .3);

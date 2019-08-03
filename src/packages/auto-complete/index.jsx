@@ -1,9 +1,9 @@
 import {nameFactory} from '../../utils';
 import {ImInput} from '../input';
-import {autoColorValid, autoSizeValid} from '../../utils/validator';
 import {typeArray, typeBoolean} from '../../utils/props';
 import {filterArray} from '../../utils/array';
 import {ImTransition} from '../transition';
+import {inputExpandMixin} from '../../predefined/mixins';
 
 const subNs = 'AutoComplete', factory = nameFactory(subNs);
 const clsAuto = factory(),
@@ -55,28 +55,8 @@ export const ImAutoComplete = {
     factory.install(Vue, ImAutoComplete);
   },
   name,
+  mixins: [inputExpandMixin],
   props: {
-    value: String,
-    // input props
-    placeholder: String,
-    color: {
-      type: String,
-      validator: autoColorValid,
-    },
-    size: {
-      type: String,
-      validator: autoSizeValid,
-    },
-    viewonly: typeBoolean(),
-    block: typeBoolean(),
-    ghost: typeBoolean(),
-    dashed: typeBoolean(),
-    radius: typeBoolean(),
-    autofocus: typeBoolean(),// 未实现
-    readonly: typeBoolean(),
-    disabled: typeBoolean(),
-    inputClass: [String, Object, Array],
-
     optionsClass: [String, Object, Array],
 
     // clear
@@ -87,7 +67,7 @@ export const ImAutoComplete = {
     valueKey: String,
     limit: {
       type: Number,
-      default: 15,
+      default: 10,
     },
     hideSerial: typeBoolean(),
   },
@@ -96,24 +76,14 @@ export const ImAutoComplete = {
       visible: false,
       currentIndex: 0,
       cacheOptions: [],
-      cacheValue: null,
     };
   },
   computed: {
-    currentValue: {
-      get() {
-        return this.cacheValue;
-      },
-      set(value) {
-        this.cacheValue = value;
-        this.$emit('input', value);
-      },
+    visibility(vm) {
+      return vm.visible;
     },
-    visibility() {
-      return this.visible;
-    },
-    editable() {
-      const {viewonly, readonly, disabled} = this;
+    editable(vm) {
+      const {viewonly, readonly, disabled} = vm;
       return !(viewonly || readonly || disabled);
     },
     getLimit() {
@@ -136,29 +106,6 @@ export const ImAutoComplete = {
     },
   },
   render(h, context = this) {
-    const {
-      placeholder, color, size, radius,
-      viewonly, readonly, disabled, ghost, dashed,
-      autofocus, inputClass, optionsClass,
-    } = context;
-
-    const inputDef = {
-      attrs: {placeholder}, props: {
-        color, size, viewonly, block: true,
-        ghost, dashed, radius, autofocus,
-      },
-      domProps: {value: context.currentValue},
-    };
-    if (inputClass) {
-      inputDef.class = inputClass;
-    }
-    if (readonly) {
-      inputDef.attrs.readonly = 'readonly';
-    }
-    if (disabled) {
-      inputDef.attrs.disabled = 'disabled';
-    }
-
     function optionMapper(option, index) {
       return (
         <li
@@ -180,7 +127,7 @@ export const ImAutoComplete = {
       <div class={clsAuto}>
         <ImInput
           ref="input"
-          {...inputDef}
+          {...inputExpandMixin.fromVm(context)}
           on-input={context.onInput}
           on-focus={context.onFocus}
           on-keydown={context.onKeydown}/>
@@ -189,7 +136,7 @@ export const ImAutoComplete = {
             context.visibility ? (
               <div
                 style={optionsMeta.style}
-                class={[clsOuter, optionsClass,
+                class={[clsOuter, context.optionsClass,
                   {[clsShow]: context.visibility}]}>
                 <div class={clsInner}>
                   <ul class={clsUl}>
@@ -209,7 +156,7 @@ export const ImAutoComplete = {
       if (input) {
         const rect = input.getBoundingClientRect();
         const {innerWidth: winW, innerHeight: winH} = window, style = {};
-        const isBottom = winH - rect.bottom < 200;
+        const isBottom = winH - rect.bottom < 250;
         style[isBottom ? 'bottom' : 'top'] = '125%';
         style[winW - rect.right < 100 ? 'right' : 'left'] = '0';
         return {style, name: isBottom ? 'slideDown' : 'slideUp'};

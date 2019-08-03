@@ -1,8 +1,7 @@
 import {nameFactory, READONLY} from '../../utils';
-import {typeBoolean} from '../../utils/props';
 import {addDynamicCSS, cssBooleanCreator} from '../../utils/style';
 import {inputColorRegister} from './style';
-import {autoSizeValid, autoColorValid} from '../../utils/validator';
+import {inputBaseProps} from '../../predefined/props';
 
 const subNs = 'input';
 const creator = nameFactory(subNs), clsInput = creator(),
@@ -49,23 +48,7 @@ export const ImInput = {
   },
   name: creator.thisName(),
   functional: true,
-  props: {
-    value: {},
-    color: {
-      type: String,
-      validator: autoColorValid,
-    },
-    size: {
-      type: String,
-      validator: autoSizeValid,
-    },
-    viewonly: typeBoolean(),
-    block: typeBoolean(),
-    ghost: typeBoolean(),
-    dashed: typeBoolean(),
-    radius: typeBoolean(),
-    autofocus: typeBoolean(),// 未实现
-  },
+  props: inputBaseProps,
   render(h, {data, props = READONLY, injections: {$providedProps = READONLY} = READONLY}) {
     const {class: classArgs} = data, {viewonly, value, color, size} = props;
     const className = `${clsInput} ${inputColorCreator(color)} ${size ? creator(size) : ''}`;

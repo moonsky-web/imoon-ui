@@ -12,7 +12,7 @@
   import {ImButton} from '../../packages/button';
 
   export default {
-    name: 'input.vue',
+    name: 'ImInputDemo',
     components: {ImInput, ImButton},
   };
 </script>

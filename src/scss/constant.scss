@@ -9,6 +9,7 @@ $ns-icon: #{$ns}-icon; // 图标
 $ns-alert: #{$ns}-alert; // 警告
 $ns-table: #{$ns}-table; // 表格
 $ns-input: #{$ns}-input; // 输入框
+$ns-input-number: #{$ns}-input-number; // 数字输入框
 $ns-radio: #{$ns}-radio; // 单选框
 $ns-checkbox: #{$ns}-checkbox; // 单选框
 $ns-modal: #{$ns}-modal; // 弹出框
@@ -40,12 +41,12 @@ $danger: 'danger';
 // 默认主色
 $default-color-name: $primary;
 $color-map: (
-  $primary: $color-primary,
-  $base: $color-base,
-  $success: $color-success,
-  $info: $color-info,
-  $warn: $color-warn,
-  $danger: $color-danger,
+    $primary: $color-primary,
+    $base: $color-base,
+    $success: $color-success,
+    $info: $color-info,
+    $warn: $color-warn,
+    $danger: $color-danger,
 );
 
 /*
@@ -56,8 +57,8 @@ $md: 'md';
 $sm: 'sm';
 $xs: 'xs';
 $size-map: (
-  $lg: ($height: 38px, fontSize: 16px, btnPadding: 20px, inputPadding: 14px),
-  $md: ($height: 32px, fontSize: 14px, btnPadding: 15px, inputPadding: 12px),
-  $sm: ($height: 26px, fontSize: 12px, btnPadding: 10px, inputPadding: 10px),
-  $xs: ($height: 20px, fontSize: 10px, btnPadding: 5px, inputPadding: 8px),
+    $lg: ($height: 38px, fontSize: 16px, btnPadding: 20px, inputPadding: 14px),
+    $md: ($height: 32px, fontSize: 14px, btnPadding: 15px, inputPadding: 12px),
+    $sm: ($height: 26px, fontSize: 12px, btnPadding: 10px, inputPadding: 10px),
+    $xs: ($height: 20px, fontSize: 10px, btnPadding: 5px, inputPadding: 8px),
 );

@@ -74,6 +74,11 @@ export const router = new Router({
       name: 'AutoComplete',
       component: () => import('./auto-complete/auto-complete.vue'),
     },
+    {
+      path: '/input-number',
+      name: 'InputNumber',
+      component: () => import('./input-number/InputNumber.vue'),
+    },
   ],
 });
 

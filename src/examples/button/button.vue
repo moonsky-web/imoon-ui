@@ -1,6 +1,9 @@
 <template>
   <Provider>
     <imButton>按钮</imButton>
+    <imButton text>aaaa</imButton>
+    <imButton text color="danger">按钮</imButton>
+    <imButton text color="#ffe484">按钮</imButton>
     <imButton href="https://www.baidu.com">按钮</imButton>
   </Provider>
 </template>
