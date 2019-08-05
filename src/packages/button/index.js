@@ -1,11 +1,11 @@
 import {nameFactory} from '../../utils';
-import {typeNullBoolean, typeString} from '../../utils/props';
+import {typeBoolean, typeNullBoolean, typeString} from '../../utils/props';
 import {colorRegister} from './style';
 import {autoColorValid, autoSizeValid} from '../../utils/validator';
 import {addDynamicCSS, cssBooleanCreator} from '../../utils/style';
 
 const subNs = 'btn', readonly = Object.freeze({});
-const creator = nameFactory(subNs), clsBtn = creator();
+const creator = nameFactory(subNs), clsBtn = creator(), clsTxt = creator('text');
 const colorCreator = addDynamicCSS(subNs, colorRegister);
 const btnBooleanCreator = cssBooleanCreator((name, val) => {
   return val ? creator(name) : '';
@@ -26,6 +26,7 @@ export const ImButton = {
       type: String,
       validator: autoSizeValid,
     },
+    text: typeBoolean(),
     block: typeNullBoolean(),
     ghost: typeNullBoolean(),
     dashed: typeNullBoolean(),
@@ -36,8 +37,8 @@ export const ImButton = {
   render(h, {
     props, data, children, injections: {$providedProps = readonly} = readonly,
   }) {
-    const {class: cls, attrs = {}} = data, {color, size, to} = props;
-    const names = btnBooleanCreator(props, $providedProps);
+    const {class: cls, attrs = {}} = data, {color, size, text, to} = props;
+    const names = text ? [clsTxt] : btnBooleanCreator(props, $providedProps);
     const className = `${clsBtn} ${colorCreator(color)} ${size ? creator(size) : ''}`;
     const settings = {
       ...data, attrs, class: cls ? [cls, className, ...names] : [className, ...names],

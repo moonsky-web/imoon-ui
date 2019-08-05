@@ -25,7 +25,7 @@ export function isFalse(val) {
 }
 
 export function isDef(val) {
-  return val != null;
+  return val !== undefined;
 }
 
 export function isUndef(val) {

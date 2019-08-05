@@ -1,20 +1,22 @@
 <template>
   <div>
     <div style="height: 660px;">
-      <ImAutoComplete v-show="showAutoComplete"
-        color="danger" :readonly="readonly"
+      <ImAutoComplete
+        v-show="showAutoComplete" :readonly="readonly"
         :options="options" valueKey="name"
-        placeholder="请输入内容" :limit="10"/>
+        placeholder="请输入内容" :limit="limit"/>
       <div style="height: 200px;"></div>
-      <ImAutoComplete v-show="showAutoComplete"
+      <ImAutoComplete
+        v-show="showAutoComplete"
         color="danger" :readonly="readonly"
         :options="options" valueKey="name"
-        placeholder="请输入内容" :limit="10"/>
+        placeholder="请输入内容" :limit="limit"/>
       <div style="height: 200px;"></div>
-      <ImAutoComplete v-show="showAutoComplete"
+      <ImAutoComplete
+        v-show="showAutoComplete"
         color="danger" :readonly="readonly"
         :options="options" valueKey="name"
-        placeholder="请输入内容" :limit="10"/>
+        placeholder="请输入内容" :limit="limit"/>
     </div>
     <div style="display: flex;">
       <div style="width: 800px;">
@@ -29,7 +31,7 @@
           :options="options"
           valueKey="name"
           placeholder="请输入内容"
-          :limit="10"
+          :limit="limit"
         ></ImAutoComplete>
       </div>
     </div>
@@ -47,6 +49,7 @@
       return {
         readonly: false,
         showAutoComplete: true,
+        limit: 10,
         options: [
           {name: '111111111111111111111111111111'},
           {name: 'asdfas'},

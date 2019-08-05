@@ -37,7 +37,8 @@
     $setting: map_get($size-map, $name);
     font-size: map_get($setting, 'fontSize');
     @include set-padding-h(map_get($setting, 'btnPadding'));
-    @include set-liner-height(map_get($setting, $height), 1px);
+    @include set-liner-height(map_get($setting, $height));
+    //@include set-liner-height(map_get($setting, $height), 1px);
   }
 
   @include size-of-btn();
@@ -101,6 +102,33 @@
 
   &.#{$ns-btn}-ghost {
     background: transparent;
+  }
+
+  @mixin color-on-text($name: $default-color-name, $important: false) {
+    $color: get-color($name);
+    @include set-prop(color, $color, $important);
+    &:hover {
+      color: hover-color($color, 16);
+    }
+    &:active {
+      color: active-color($color, 16);
+    }
+  }
+
+  &.#{$ns-btn}-text {
+    $important: true;
+    @include color-on-text();
+    @include set-prop(border-color, transparent, $important);
+    @include set-prop(background, transparent, $important);
+    @include set-prop(box-shadow, none, $important);
+
+    @each $name in map_keys($color-map) {
+      @if ($name != $default-color-name) {
+        &.#{$ns-btn}-#{$name} {
+          @include color-on-text($name);
+        }
+      }
+    }
   }
 
   &.#{$ns-btn}-outline, &.#{$ns-btn}-dashed, &.#{$ns-btn}-ghost {
