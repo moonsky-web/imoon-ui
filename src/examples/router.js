@@ -79,6 +79,11 @@ export const router = new Router({
       name: 'InputNumber',
       component: () => import('./input-number/InputNumber.vue'),
     },
+    {
+      path: '/input-range',
+      name: 'InputRange',
+      component: () => import('./input-range/InputRange.vue'),
+    },
   ],
 });
 

@@ -87,7 +87,7 @@ export const ImAlert = {
               },
             },
           }, close.length ? close : [
-            h(ImWinClose, {class: clsCloseIcon}),
+            h(ImWinClose, {props: {rightMiddle: true}}),
           ]) : '',
         ]),
       ]);

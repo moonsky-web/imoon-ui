@@ -1,5 +1,5 @@
 import {nameFactory} from '../../utils';
-import {ImInput} from '../input';
+import {ImInputClearable} from '../input';
 import {typeArray, typeBoolean} from '../../utils/props';
 import {filterArray} from '../../utils/array';
 import {ImTransition} from '../transition';
@@ -125,7 +125,7 @@ export const ImAutoComplete = {
     const optionsMeta = context.getOptionsMeta();
     return (
       <div class={clsAuto}>
-        <ImInput
+        <ImInputClearable
           ref="input"
           {...inputExpandMixin.fromVm(context)}
           on-input={context.onInput}

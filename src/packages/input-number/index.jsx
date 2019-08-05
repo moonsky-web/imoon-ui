@@ -1,8 +1,8 @@
 import {nameFactory, runtimeError} from '../../utils';
-import {ImInput} from '../input';
 import {inputExpandMixin} from '../../predefined/mixins';
 import {isDef} from '../../utils/predicates';
 import {ImButton} from '../button';
+import {ImInput} from '../input';
 
 const subNs = 'InputNumber';
 const factory = nameFactory(subNs), name = factory.thisName();
@@ -10,6 +10,10 @@ const factory = nameFactory(subNs), name = factory.thisName();
 const clsNumber = factory();
 const clsBtn = factory('btn');
 const clsBox = factory('box');
+
+function otherPrecision(value, precision) {
+  return value * Math.pow(10, precision) % 1 !== 0;
+}
 
 const precisions = [
   v => v % 1 !== 0,
@@ -19,10 +23,6 @@ const precisions = [
   v => v * 10000 % 1 !== 0,
   v => v * 100000 % 1 !== 0,
 ];
-
-function otherPrecision(value, precision) {
-  return value * Math.pow(10, precision) % 1 !== 0;
-};
 
 export const ImInputNumber = {
   install(Vue) {

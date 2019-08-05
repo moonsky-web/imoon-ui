@@ -52,4 +52,15 @@
       transform: rotate(-45deg);
     }
   }
+
+  &.#{$ns-win}-close-rm {
+    position: absolute;
+    top: 50%;
+    height: 1em;
+    line-height: 1em;
+    transform: translateY(-50%);
+    @include set-align-center();
+    @include set-border-radius(999px);
+    @include set-mouse-style();
+  }
 }

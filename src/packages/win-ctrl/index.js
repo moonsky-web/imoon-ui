@@ -6,18 +6,26 @@ const creator = nameFactory(subNs),
   ctrlCreator = creator.next('ctrl'),
   clsCtrl = ctrlCreator(),
   clsClose = creator('close'),
+  clsRMid = creator('closeRm'),
   clsCloseIcon = creator('close-icon');
 
+/**
+ * 提供基本关闭控件；
+ * 需要父组件提供：
+ * - 放置 close 图标位置的盒子
+ * @type {{functional: boolean, name: *, render(*, {data: *}): *}}
+ */
 export const ImWinClose = {
   name: creator.thisName('Close'),
   functional: true,
-  render(h, {data}) {
+  props: {
+    rightMiddle: typeBoolean(),
+  },
+  render(h, {data, props: {rightMiddle: rm}}) {
     const {class: classes = {}} = data;
     return h('div', {
-      ...data, class: [clsClose, classes],
-    }, [
-      h('i', {class: clsCloseIcon}),
-    ]);
+      ...data, class: [clsClose, classes, {[clsRMid]: rm}],
+    }, [h('i', {class: clsCloseIcon})]);
   },
 };
 
