@@ -33,28 +33,7 @@
     position: absolute;
     top: 50%;
     right: 2em;
-    height: 1em;
-    line-height: 1em;
     transform: translateY(-50%);
-    @include set-align-center();
-    @include set-border-radius(999px);
-    @include set-mouse-style();
-
-    & > .#{$ns-alert}-close-icon {
-      position: absolute;
-      display: block;
-      top: 50%;
-      transform: translateY(-50%);
-      @include set-transition-duration();
-
-      &:hover {
-        transform: translateY(-50%) scale(1.3);
-      }
-
-      &:active {
-        transform: translateY(-50%) scale(1.1);
-      }
-    }
   }
 
   @mixin size-of-alert($name: $default-size-name) {

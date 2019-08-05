@@ -2,13 +2,18 @@ import {nameFactory, READONLY} from '../../utils';
 import {addDynamicCSS, cssBooleanCreator} from '../../utils/style';
 import {inputColorRegister} from './style';
 import {inputBaseProps} from '../../predefined/props';
+import {ImWinClose} from '../win-ctrl';
+import {typeBoolean} from '../../utils/props';
 
 const subNs = 'input';
-const creator = nameFactory(subNs), clsInput = creator(),
-  viewonly = creator('viewonly');
+const factory = nameFactory(subNs),
+  clsInput = factory(),
+  viewonly = factory('viewonly'),
+  clsClear = factory('clearable'),
+  clsClearIcon = factory('clearIcon');
 const inputColorCreator = addDynamicCSS(subNs, inputColorRegister);
 const inputBooleanCreator = cssBooleanCreator((name, val) => {
-  return val ? creator(name) : '';
+  return val ? factory(name) : '';
 }, 'block', 'ghost', 'dashed', 'radius');
 
 function noneInput() {
@@ -16,7 +21,7 @@ function noneInput() {
 
 const Default = {
   functional: true,
-  name: creator.thisName('Default'),
+  name: factory.thisName('Default'),
   render(h, {data, listeners}) {
     const {input = noneInput} = listeners;
     const settings = {
@@ -32,7 +37,7 @@ const Default = {
   },
 }, Viewonly = {
   functional: true,
-  name: creator.thisName('Viewonly'),
+  name: factory.thisName('Viewonly'),
   props: {
     placeholder: {},
   },
@@ -42,25 +47,58 @@ const Default = {
   },
 };
 
+function render(h, {data, props = READONLY, injections: {$providedProps = READONLY} = READONLY}) {
+  const {class: classArgs} = data, {viewonly, value, color, size} = props;
+  const className = `${clsInput} ${inputColorCreator(color)} ${size ? factory(size) : ''}`;
+  const computedClass = inputBooleanCreator(props, $providedProps);
+  const settings = {
+    ...data,
+    class: classArgs ? [classArgs, className, ...computedClass] : [className, ...computedClass],
+  };
+  if (viewonly) {
+    return h(Viewonly, settings, [value]);
+  } else {
+    return h(Default, settings);
+  }
+}
+
 export const ImInput = {
   install(Vue) {
-    creator.install(Vue, ImInput);
+    factory.install(Vue, ImInput);
   },
-  name: creator.thisName(),
+  name: factory.thisName(),
   functional: true,
   props: inputBaseProps,
-  render(h, {data, props = READONLY, injections: {$providedProps = READONLY} = READONLY}) {
-    const {class: classArgs} = data, {viewonly, value, color, size} = props;
-    const className = `${clsInput} ${inputColorCreator(color)} ${size ? creator(size) : ''}`;
-    const computedClass = inputBooleanCreator(props, $providedProps);
-    const settings = {
-      ...data,
-      class: classArgs ? [classArgs, className, ...computedClass] : [className, ...computedClass],
-    };
-    if (viewonly) {
-      return h(Viewonly, settings, [value]);
-    } else {
-      return h(Default, settings);
-    }
+  render,
+};
+
+export const ImInputClearable = {
+  install(Vue) {
+    factory.install(Vue, ImInputClearable);
+  },
+  name: factory.thisName('clearable'),
+  functional: true,
+  props: {
+    ...inputBaseProps,
+    clearable: typeBoolean(true),
+  },
+  render(h, context) {
+    const {data, props: {clearable}} = context;
+    const {class: clazz, ...rest} = data;
+    const {on: {input = noneInput} = {}} = rest;
+    delete context.data.class;
+    return h('div', {class: [clsClear, clazz]}, [
+      render(h, context),
+      clearable ? h('div', {class: clsClearIcon}, [
+        h(ImWinClose, {
+          props: {rightMiddle: true},
+          on: {
+            click() {
+              input(null);
+            },
+          },
+        }),
+      ]) : null,
+    ]);
   },
 };

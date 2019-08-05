@@ -48,7 +48,7 @@ function getClassName(subNs, defaultNamespace = namespace) {
 
   function className(v) {
     if ((v = (v || '').trim())) {
-      return toLower(`${nowClassNs}-${v}`);
+      return toLower(`${nowClassNs}-${camelcaseToHyphen(v)}`);
     } else if (nowClassNs === nowNs && subNs !== false) {
       runtimeError('Got an empty sub namespace.');
     } else {

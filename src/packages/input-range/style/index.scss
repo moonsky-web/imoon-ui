@@ -1,0 +1,50 @@
+$ns-input-range: #{$ns-input}-range;
+
+.#{$ns-input-range} {
+  display: inline-block;
+  width: 14em;
+
+  & > .#{$ns-input-range}-in {
+    display: flex;
+    width: 100%;
+  }
+
+  & .#{$ns-input-range}-arrow {
+    width: 2em;
+    text-align: center;
+  }
+
+  & .#{$ns-input-range}-box {
+    width: inherit;
+    flex: 1;
+  }
+
+  & + #{&} {
+    margin-left: 8px;
+  }
+
+  &.#{$ns-input-range}-block {
+    @include set-display();
+    width: 100%;
+
+    & + #{&} {
+      margin-left: 0;
+      margin-top: 8px;
+    }
+  }
+
+  @mixin size-of-input($name: $default-size-name) {
+    $setting: map_get($size-map, $name);
+    font-size: map_get($setting, 'fontSize');
+    @include set-liner-height(map_get($setting, $height));
+  }
+
+  @include size-of-input();
+  @each $name in map_keys($size-map) {
+    @if ($name != $default-size-name) {
+      &.#{$ns-input}-#{$name} {
+        @include size-of-input($name);
+      }
+    }
+  }
+}
