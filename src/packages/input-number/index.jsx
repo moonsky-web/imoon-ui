@@ -19,7 +19,8 @@ const precisions = [
   v => v * 10000 % 1 !== 0,
   v => v * 100000 % 1 !== 0,
 ];
-precisions.other = function (value, precision) {
+
+function otherPrecision(value, precision) {
   return value * Math.pow(10, precision) % 1 !== 0;
 };
 
@@ -35,9 +36,7 @@ export const ImInputNumber = {
     step: Number,
     precision: {
       type: Number,
-      validator(value) {
-        return value >= 0;
-      },
+      validator: value => value >= 0,
       default: 0,
     },
   },
@@ -93,7 +92,7 @@ export const ImInputNumber = {
       if (isDef(min) && value < min) {
         error += ` Value must greater than the minimum (prop of min): ${min}, but got: ${value}.`;
       }
-      if (precision > 0 && (precisions[precision] || precisions.other)(value, precision)) {
+      if (precision > 0 && (precisions[precision] || otherPrecision)(value, precision)) {
         error += ` The precision: ${this.getStep(precision)}, but got: ${value}.`;
       }
       if (error) {
