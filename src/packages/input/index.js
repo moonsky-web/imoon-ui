@@ -84,10 +84,11 @@ export const ImInputClearable = {
   },
   render(h, context) {
     const {data, props: {clearable}} = context;
-    const {class: clazz, ...rest} = data;
+    const {class: clazz, style, ...rest} = data;
     const {on: {input = noneInput} = {}} = rest;
     delete context.data.class;
-    return h('div', {class: [clsClear, clazz]}, [
+    delete context.data.style;
+    return h('div', {class: [clsClear, clazz], style}, [
       render(h, context),
       clearable ? h('div', {class: clsClearIcon}, [
         h(ImWinClose, {

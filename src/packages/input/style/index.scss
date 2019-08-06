@@ -1,4 +1,5 @@
 .#{$ns-input} {
+  padding: 0 1em;
   border: 1px solid #aaa;
   width: 14em;
   @include set-display(inline-block);
@@ -49,7 +50,7 @@
     $setting: map_get($size-map, $name);
     font-size: map_get($setting, 'fontSize');
     @include set-liner-height(map_get($setting, $height), 1px);
-    @include set-padding-h(map_get($setting, 'inputPadding'));
+    //@include set-padding-h(map_get($setting, 'inputPadding'));
   }
 
   @include size-of-input();
@@ -113,12 +114,19 @@
 
   & > .#{$ns-input}-clear-icon {
     position: absolute;
+    display: none;
     top: 50%;
     right: 1.5em;
     transform: translate(-50%);
+    z-index: 1;
+  }
+
+  &:hover > .#{$ns-input}-clear-icon {
+    display: block;
   }
 
   & > .#{$ns-input} {
     width: 100%;
+    padding-right: 2em;
   }
 }
