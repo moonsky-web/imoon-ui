@@ -2,12 +2,12 @@ import {nameFactory} from '../../utils';
 import {typeBoolean} from '../../utils/props';
 
 const subNs = 'win', empty = {};
-const creator = nameFactory(subNs),
-  ctrlCreator = creator.next('ctrl'),
+const factory = nameFactory(subNs),
+  ctrlCreator = factory.next('ctrl'),
   clsCtrl = ctrlCreator(),
-  clsClose = creator('close'),
-  clsRMid = creator('closeRm'),
-  clsCloseIcon = creator('close-icon');
+  clsClose = factory('close'),
+  clsRMid = factory('closeRm'),
+  clsCloseIcon = factory('close-icon');
 
 /**
  * 提供基本关闭控件；
@@ -15,22 +15,20 @@ const creator = nameFactory(subNs),
  * - 放置 close 图标位置的盒子
  * @type {{functional: boolean, name: *, render(*, {data: *}): *}}
  */
-export const ImWinClose = {
-  name: creator.thisName('Close'),
+export const ImWinClose = factory.create('Close', {
   functional: true,
   props: {
-    rightMiddle: typeBoolean(),
+    middleRight: typeBoolean(true),
   },
-  render(h, {data, props: {rightMiddle: rm}}) {
+  render(h, {data, props: {middleRight: rm}}) {
     const {class: classes = {}} = data;
     return h('div', {
       ...data, class: [clsClose, classes, {[clsRMid]: rm}],
     }, [h('i', {class: clsCloseIcon})]);
   },
-};
+});
 
-export const ImWinCtrl = {
-  name: creator.thisName('Ctrl'),
+export const ImWinCtrl = factory.create('Ctrl', {
   functional: true,
   props: {
     closeBtn: typeBoolean(true),
@@ -66,7 +64,7 @@ export const ImWinCtrl = {
       ],
     }, children);
   },
-};
+});
 
 export default ImWinCtrl;
 

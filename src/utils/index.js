@@ -1,5 +1,6 @@
 import {capitalize, namespace, namespacedComponentName} from '../default';
 import {camelcase, camelcaseToHyphen, firstLowerCase, firstUpperCase, toLower} from './str';
+import {isString} from './predicates';
 
 /**
  * UID
@@ -56,9 +57,7 @@ function getClassName(subNs, defaultNamespace = namespace) {
     }
   }
 
-  className.install = installComponent;
-
-  className.thisName = namespacedComponentName ? (capitalize ? function (componentName) {
+  const thisName = namespacedComponentName ? (capitalize ? function (componentName) {
     return firstUpper(componentName, componentNs);
   } : function (componentName) {
     return firstLower(componentName, componentNs);
@@ -68,6 +67,16 @@ function getClassName(subNs, defaultNamespace = namespace) {
       : `${firstUpperCase(componentName)}`;
   };
 
+  className.install = installComponent;
+
+  className.create = (target, src) => {
+    [target, src] = isString(target) ? [src, target] : [target, src];
+    target.install = Vue => installComponent(Vue, target);
+    target.name = thisName(src);
+    return target;
+  };
+
+  className.thisName = thisName;
   className.next = function (nextSubNs) {
     return getClassName(nextSubNs, nowClassNs);
   };

@@ -49,64 +49,39 @@ const Default = {
   },
 };
 
-function render(h, {data, props = READONLY, injections: {$providedProps = READONLY} = READONLY}) {
-  const {class: classArgs} = data, {viewonly, value, color, size} = props;
-  const className = `${clsInput} ${inputColorCreator(color)} ${size ? factory(size) : ''}`;
-  const computedClass = inputBooleanCreator(props, $providedProps);
+export const ImInput = factory.create({
+  functional: true, props,
+  render(h, {data, props = READONLY, injections: {$providedProps = READONLY} = READONLY}) {
+    const {class: classArgs} = data, {viewonly, value, color, size} = props;
+    const className = `${clsInput} ${inputColorCreator(color)} ${size ? factory(size) : ''}`;
+    const computedClass = inputBooleanCreator(props, $providedProps);
 
-  const settings = {
-    ...data, props,
-    class: classArgs ? [classArgs, className, ...computedClass] : [className, ...computedClass],
-  };
-  if (viewonly) {
-    return h(Viewonly, settings, [value]);
-  } else {
-    return h(Default, settings);
-  }
-}
-
-export const ImInput = {
-  install(Vue) {
-    factory.install(Vue, ImInput);
+    const settings = {
+      ...data, props,
+      class: classArgs ? [classArgs, className, ...computedClass] : [className, ...computedClass],
+    };
+    if (viewonly) {
+      return h(Viewonly, settings, [value]);
+    } else {
+      return h(Default, settings);
+    }
   },
-  name: factory.thisName(),
-  functional: true,
-  props,
-  render,
-};
+});
 
-export const ImInputClear = {
-  install(Vue) {
-    factory.install(Vue, ImInputClear);
-  },
-  name: factory.thisName('clearable'),
+export const ImInputClearable = factory.create('clearable', {
   mixins: [inputExpandMixin],
   props: {
     clearable: typeBoolean(true),
   },
-  computed: {
-    currentValue: {
-      get(vm) {
-        return vm.cacheValue;
-      },
-      set(value) {
-        value = this.computeOriginalValue(value);
-        this.cacheValue = value;
-      },
-    },
-  },
   render(h, context = this) {
-    const {clearable, $listeners, $props} = context;
-    const onInput = convertListeners([context.onInput]);
-
+    const {clearable, $listeners, $props, onInput, currentValue: value} = context;
     return h('div', {class: clsClear}, [
       h(ImInput, {
-        props: {...$props, value: context.currentValue},
+        props: {...$props, value},
         on: {...$listeners, input: onInput},
       }),
       clearable ? h('div', {class: clsClearIcon}, [
         h(ImWinClose, {
-          props: {rightMiddle: true},
           on: {
             click() {
               onInput(null);
@@ -119,44 +94,6 @@ export const ImInputClear = {
   methods: {
     onInput(value) {
       this.currentValue = value;
-      const {$listeners: {input = noneInput} = READONLY} = this;
-      input(value);
     },
   },
-};
-
-export const ImInputClearable = ImInputClear;
-
-export const ImInputClearable0 = {
-  install(Vue) {
-    factory.install(Vue, ImInputClearable0);
-  },
-  name: factory.thisName('clearable'),
-  functional: true,
-  props: {
-    ...props,
-    clearable: typeBoolean(true),
-  },
-  render(h, context) {
-    const {data, props: {clearable}, parent} = context;
-    const {class: clazz, style, on = {}} = data;
-    const {input = noneInput} = on;
-    delete context.data.class;
-    delete context.data.style;
-
-    const currInput = convertListeners(input, parent);
-    return h('div', {class: [clsClear, clazz], style}, [
-      render(h, context),
-      clearable ? h('div', {class: clsClearIcon}, [
-        h(ImWinClose, {
-          props: {rightMiddle: true},
-          on: {
-            click() {
-              currInput(null);
-            },
-          },
-        }),
-      ]) : null,
-    ]);
-  },
-};
+});

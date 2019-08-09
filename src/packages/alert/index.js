@@ -1,7 +1,7 @@
 import {nameFactory, READONLY, runtimeError} from '../../utils';
 import {typeBoolean, typeString} from '../../utils/props';
 import {ImTransition} from '../transition';
-import {autoColorValid, autoSizeValid, colorValid} from '../../utils/validator';
+import {autoColorValid, autoSizeValid} from '../../utils/validator';
 import {addDynamicCSS, cssBooleanCreator} from '../../utils/style';
 import {rgbaColor} from '../../utils/color';
 import {ImWinClose} from '../win-ctrl';
@@ -13,8 +13,7 @@ const subNs = 'alert', EMPTY = [],
 const creator = nameFactory(subNs),
   clsAlert = creator(),
   clsClose = creator('close'),
-  clsTitle = creator('title'),
-  clsCloseIcon = creator('close-icon');
+  clsTitle = creator('title');
 const alertColorCreator = addDynamicCSS(subNs, (className, color, namespaced) =>
   `.${namespaced}.${className}{color:${color};background:${rgbaColor(color, 0.1)};}`);
 const alertBooleanCreator = cssBooleanCreator((name, val) => {
@@ -22,14 +21,10 @@ const alertBooleanCreator = cssBooleanCreator((name, val) => {
 }, 'dashed', 'radius');
 
 function noneEvent() {
-  runtimeError(`请使用 v-model 或 .sync 绑定 ${visible}.`, 'log');
+  runtimeError(`请使用 v-model 或 .sync 绑定 ${visible}.`, 'warn');
 }
 
-export const ImAlert = {
-  install(Vue) {
-    creator.install(Vue, ImAlert);
-  },
-  name: creator.thisName(),
+export const ImAlert = creator.create({
   functional: true,
   model: {
     prop: visible,
@@ -86,13 +81,11 @@ export const ImAlert = {
                 });
               },
             },
-          }, close.length ? close : [
-            h(ImWinClose, {props: {rightMiddle: true}}),
-          ]) : '',
+          }, close.length ? close : [h(ImWinClose, READONLY)]) : '',
         ]),
       ]);
     }
   },
-};
+});
 
 export default ImAlert;

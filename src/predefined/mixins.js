@@ -20,6 +20,11 @@ export const inputExpandMixin = {
       },
     },
   },
+  watch: {
+    value(val) {
+      this.cacheValue = val;
+    },
+  },
   methods: {
     computeInitialValue: v => v,
     computeOriginalValue: v => v,
@@ -32,11 +37,12 @@ defineValueOf(inputExpandMixin, 'fromVm', function (vm) {
     viewonly, readonly, disabled, ghost, dashed,
     autofocus, inputClass,
   } = vm, data = {
-    attrs: {placeholder}, props: {
+    props: {
       color, size, viewonly, block: true,
       ghost, dashed, radius, autofocus,
+      placeholder, value: vm.currentValue,
     },
-    domProps: {value: vm.currentValue},
+    attrs: {},
   };
   if (inputClass) {
     data.class = inputClass;

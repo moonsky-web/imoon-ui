@@ -3,7 +3,7 @@
     <div style="height: 660px;">
       <ImAutoComplete
         v-show="showAutoComplete" :readonly="readonly"
-        :options="options" valueKey="name"
+        :options="options" valueKey="name" v-model="modelValue"
         placeholder="请输入内容" :limit="limit"/>
       <div style="height: 200px;"></div>
       <ImAutoComplete
@@ -50,6 +50,7 @@
         readonly: false,
         showAutoComplete: true,
         limit: 10,
+        modelValue: '123',
         options: [
           {name: '111111111111111111111111111111'},
           {name: 'asdfas'},
