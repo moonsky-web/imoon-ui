@@ -1,6 +1,12 @@
 import {eachObject} from './index';
 import {typeOf} from './predicates';
 
+export function convertListeners(listeners, thisValue) {
+  return Array.isArray(listeners) ? (...args) => {
+    listeners.forEach(fn => fn.apply(thisValue, args));
+  } : listeners;
+}
+
 /**
  * 拆分父组件的 attrs，根据子组件 propsObj 描述拆分为 props 和 attrs
  * @param $attrs

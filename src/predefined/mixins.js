@@ -1,15 +1,8 @@
-import {inputBaseProps} from './props';
-import {typeBoolean} from '../utils/props';
+import {inputBaseProps as props} from './props';
 import {defineValueOf} from '../utils/core';
 
 export const inputExpandMixin = {
-  props: {
-    ...inputBaseProps,
-    placeholder: String,
-    readonly: typeBoolean(),
-    disabled: typeBoolean(),
-    inputClass: [String, Object, Array],
-  },
+  props,
   data() {
     return {
       cacheValue: this.computeInitialValue(this.value),

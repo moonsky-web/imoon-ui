@@ -2,7 +2,9 @@ import {autoColorValid, autoSizeValid} from '../utils/validator';
 import {typeBoolean} from '../utils/props';
 
 export const inputBaseProps = {
-  value: {},
+  value: {default: null},
+  placeholder: String,
+  inputClass: [String, Object, Array],
   color: {
     type: String,
     validator: autoColorValid,
@@ -12,6 +14,8 @@ export const inputBaseProps = {
     validator: autoSizeValid,
   },
   viewonly: typeBoolean(),
+  readonly: typeBoolean(),
+  disabled: typeBoolean(),
   block: typeBoolean(),
   ghost: typeBoolean(),
   dashed: typeBoolean(),

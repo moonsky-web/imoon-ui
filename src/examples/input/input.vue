@@ -1,9 +1,10 @@
 <template>
   <div>
-    <imInput/>
-    <imInput color="primary"/>
-    <imInput color="#df83ac"/>
-    <ImInputClearable v-model="clearableValue" @blur="onClearableBlur()"/>
+    <imInput v-model="defaultValue"/>
+    <imInput color="primary" v-model="defaultValue"/>
+    <imInput color="#df83ac" :value="defaultValue"/>
+    <imInput color="#df83ac" :value="clearableValue"/>
+    <ImInputClearable placeholder="placeholder" v-model="clearableValue" @blur="onClearableBlur()"/>
   </div>
 </template>
 
@@ -18,11 +19,15 @@
     data() {
       return {
         clearableValue: 12,
+        defaultValue: 123,
       };
     },
     methods: {
       onClearableBlur() {
         console.log(this.clearableValue);
+        setTimeout(() => {
+          console.log(this.clearableValue);
+        }, 1000);
       },
     },
   };
