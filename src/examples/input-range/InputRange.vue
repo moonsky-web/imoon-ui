@@ -11,6 +11,7 @@
         @blur="onBlur"
         placeholder="placeholder"
         v-model="currentValue"/>
+      <ImInput></ImInput>
     </div>
   </div>
 </template>

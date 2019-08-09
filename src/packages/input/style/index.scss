@@ -1,3 +1,22 @@
+// size setting
+@mixin size-of-input($name: $default-size-name) {
+  $setting: map_get($size-map, $name);
+  font-size: map_get($setting, 'fontSize');
+  @include set-liner-height(map_get($setting, $height), 1px);
+  //@include set-padding-h(map_get($setting, 'inputPadding'));
+}
+
+@mixin sizes() {
+  @include size-of-input();
+  @each $name in map_keys($size-map) {
+    @if ($name != $default-size-name) {
+      &.#{$ns-input}-#{$name} {
+        @include size-of-input($name);
+      }
+    }
+  }
+}
+
 .#{$ns-input} {
   padding: 0 1em;
   border: 1px solid #aaa;
@@ -45,22 +64,7 @@
     }
   }
 
-  // size setting
-  @mixin size-of-input($name: $default-size-name) {
-    $setting: map_get($size-map, $name);
-    font-size: map_get($setting, 'fontSize');
-    @include set-liner-height(map_get($setting, $height), 1px);
-    //@include set-padding-h(map_get($setting, 'inputPadding'));
-  }
-
-  @include size-of-input();
-  @each $name in map_keys($size-map) {
-    @if ($name != $default-size-name) {
-      &.#{$ns-input}-#{$name} {
-        @include size-of-input($name);
-      }
-    }
-  }
+  @include sizes();
 
   // color setting
   @mixin color-of-input($name: null) {
@@ -111,6 +115,9 @@
 .#{$ns-input}-clearable {
   position: relative;
   display: inline-block;
+  width: 14em;
+  @include set-align-middle();
+  @include sizes();
 
   & > .#{$ns-input}-clear-icon {
     position: absolute;

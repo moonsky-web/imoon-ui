@@ -9,6 +9,7 @@
 </template>
 
 <script>
+  /* eslint-disable */
   import {ImInputNumber} from '../../packages/input-number';
   import {ImButton} from '../../packages/button';
 

@@ -223,9 +223,7 @@ export const ImAutoComplete = {
       this.onBlur();
     },
     onInput(value) {
-      if (!this.visible) {
-        this.visible = true;
-      }
+      this.visible = true;
       this.currentValue = value;
     },
   },
