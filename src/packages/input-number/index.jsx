@@ -67,20 +67,17 @@ export const ImInputNumber = {
           ref="input"
           {...inputData}
           on-input={context.onInput}
-          on-blur={context.onBlur}
-        />
+          on-blur={context.onBlur}/>
         <div class={clsBox}>
           <button
             class={[clsBtn, clsPlus]}
             onClick={context.onStepUp}
-            color={color}
-            text={true}>+
+            color={color}>+
           </button>
           <button
             class={[clsBtn, clsMinus]}
             onClick={context.onStepDown}
-            color={color}
-            text={true}>-
+            color={color}>-
           </button>
         </div>
       </div>
