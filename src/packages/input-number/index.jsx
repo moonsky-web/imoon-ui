@@ -2,14 +2,17 @@ import {nameFactory, runtimeError} from '../../utils';
 import {inputExpandMixin} from '../../predefined/mixins';
 import {isDef} from '../../utils/predicates';
 import {ImButton} from '../button';
-import {ImInput} from '../input';
+import {ImInputClearable} from '../input';
 
 const subNs = 'InputNumber';
 const factory = nameFactory(subNs), name = factory.thisName();
 
 const clsNumber = factory();
-const clsBtn = factory('btn');
-const clsBox = factory('box');
+const clsBtn = factory('button'),
+  clsPlus = factory('plus'),
+  clsMinus = factory('minus'),
+  clsDivider = factory('divider'),
+  clsBox = factory('box');
 
 function otherPrecision(value, precision) {
   return value * Math.pow(10, precision) % 1 !== 0;
@@ -60,21 +63,25 @@ export const ImInputNumber = {
     inputData.attrs.min = context.min;
     return (
       <div class={clsNumber}>
-        <ImInput
+        <ImInputClearable
           ref="input"
           {...inputData}
           on-input={context.onInput}
           on-blur={context.onBlur}
         />
         <div class={clsBox}>
-          <ImButton
-            onClick={context.onStepDown}
-            color={color}
-            text={true}>-</ImButton>
-          <ImButton
+          <button
+            class={[clsBtn, clsPlus]}
             onClick={context.onStepUp}
             color={color}
-            text={true}>+</ImButton>
+            text={true}>+
+          </button>
+          <button
+            class={[clsBtn, clsMinus]}
+            onClick={context.onStepDown}
+            color={color}
+            text={true}>-
+          </button>
         </div>
       </div>
     );
@@ -101,11 +108,15 @@ export const ImInputNumber = {
       }
       return value;
     },
+    getInput() {
+      const {$refs: {input: {$el}}} = this;
+      return $el;
+    },
     onStepUp() {
-      this.$refs.input.stepUp();
+      this.getInput().stepUp();
     },
     onStepDown() {
-      this.$refs.input.stepDown();
+      this.getInput().stepDown();
     },
     onBlur() {
       const {min, max, currentValue: val} = this;

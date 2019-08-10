@@ -87,10 +87,6 @@ export const ImAutoComplete = {
     visibility(vm) {
       return vm.visible;
     },
-    editable(vm) {
-      const {viewonly, readonly, disabled} = vm;
-      return !(viewonly || readonly || disabled);
-    },
     getLimit() {
       const {options, limit} = this;
       return limit < 1 ? options.length : limit;
@@ -174,12 +170,12 @@ export const ImAutoComplete = {
       this.currentIndex = value;
     },
     onFocus() {
-      if (this.editable) {
+      if (this.isEditable) {
         this.visible = true;
       }
     },
     onBlur() {
-      if (this.editable) {
+      if (this.isEditable) {
         this.visible = false;
         this.resetIndex();
       }

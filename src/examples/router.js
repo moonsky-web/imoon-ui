@@ -45,6 +45,11 @@ export const router = new Router({
       component: () => import('./input/input.vue'),
     },
     {
+      path: '/input-clearable',
+      name: 'InputClearable',
+      component: () => import('./input/InputClearable.vue'),
+    },
+    {
       path: '/inputs',
       name: 'Inputs Demo',
       component: () => import('./input/inputDemo.vue'),

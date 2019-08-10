@@ -11,11 +11,12 @@ const subNs = 'input';
 const factory = nameFactory(subNs),
   clsInput = factory(),
   clsView = factory('viewonly'),
+  clsBlock = factory('block'),
   clsClear = factory('clearable'),
   clsClearIcon = factory('clearIcon');
 const inputColorCreator = addDynamicCSS(subNs, inputColorRegister);
 const inputBooleanCreator = cssBooleanCreator((name, val) => {
-  return val ? factory(name) : '';
+  return val ? factory(name) : null;
 }, 'block', 'ghost', 'dashed', 'radius');
 
 function noneInput() {
@@ -25,16 +26,23 @@ const Default = {
   functional: true,
   name: factory.thisName('Default'),
   render(h, {data, parent}) {
-    const {on = READONLY, props: {value, placeholder} = READONLY} = data;
+    const {on = READONLY, attrs = {}, props: {value, placeholder, readonly, disabled} = READONLY} = data;
     const {input = noneInput} = on;
     const onInput = convertListeners(input, parent);
+    const domProps = {value, placeholder};
+    if (readonly) {
+      attrs.readonly = 'readonly';
+    }
+    if (disabled) {
+      attrs.disabled = 'disabled';
+    }
     return h('input', {
       ...data, on: {
         ...on, input: ({target: {value}}) => {
           onInput(value);
         },
       },
-      domProps: {value, placeholder},
+      domProps, attrs,
     });
   },
 }, Viewonly = {
@@ -69,18 +77,20 @@ export const ImInput = factory.create({
 });
 
 export const ImInputClearable = factory.create('clearable', {
+  inheritAttrs: false,
   mixins: [inputExpandMixin],
   props: {
     clearable: typeBoolean(true),
   },
   render(h, context = this) {
-    const {clearable, $listeners, $props, onInput, currentValue: value} = context;
-    return h('div', {class: clsClear}, [
+    const {clearable, isEditable, $listeners, $props, $attrs, onInput, currentValue: value} = context;
+    let {size} = $props;
+    return h('div', {class: [clsClear, {[clsBlock]: $props.block}, size ? factory(size) : null]}, [
       h(ImInput, {
-        props: {...$props, value},
+        props: {...$props, value}, attrs: $attrs,
         on: {...$listeners, input: onInput},
       }),
-      clearable ? h('div', {class: clsClearIcon}, [
+      clearable && isEditable ? h('div', {class: clsClearIcon}, [
         h(ImWinClose, {
           on: {
             click() {

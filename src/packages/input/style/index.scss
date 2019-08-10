@@ -18,6 +18,7 @@
 }
 
 .#{$ns-input} {
+  position: relative;
   padding: 0 1em;
   border: 1px solid #aaa;
   width: 14em;
@@ -52,6 +53,10 @@
 
   & + #{&} {
     margin-left: 8px;
+  }
+
+  &:focus {
+    z-index: 1;
   }
 
   &.#{$ns-input}-block {
@@ -119,6 +124,11 @@
   @include set-align-middle();
   @include sizes();
 
+  &.#{$ns-input}-block {
+    @include set-display();
+    width: 100%;
+  }
+
   & > .#{$ns-input}-clear-icon {
     position: absolute;
     display: none;
@@ -130,6 +140,10 @@
 
   &:hover > .#{$ns-input}-clear-icon {
     display: block;
+  }
+
+  &:focus-within {
+    z-index: 1;
   }
 
   & > .#{$ns-input} {

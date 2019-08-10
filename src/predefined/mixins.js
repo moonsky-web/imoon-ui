@@ -19,6 +19,10 @@ export const inputExpandMixin = {
         this.$emit('input', value);
       },
     },
+    isEditable() {
+      const {viewonly, readonly, disabled} = this;
+      return !(viewonly || readonly || disabled);
+    },
   },
   watch: {
     value(val) {
