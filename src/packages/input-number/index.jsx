@@ -105,15 +105,14 @@ export const ImInputNumber = {
       }
       return value;
     },
-    getInput() {
-      const {$refs: {input: {$el}}} = this;
-      return $el;
+    getRefInput() {
+      return this.$refs.input.getRefInput();
     },
     onStepUp() {
-      this.getInput().stepUp();
+      this.getRefInput().stepUp();
     },
     onStepDown() {
-      this.getInput().stepDown();
+      this.getRefInput().stepDown();
     },
     onBlur() {
       const {min, max, currentValue: val} = this;

@@ -89,6 +89,7 @@ export const ImInputClearable = factory.create('clearable', {
       h(ImInput, {
         props: {...$props, value}, attrs: $attrs,
         on: {...$listeners, input: onInput},
+        ref: 'input',
       }),
       clearable && isEditable ? h('div', {class: clsClearIcon}, [
         h(ImWinClose, {
@@ -102,6 +103,9 @@ export const ImInputClearable = factory.create('clearable', {
     ]);
   },
   methods: {
+    getRefInput() {
+      return this.$refs.input;
+    },
     onInput(value) {
       this.currentValue = value;
     },
