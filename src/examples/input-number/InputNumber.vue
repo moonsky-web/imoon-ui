@@ -13,7 +13,6 @@
   import {ImInputNumber} from '../../packages/input-number';
   import {ImButton} from '../../packages/button';
 
-  console.log(ImInputNumber);
   export const ImInputNumberDemo = {
     name: 'InputNumber',
     components: {ImInputNumber, ImButton},

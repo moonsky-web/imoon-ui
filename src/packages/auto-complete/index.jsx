@@ -107,6 +107,8 @@ export const ImAutoComplete = {
     },
   },
   render(h, context = this) {
+    let {block} = context;
+
     function optionMapper(option, index) {
       return (
         <li
@@ -123,7 +125,7 @@ export const ImAutoComplete = {
     const optionsMeta = context.getOptionsMeta();
     data.props.clearable = context.clearable;
     return (
-      <div class={clsAuto}>
+      <div class={[clsAuto, {'display-block': block}]}>
         <ImInputClearable
           ref="input" {...data}
           on-input={context.onInput}

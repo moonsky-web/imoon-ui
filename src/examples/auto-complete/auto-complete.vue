@@ -18,6 +18,17 @@
         :options="options" valueKey="name"
         placeholder="请输入内容" :limit="limit"/>
     </div>
+    <div style="padding: 15px 0;">
+      <ImAutoComplete
+        block
+        color="danger"
+        :readonly="readonly"
+        :options="options"
+        valueKey="name"
+        placeholder="请输入内容"
+        :limit="15"
+      ></ImAutoComplete>
+    </div>
     <div style="display: flex;">
       <div style="width: 800px;">
         <ImButton @click="readonly=!readonly">切换 Readonly</ImButton>

@@ -48,18 +48,15 @@ export function toLower(obj) {
   return toString(obj).toLowerCase();
 }
 
-const CHARS_REGEXP = /([:\-_]+(.))/g;
-const MOZ_REGEXP = /^moz([A-Z])/;
-
 /**
  * 驼峰命名
  * @param name
  * @returns {*}
  */
 export function camelcase(name) {
-  return name.replace(CHARS_REGEXP, function (undef, sep, letter, offset) {
+  return name.replace(/([:\-_]+(.))/g, function (undef, sep, letter, offset) {
     return offset ? letter.toUpperCase() : letter;
-  }).replace(MOZ_REGEXP, 'Moz$1');
+  }).replace(/^moz([A-Z])/, 'Moz$1');
 }
 
 /**

@@ -17,11 +17,13 @@
   }
 }
 
+$ns-input-width: 14em;
+
 .#{$ns-input} {
   position: relative;
   padding: 0 1em;
   border: 1px solid #aaa;
-  width: 14em;
+  width: $ns-input-width;
   @include set-display(inline-block);
   @include set-transition-duration();
   @include set-align-middle();
@@ -120,7 +122,7 @@
 .#{$ns-input}-clearable {
   position: relative;
   display: inline-block;
-  width: 14em;
+  width: $ns-input-width;
   @include set-align-middle();
   @include sizes();
 
@@ -133,7 +135,7 @@
     position: absolute;
     display: none;
     top: 50%;
-    right: 1.5em;
+    right: 1.8em;
     transform: translate(-50%);
     z-index: 1;
   }

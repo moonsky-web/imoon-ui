@@ -83,7 +83,7 @@ export const ImInputClearable = factory.create('clearable', {
     clearable: typeBoolean(true),
   },
   render(h, context = this) {
-    const {clearable, isEditable, $listeners, $props, $attrs, onInput, currentValue: value} = context;
+    let {clearable, isEditable, $listeners, $props, $attrs, onInput, currentValue: value} = context;
     let {size} = $props;
     return h('div', {class: [clsClear, {[clsBlock]: $props.block}, size ? factory(size) : null]}, [
       h(ImInput, {

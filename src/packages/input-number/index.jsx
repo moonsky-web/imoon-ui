@@ -1,8 +1,8 @@
 import {nameFactory, runtimeError} from '../../utils';
 import {inputExpandMixin} from '../../predefined/mixins';
 import {isDef} from '../../utils/predicates';
-import {ImButton} from '../button';
 import {ImInputClearable} from '../input';
+import {proxyDefaultValue} from '../../utils/proxy';
 
 const subNs = 'InputNumber';
 const factory = nameFactory(subNs), name = factory.thisName();
@@ -14,18 +14,18 @@ const clsBtn = factory('button'),
   clsDivider = factory('divider'),
   clsBox = factory('box');
 
-function otherPrecision(value, precision) {
-  return value * Math.pow(10, precision) % 1 !== 0;
+function getPrecisionStep(precision) {
+  return 1 / (Math.pow(10, precision));
 }
 
-const precisions = [
+const precisions = proxyDefaultValue([
   v => v % 1 !== 0,
   v => v * 10 % 1 !== 0,
   v => v * 100 % 1 !== 0,
   v => v * 1000 % 1 !== 0,
   v => v * 10000 % 1 !== 0,
   v => v * 100000 % 1 !== 0,
-];
+], (value, precision) => value * Math.pow(10, precision) % 1 !== 0);
 
 export const ImInputNumber = {
   install(Vue) {
@@ -46,7 +46,7 @@ export const ImInputNumber = {
   computed: {
     innerStep() {
       const {step} = this;
-      return isDef(step) ? step : this.getStep(this.precision);
+      return isDef(step) ? step : getPrecisionStep(this.precision);
     },
   },
   data() {
@@ -55,7 +55,7 @@ export const ImInputNumber = {
     };
   },
   render(h, context = this) {
-    const {color} = context;
+    const {color, onInput, onBlur, onStepUp, onStepDown} = context;
     const inputData = inputExpandMixin.fromVm(context);
     inputData.attrs.type = 'number';
     inputData.attrs.step = context.innerStep;
@@ -66,28 +66,19 @@ export const ImInputNumber = {
         <ImInputClearable
           ref="input"
           {...inputData}
-          on-input={context.onInput}
-          on-blur={context.onBlur}/>
-        <div class={clsBox}>
-          <button
-            class={[clsBtn, clsPlus]}
-            onClick={context.onStepUp}
-            color={color}>+
-          </button>
-          <button
-            class={[clsBtn, clsMinus]}
-            onClick={context.onStepDown}
-            color={color}>-
-          </button>
-        </div>
+          on-input={onInput}
+          on-blur={onBlur}/>
+        <div
+          class={[clsBtn, clsPlus]}
+          onClick={onStepUp}/>
+        <div
+          class={[clsBtn, clsMinus]}
+          onClick={onStepDown}/>
       </div>
     );
   },
   methods: {
-    getStep(precision) {
-      return 1 / (Math.pow(10, precision));
-    },
-    computeInitialValue(value) {
+    transformValue(value) {
       let error = '';
       const {max, min, precision} = this;
       if (isDef(max) && value > max) {
@@ -96,8 +87,8 @@ export const ImInputNumber = {
       if (isDef(min) && value < min) {
         error += ` Value must greater than the minimum (prop of min): ${min}, but got: ${value}.`;
       }
-      if (precision > 0 && (precisions[precision] || otherPrecision)(value, precision)) {
-        error += ` The precision: ${this.getStep(precision)}, but got: ${value}.`;
+      if (precision > 0 && precisions[precision](value, precision)) {
+        error += ` The precision: ${getPrecisionStep(precision)}, but got: ${value}.`;
       }
       if (error) {
         runtimeError(error);
@@ -109,10 +100,14 @@ export const ImInputNumber = {
       return this.$refs.input.getRefInput();
     },
     onStepUp() {
-      this.getRefInput().stepUp();
+      let input = this.getRefInput();
+      input.stepUp();
+      this.onInput(input.value);
     },
     onStepDown() {
-      this.getRefInput().stepDown();
+      let input = this.getRefInput();
+      input.stepDown();
+      this.onInput(input.value);
     },
     onBlur() {
       const {min, max, currentValue: val} = this;

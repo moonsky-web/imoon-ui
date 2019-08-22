@@ -53,6 +53,51 @@
     return {target, inner, outer};
   }
 
+  const targetObj = {
+    id: null,
+    name: 'benshaoye',
+  };
+
+  const currObj = {...targetObj}, defineObj = {};
+  for (let key in currObj) {
+    Object.defineProperty(defineObj, key, {
+      set(value) {
+        currObj[key] = value;
+      },
+      get() {
+        return currObj[key];
+      },
+    });
+  }
+
+  const proxyObj = new Proxy(targetObj, {
+    get(target, key) {
+      return target[key];
+    },
+  });
+
+  for (let i = 0; i < 10000; i++) {
+    let now0 = targetObj.id;
+    let now2 = defineObj.id;
+    let now1 = proxyObj.id;
+  }
+  const count = 10;
+  // console.time('proxyObj');
+  for (let i = 0; i < count; i++) {
+    let now = proxyObj.id;
+  }
+  // console.timeEnd('proxyObj');
+  // console.time('targetObj');
+  for (let i = 0; i < count; i++) {
+    let now = targetObj.id;
+  }
+  // console.timeEnd('targetObj');
+  // console.time('defineObj');
+  for (let i = 0; i < count; i++) {
+    let now = defineObj.id;
+  }
+  // console.timeEnd('defineObj');
+
   export const Home = {
     name: 'ImHome',
   };

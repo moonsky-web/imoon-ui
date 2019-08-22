@@ -5,7 +5,7 @@ export const inputExpandMixin = {
   props,
   data() {
     return {
-      cacheValue: this.computeInitialValue(this.value),
+      cacheValue: null,
     };
   },
   computed: {
@@ -14,7 +14,7 @@ export const inputExpandMixin = {
         return vm.cacheValue;
       },
       set(value) {
-        value = this.computeOriginalValue(value);
+        value = this.transformValue(value);
         this.cacheValue = value;
         this.$emit('input', value);
       },
@@ -25,13 +25,17 @@ export const inputExpandMixin = {
     },
   },
   watch: {
-    value(val) {
-      this.cacheValue = val;
+    value: {
+      handler(val) {
+        if (this.cacheValue !== val) {
+          this.cacheValue = this.transformValue(val);
+        }
+      },
+      immediate: true,
     },
   },
   methods: {
-    computeInitialValue: v => v,
-    computeOriginalValue: v => v,
+    transformValue: v => v,
   },
 };
 
