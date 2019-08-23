@@ -10,9 +10,7 @@ const factory = nameFactory(subNs), name = factory.thisName();
 const clsNumber = factory();
 const clsBtn = factory('button'),
   clsPlus = factory('plus'),
-  clsMinus = factory('minus'),
-  clsDivider = factory('divider'),
-  clsBox = factory('box');
+  clsMinus = factory('minus');
 
 function getPrecisionStep(precision) {
   return 1 / (Math.pow(10, precision));

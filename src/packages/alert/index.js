@@ -20,10 +20,6 @@ const alertBooleanCreator = cssBooleanCreator((name, val) => {
   return val ? creator(name) : '';
 }, 'dashed', 'radius');
 
-function noneEvent() {
-  runtimeError(`请使用 v-model 或 .sync 绑定 ${visible}.`, 'warn');
-}
-
 export const ImAlert = creator.create({
   functional: true,
   model: {
@@ -32,7 +28,6 @@ export const ImAlert = creator.create({
   },
   props: {
     [visible]: typeBoolean(true),
-    closeable: typeBoolean(true),
     title: typeString(),
     icon: typeString(),
     color: {
@@ -52,8 +47,8 @@ export const ImAlert = creator.create({
   }) {
     const {visible} = props;
     if (visible) {
-      const {[updateVisible]: updateSync = noneEvent, ...on} = listeners;
-      const {closeable, title, color, size} = props, {class: classArgs} = data;
+      const {[updateVisible]: updateSync, ...on} = listeners;
+      const {title, color, size} = props, {class: classArgs} = data;
 
       const className = `${clsAlert} ${alertColorCreator(color)} ${size ? creator(size) : ''}`;
       const computedClass = alertBooleanCreator(props, $providedProps);
@@ -70,7 +65,7 @@ export const ImAlert = creator.create({
             class: clsTitle,
           }, [title]) : ''),
           ...Object.values(rest).flat(),
-          closeable ? h('div', {
+          updateSync ? h('div', {
             class: clsClose,
             on: {
               click: typeof (updateSync) === 'function' ? function () {
@@ -81,7 +76,7 @@ export const ImAlert = creator.create({
                 });
               },
             },
-          }, close.length ? close : [h(ImWinClose, READONLY)]) : '',
+          }, close.length ? close : [h(ImWinClose, READONLY)]) : null,
         ]),
       ]);
     }

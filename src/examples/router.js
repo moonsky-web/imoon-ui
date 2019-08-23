@@ -2,6 +2,9 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './Home.vue';
 
+import {AlertRoutes} from './alert/router';
+import {ButtonRoutes} from './button/router';
+
 Vue.use(Router);
 
 export const router = new Router({
@@ -11,6 +14,8 @@ export const router = new Router({
       name: 'home',
       component: Home,
     },
+    ...AlertRoutes,
+    ...ButtonRoutes,
     {
       path: '/icon',
       name: 'Icon',
@@ -20,44 +25,47 @@ export const router = new Router({
       component: () => import(/* webpackChunkName: "about" */ './icon/iconDemo.vue'),
     },
     {
-      path: '/alert',
-      name: 'Alert',
-      component: () => import('./alert/alert.vue'),
-    },
-    {
-      path: '/alerts',
-      name: 'Alerts Demo',
-      component: () => import('./alert/alert-demo.vue'),
-    },
-    {
-      path: '/button',
-      name: 'Button',
-      component: () => import('./button/button.vue'),
-    },
-    {
-      path: '/buttons',
-      name: 'Buttons Demo',
-      component: () => import('./button/button-demo.vue'),
-    },
-    {
       path: '/input',
       name: 'Input',
       component: () => import('./input/input.vue'),
+      meta: {groupId: '[Input]'},
     },
     {
       path: '/input-clearable',
       name: 'InputClearable',
       component: () => import('./input/InputClearable.vue'),
+      meta: {groupId: '[Input]'},
     },
     {
       path: '/inputs',
       name: 'Inputs Demo',
       component: () => import('./input/inputDemo.vue'),
+      meta: {groupId: '[Input]'},
     },
     {
       path: '/input-item',
       name: 'InputItem Demo',
       component: () => import('./input-item/input-item-demo.vue'),
+      meta: {groupId: '[Input]'},
+    },
+    {
+      path: '/auto-complete',
+      name: 'AutoComplete',
+      component: () => import('./auto-complete/auto-complete.vue'),
+      meta: {groupId: '[Input]'},
+    },
+    {
+      path: '/input-number',
+      name: 'InputNumber',
+      component: () => import('./input-number/InputNumber.vue'),
+      meta: {groupId: '[Input]'},
+    },
+
+    {
+      path: '/input-range',
+      name: 'InputRange',
+      component: () => import('./input-range/InputRange.vue'),
+      meta: {groupId: '[Input]'},
     },
     {
       path: '/descriptor',
@@ -73,21 +81,6 @@ export const router = new Router({
       path: '/loading',
       name: 'Loading Demo',
       component: () => import('./loading/loading.vue'),
-    },
-    {
-      path: '/auto-complete',
-      name: 'AutoComplete',
-      component: () => import('./auto-complete/auto-complete.vue'),
-    },
-    {
-      path: '/input-number',
-      name: 'InputNumber',
-      component: () => import('./input-number/InputNumber.vue'),
-    },
-    {
-      path: '/input-range',
-      name: 'InputRange',
-      component: () => import('./input-range/InputRange.vue'),
     },
   ],
 });

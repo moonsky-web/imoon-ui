@@ -1,8 +1,21 @@
 import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
+import {eachArray} from '../utils';
+/*
+ * 自定义全局组件
+ */
+import {DemoContainer} from './DemoContainer';
+import {DemoItem} from './DemoItem';
 
 import '../index.scss';
+
+eachArray([
+  DemoContainer,
+  DemoItem,
+], component => {
+  Vue.component(component.name, component);
+});
 
 Vue.config.productionTip = false;
 

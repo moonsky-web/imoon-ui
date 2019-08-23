@@ -33,11 +33,12 @@ export const ImButton = {
     outline: typeNullBoolean(),
     radius: typeNullBoolean(),
     to: typeString(),
+    disabled: typeBoolean(),
   },
   render(h, {
     props, data, children, injections: {$providedProps = readonly} = readonly,
   }) {
-    const {class: cls, attrs = {}} = data, {color, size, text, to} = props;
+    const {class: cls, attrs = {}} = data, {color, size, text, to, disabled} = props;
     const names = text ? [clsTxt] : btnBooleanCreator(props, $providedProps);
     const className = `${clsBtn} ${colorCreator(color)} ${size ? creator(size) : ''}`;
     const settings = {
@@ -47,6 +48,11 @@ export const ImButton = {
     if (to) {
       tag = 'a';
       attrs.href = to;
+    }
+    if (disabled) {
+      settings.on = null;
+      settings.nativeOn = null;
+      attrs.disabled = 'disabled';
     }
     return h(tag, settings, children);
   },

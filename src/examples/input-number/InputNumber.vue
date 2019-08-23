@@ -1,7 +1,7 @@
 <template>
   <div>
-    <ImInputNumber ref="num" v-model="currentValue" :precision="1" :max="3"></ImInputNumber>
-    <ImInputNumber color="danger" v-model="currentValue" :precision="1" :max="3"></ImInputNumber>
+    <ImInputNumber ref="num" v-model="currentValue" :precision="1" :min="0" :max="3"></ImInputNumber>
+    <ImInputNumber color="danger" v-model="currentValue" :precision="1" :min="0" :max="3"></ImInputNumber>
     <div style="width: 5vh; height: 5vh; background: #008B45"></div>
     <input type="number" max="10" step="0.2">
     <ImButton @click="stepUp">step up</ImButton>

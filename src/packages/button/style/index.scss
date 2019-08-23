@@ -37,7 +37,7 @@
     $setting: map_get($size-map, $name);
     font-size: map_get($setting, 'fontSize');
     @include set-padding-h(map_get($setting, 'btnPadding'));
-    @include set-liner-height(map_get($setting, $height));
+    @include set-liner-height(map_get($setting, $height), 1px);
     //@include set-liner-height(map_get($setting, $height), 1px);
   }
 
@@ -155,7 +155,8 @@
     border: 1px solid #aaa !important;
     color: #aaa !important;
     box-shadow: none !important;
-    @include set-mouse-style(false, not-allowed);
+    pointer-events: none !important;
+    //@include set-mouse-style(false, not-allowed);
   }
 
   &.#{$ns-btn}-auto {

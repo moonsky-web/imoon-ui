@@ -52,7 +52,7 @@
   @mixin color-of-alert($name: $default-color-name) {
     $color: map_get($color-map, $name);
     color: $color;
-    background: rgba($color, .01);
+    background: rgba($color, .1);
   }
 
   @include color-of-alert();

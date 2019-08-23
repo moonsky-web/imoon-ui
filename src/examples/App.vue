@@ -1,30 +1,96 @@
 <template>
   <div id="app">
-    <div :style="currentStyle" class="nav-header">
+    <div class="nav-header">
       <div class="nav-label">列表：</div>
-      <div class="nav-main">
-        <router-link
-          class="router-link"
-          v-for="(route) of currentRoutes"
-          :to="route.path"
+      <div
+        class="nav-main"
+        :key="routeList.id"
+        v-for="(routeList) of currentRoutes">
+        <h4>{{routeList.id}}</h4>
+        <div
+          v-for="route in routeList.routes"
           :key="route.path">
-          {{route.name}}
-        </router-link>
+          <router-link
+            class="router-link"
+            :to="route.path">
+            {{getLabel(route)}}
+          </router-link>
+          <div v-if="hasChildren(route)">
+            <router-link
+              v-for="child in route.children"
+              :key="child.path"
+              class="router-link padding-left-plus"
+              :to="child.path">
+              {{getLabel(child)}}
+            </router-link>
+          </div>
+        </div>
       </div>
     </div>
-    <router-view/>
+    <div class="keep-width-full" style="padding: 0 20px 40px;">
+      <router-view/>
+    </div>
   </div>
 </template>
 <script>
+  const NONE_OBJ = {}, EMPTY = [];
+
+  function excludeUnnamedRoutes(routes) {
+
+    const len = routes.length, arr = [];
+
+    for (let i = 0; i < len; i++) {
+      const route = routes[i];
+      if (route.name) {
+        arr.push({...route});
+      }
+    }
+
+    return arr;
+  }
+
   export default {
     name: 'App',
     computed: {
       currentRoutes() {
-        const {$router: {options: {routes = []} = {}} = {}} = this;
-        return routes;
+        const {$router: {options: {routes: sourceRoutes = []} = NONE_OBJ} = NONE_OBJ} = this;
+        const routes = excludeUnnamedRoutes(sourceRoutes);
+
+        const length = routes.length, routesObj = {};
+        for (let i = 1; i < length; i++) {
+          const route = routes[i], {meta: {groupId = '[Rest...]'} = NONE_OBJ} = route;
+          let grouped = routesObj[groupId];
+          if (!grouped) {
+            grouped = routesObj[groupId] = [];
+          }
+          grouped.push(route);
+        }
+        const keys = Object.keys(routesObj), len = keys.length, routesArr = [];
+        keys.sort();
+
+        for (let i = 0; i < len; i++) {
+          const id = keys[i], routes = routesObj[id],
+            arr = [], nowLen = routes.length;
+          for (let j = 0; j < nowLen; j++) {
+            let {children = EMPTY, ...rest} = routes[j];
+            arr.push({...rest, children: excludeUnnamedRoutes(children)});
+          }
+          routesArr.push({id, routes: arr});
+        }
+
+        // eslint-disable-next-line
+        console.log(routesArr);
+        return routesArr;
       },
-      currentStyle() {
-        return 'line-height: 38px; padding-bottom: 10px; border-bottom: 1px solid #ddd;margin-bottom: 10px;';
+    },
+    methods: {
+      hasChildren(route) {
+        return route && route.children && route.children.length;
+      },
+      getLabel(route) {
+        const {meta: {title} = NONE_OBJ, name} = route;
+        const label = title || name, last = label.charAt(label.length - 1);
+        return last === ':' ? label : label;
       },
     },
   };
@@ -40,37 +106,62 @@
     /*-webkit-font-smoothing: antialiased;*/
     /*-moz-osx-font-smoothing: grayscale;*/
     color: #2C3E50;
-    padding: 30px 10px;
-    margin-top: 30px;
+    margin: 30px auto 0;
+    max-width: 1280px;
+  }
+
+  #app {
+    display: flex;
   }
 
   .nav-header {
     display: flex;
+    flex-direction: column;
+    padding: 10px 0;
+    line-height: 38px;
+    border-bottom: 1px solid #DDD;
+    margin-bottom: 10px;
+    width: 240px;
   }
 
-  .nav-label {
-    width: 60px;
+  .nav-label, .nav-main {
+    padding: 0 10px;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   .nav-main {
-    flex: 1;
+    line-height: 32px;
+  }
+
+  .nav-label {
+    line-height: 48px;
+    font-weight: bold;
   }
 
   .router-link {
-    display: inline-block;
+    display: block;
     padding: 0 8px;
-    border-radius: 3px;
-    height: 32px;
-    line-height: 32px;
     color: teal;
-    border: 1px solid rgba(0, 128, 128, .5);
-    transition-duration: .3s;
+    transition-duration: .2s;
     text-decoration: none;
-    margin-right: 12px;
-    margin-bottom: 8px;
+    font-size: 16px;
+
+    &.padding-left-plus {
+      padding-left: 16px;
+      font-size: 14px;
+    }
+
+    &.router-link-active, &:active {
+      background: rgba(0, 128, 128, .1);
+    }
+
+    &.router-link-exact-active, &:active {
+      background: rgba(0, 128, 128, .3);
+    }
 
     &:hover {
-      background: rgba(0, 128, 128, .3);
+      background: rgba(0, 128, 128, .2);
     }
   }
 
@@ -88,5 +179,59 @@
 
   .demo-bg {
     background: #A2A5AA;
+  }
+
+  .demo-flex-1 {
+    flex: 1;
+  }
+
+  .demo-width-100 {
+    width: 100px;
+  }
+
+  .demo-padding-10 {
+    padding: 10px;
+  }
+
+  .demo-padding-5 {
+    padding: 5px;
+  }
+
+  .demo-padding-v-10 {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  .demo-padding-v-5 {
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
+
+  .demo-padding-bottom-10 {
+    padding-bottom: 10px;
+  }
+
+  .demo-padding-top-5 {
+    padding-top: 5px;
+  }
+
+  .demo-border-box {
+    -webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;
+  }
+
+  .demo-align-center {
+    text-align: center;
+  }
+
+  .demo-align-right {
+    text-align: right;
+  }
+
+  .demo-default-box {
+    @extend .demo-width-100;
+    @extend .demo-padding-5;
+    @extend .demo-border-box;
+    @extend .demo-align-right;
+    min-height: 40px;
   }
 </style>

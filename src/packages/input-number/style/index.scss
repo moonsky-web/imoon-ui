@@ -1,6 +1,7 @@
 .#{$ns-input-number} {
   position: relative;
   display: inline-block;
+  width: $default-input-width;
 
   .#{$ns-input} {
     &::-webkit-outer-spin-button,
