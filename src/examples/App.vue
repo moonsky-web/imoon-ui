@@ -1,34 +1,42 @@
 <template>
   <div id="app">
-    <div class="nav-header">
-      <div class="nav-label">列表：</div>
-      <div
-        class="nav-main"
-        :key="routeList.id"
-        v-for="(routeList) of currentRoutes">
-        <h4>{{routeList.id}}</h4>
+    <div class="app-header">
+
+    </div>
+    <div class="app-content">
+      <div class="app-aside">
+        <div class="app-aside-label">列表：</div>
         <div
-          v-for="route in routeList.routes"
-          :key="route.path">
-          <router-link
-            class="router-link"
-            :to="route.path">
-            {{getLabel(route)}}
-          </router-link>
-          <div v-if="hasChildren(route)">
+          class="app-aside-menu"
+          :key="routeList.id"
+          v-for="(routeList) of currentRoutes">
+          <h4>{{routeList.id}}</h4>
+          <div
+            v-for="route in routeList.routes"
+            :key="route.path">
             <router-link
-              v-for="child in route.children"
-              :key="child.path"
-              class="router-link padding-left-plus"
-              :to="child.path">
-              {{getLabel(child)}}
+              class="router-link"
+              :to="route.path">
+              {{getLabel(route)}}
             </router-link>
+            <div v-if="hasChildren(route)">
+              <router-link
+                v-for="child in route.children"
+                :key="child.path"
+                class="router-link padding-left-plus"
+                :to="child.path">
+                {{getLabel(child)}}
+              </router-link>
+            </div>
           </div>
         </div>
       </div>
+      <div class="app-main">
+        <router-view/>
+      </div>
     </div>
-    <div class="keep-width-full" style="padding: 0 20px 40px;">
-      <router-view/>
+    <div class="app-footer">
+
     </div>
   </div>
 </template>
@@ -106,37 +114,64 @@
     /*-webkit-font-smoothing: antialiased;*/
     /*-moz-osx-font-smoothing: grayscale;*/
     color: #2C3E50;
-    margin: 30px auto 0;
-    max-width: 1280px;
-  }
-
-  #app {
-    display: flex;
-  }
-
-  .nav-header {
+    height: 100vh;
     display: flex;
     flex-direction: column;
-    padding: 10px 0;
-    line-height: 38px;
-    border-bottom: 1px solid #DDD;
-    margin-bottom: 10px;
-    width: 240px;
-  }
 
-  .nav-label, .nav-main {
-    padding: 0 10px;
-    width: 100%;
-    box-sizing: border-box;
-  }
+    & > .app-header, & > .app-footer {
+      height: 60px;
+      box-shadow: 0 0 4px #444;
+    }
 
-  .nav-main {
-    line-height: 32px;
-  }
+    & > .app-content {
+      flex: 1;
+      margin: 0 auto;
+      max-width: 1280px;
+      display: flex;
+      overflow-y: hidden;
+    }
 
-  .nav-label {
-    line-height: 48px;
-    font-weight: bold;
+    & .app-aside {
+      display: flex;
+      flex-direction: column;
+      padding: 10px 0;
+      line-height: 38px;
+      border-right: 1px solid #AAA;
+      margin-bottom: 10px;
+      width: 240px;
+    }
+
+    & .app-main {
+      padding: 50px;
+      width: 1040px;
+      overflow-y: auto;
+
+      &::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+
+      &::-webkit-scrollbar-thumb:vertical {
+        width: 8px;
+        background-color: #999;
+        -webkit-border-radius: 8px;
+      }
+    }
+
+    & .app-aside-label, & .app-aside-menu {
+      padding: 0 10px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    & .app-aside-menu {
+      line-height: 32px;
+    }
+
+    & .app-aside-label {
+      line-height: 48px;
+      font-weight: bold;
+    }
   }
 
   .router-link {
@@ -177,6 +212,26 @@
     border: solid 1px #DDD;
   }
 
+  .demo-api-table {
+    collapse: 0;
+    border: 1px solid #DDD;
+    border-collapse: collapse;
+
+    & th,
+    & td {
+      padding: 0 12px;
+      border: 1px solid #DDD;
+    }
+
+    & th {
+      line-height: 42px;
+    }
+
+    & td {
+      line-height: 32px;
+    }
+  }
+
   .demo-bg {
     background: #A2A5AA;
   }
@@ -187,6 +242,10 @@
 
   .demo-width-100 {
     width: 100px;
+  }
+
+  .demo-width-full {
+    width: 100%;
   }
 
   .demo-padding-10 {

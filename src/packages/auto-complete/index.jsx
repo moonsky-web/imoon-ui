@@ -105,6 +105,15 @@ export const ImAutoComplete = {
     getMaxIndex() {
       return this.cacheOptions.length - 1;
     },
+    keypressMap() {
+      const self = this;
+      return {
+        40: () => self.incrementIdx(),
+        38: () => self.decrementIdx(),
+        13: () => self.onSelect(self.cacheOptions[self.currentIndex]),
+        27: () => self.onBlur(),
+      };
+    },
   },
   render(h, context = this) {
     let {block} = context;
@@ -199,19 +208,10 @@ export const ImAutoComplete = {
       }
     },
     onKeydown(e) {
-      const self = this, {keyCode} = e;
-      switch (keyCode) {
-        case 40:
-          self.incrementIdx();
-          break;
-        case 38:
-          self.decrementIdx();
-          break;
-        case 13:
-          self.onSelect(self.cacheOptions[self.currentIndex]);
-          break;
-        default:
-          break;
+      console.log(e)
+      const self = this, {keyCode} = e, fn = self.keypressMap[keyCode];
+      if (fn) {
+        fn();
       }
     },
     onSelect(option) {
