@@ -3,19 +3,19 @@
     <div style="height: 660px;">
       <ImAutoComplete
         v-show="showAutoComplete" :readonly="readonly"
-        :options="options" valueKey="name" v-model="modelValue"
+        :options="options" prop="name" v-model="modelValue"
         placeholder="请输入内容" :limit="limit"/>
       <div style="height: 200px;"></div>
       <ImAutoComplete
         v-show="showAutoComplete"
         color="danger" :readonly="readonly"
-        :options="options" valueKey="name"
+        :options="options" prop="name"
         placeholder="请输入内容" :limit="limit"/>
       <div style="height: 200px;"></div>
       <ImAutoComplete
         v-show="showAutoComplete"
         color="danger" :readonly="readonly"
-        :options="options" valueKey="name"
+        :options="options" prop="name"
         placeholder="请输入内容" :limit="limit"/>
     </div>
     <div style="padding: 15px 0;">
@@ -24,7 +24,7 @@
         color="danger"
         :readonly="readonly"
         :options="options"
-        valueKey="name"
+        prop="name"
         placeholder="请输入内容"
         :limit="15"
       ></ImAutoComplete>
@@ -40,7 +40,7 @@
           color="danger"
           :readonly="readonly"
           :options="options"
-          valueKey="name"
+          prop="name"
           placeholder="请输入内容"
           :limit="limit"
         ></ImAutoComplete>

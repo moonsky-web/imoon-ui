@@ -126,7 +126,7 @@
     & > .app-content {
       flex: 1;
       margin: 0 auto;
-      max-width: 1280px;
+      max-width: 1080px;
       display: flex;
       overflow-y: hidden;
     }
@@ -138,24 +138,15 @@
       line-height: 38px;
       border-right: 1px solid #AAA;
       margin-bottom: 10px;
-      width: 240px;
+      width: 180px !important;
+      overflow-y: auto;
     }
 
     & .app-main {
-      padding: 50px;
-      width: 1040px;
+      padding: 38px;
+      width: 900px !important;
       overflow-y: auto;
-
-      &::-webkit-scrollbar {
-        width: 8px;
-        height: 8px;
-      }
-
-      &::-webkit-scrollbar-thumb:vertical {
-        width: 8px;
-        background-color: #999;
-        -webkit-border-radius: 8px;
-      }
+      box-sizing: border-box;
     }
 
     & .app-aside-label, & .app-aside-menu {
@@ -171,6 +162,21 @@
     & .app-aside-label {
       line-height: 48px;
       font-weight: bold;
+    }
+
+    & ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+
+    & ::-webkit-scrollbar-thumb:vertical {
+      width: 8px;
+      background-color: #ddd;
+      -webkit-border-radius: 8px;
+    }
+
+    & ::-webkit-scrollbar-thumb:vertical:hover {
+      background-color: #999999;
     }
   }
 
@@ -240,6 +246,12 @@
     flex: 1;
   }
 
+  /*
+   --------------------------------------------------------------
+   width
+   --------------------------------------------------------------
+   */
+
   .demo-width-100 {
     width: 100px;
   }
@@ -247,6 +259,44 @@
   .demo-width-full {
     width: 100%;
   }
+
+  /*
+   --------------------------------------------------------------
+   margin
+   --------------------------------------------------------------
+   */
+
+  .demo-margin-10 {
+    margin: 10px;
+  }
+
+  .demo-margin-5 {
+    margin: 5px;
+  }
+
+  .demo-margin-v-10 {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  .demo-margin-v-5 {
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+
+  .demo-margin-bottom-10 {
+    margin-bottom: 10px;
+  }
+
+  .demo-margin-top-5 {
+    margin-top: 5px;
+  }
+
+  /*
+   --------------------------------------------------------------
+   padding
+   --------------------------------------------------------------
+   */
 
   .demo-padding-10 {
     padding: 10px;
@@ -274,9 +324,11 @@
     padding-top: 5px;
   }
 
-  .demo-border-box {
-    -webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;
-  }
+  /*
+   --------------------------------------------------------------
+   align
+   --------------------------------------------------------------
+   */
 
   .demo-align-center {
     text-align: center;
@@ -292,5 +344,17 @@
     @extend .demo-border-box;
     @extend .demo-align-right;
     min-height: 40px;
+  }
+
+  /*
+   --------------------------------------------------------------
+   width
+   --------------------------------------------------------------
+   */
+
+  .demo-border-box {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
   }
 </style>

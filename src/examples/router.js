@@ -4,6 +4,7 @@ import Home from './Home.vue';
 
 import {AlertRoutes} from './alert/router';
 import {ButtonRoutes} from './button/router';
+import {InputRoutes} from './input/router';
 
 Vue.use(Router);
 
@@ -16,6 +17,7 @@ export const router = new Router({
     },
     ...AlertRoutes,
     ...ButtonRoutes,
+    ...InputRoutes,
     {
       path: '/icon',
       name: 'Icon',
@@ -23,24 +25,6 @@ export const router = new Router({
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () => import(/* webpackChunkName: "about" */ './icon/iconDemo.vue'),
-    },
-    {
-      path: '/input',
-      name: 'Input',
-      component: () => import('./input/input.vue'),
-      meta: {groupId: '[Input]'},
-    },
-    {
-      path: '/input-clearable',
-      name: 'InputClearable',
-      component: () => import('./input/InputClearable.vue'),
-      meta: {groupId: '[Input]'},
-    },
-    {
-      path: '/inputs',
-      name: 'Inputs Demo',
-      component: () => import('./input/inputDemo.vue'),
-      meta: {groupId: '[Input]'},
     },
     {
       path: '/input-item',
@@ -54,13 +38,6 @@ export const router = new Router({
       component: () => import('./auto-complete/auto-complete.vue'),
       meta: {groupId: '[Input]'},
     },
-    {
-      path: '/input-number',
-      name: 'InputNumber',
-      component: () => import('./input-number/InputNumber.vue'),
-      meta: {groupId: '[Input]'},
-    },
-
     {
       path: '/input-range',
       name: 'InputRange',

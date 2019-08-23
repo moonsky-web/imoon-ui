@@ -1,64 +1,86 @@
 <template>
   <div>
-    <div class="current-container">
-      <ImInputClearable radius value="radius"/>
-      <ImInput radius value="radius"/>
-      <ImInputClearable radius color="danger" value="radius"/>
-      <ImInputClearable radius color="#99ceff" value="radius"/>
-    </div>
-    <div class="current-container">
-      <ImInputClearable dashed value="dashed"/>
-      <ImInput dashed value="dashed"/>
-      <ImInputClearable dashed color="danger" value="dashed"/>
-    </div>
-    <div class="current-container" style="background: #99ceff;">
-      <ImInputClearable ghost value="ghost"/>
-      <ImInput ghost value="ghost"/>
-    </div>
-    <div class="current-container">
-      <ImInputClearable block value="block"/>
-      <ImInput block value="block"/>
-    </div>
-    <div class="current-container">
-      <ImInputClearable viewonly value="viewonly"/>
-      <ImInput viewonly value="viewonly"/>
-    </div>
-    <div class="current-container">
-      <ImInputClearable readonly value="readonly"/>
-      <ImInput readonly value="readonly"/>
-    </div>
-    <div class="current-container">
-      <ImInputClearable name="name" disabled value="disabled"/>
-      <ImInput name="name" disabled value="disabled"/>
-    </div>
-    <div class="current-container">
-      <ImInputClearable name="name" size="lg" value="lg"/>
-      <ImInput name="name" size="lg" value="lg"/>
-    </div>
-    <div class="current-container">
-      <ImInputClearable name="name" size="sm" value="sm"/>
-      <ImInput name="name" size="sm" value="sm"/>
-    </div>
-    <div class="current-container">
-      <ImInputClearable name="name" size="xs" value="xs"/>
-      <ImInput name="name" size="xs" value="xs"/>
-    </div>
+    <DemoItem label="基本输入框">
+      <div class="demo-padding-10">
+        <div class="demo-margin-v-10">
+          <ImInputClearable/>
+          <ImInputClearable placeholder="placeholder"/>
+          <ImInputClearable placeholder="color=warn" color="warn"/>
+        </div>
+      </div>
+    </DemoItem>
+
+    <DemoItem label="圆角边框输入框 :radius=true">
+      <div class="demo-padding-10">
+        <div class="demo-margin-v-10">
+          <ImInputClearable radius placeholder="radius color=info" color="info"/>
+          <ImInputClearable radius placeholder="radius color=success" color="success"/>
+          <ImInputClearable radius placeholder="radius color=danger" color="danger"/>
+        </div>
+      </div>
+    </DemoItem>
+
+    <DemoItem label="幽灵输入框 :ghost=true">
+      <div class="demo-padding-10 input-bg">
+        <div class="demo-margin-v-10">
+          <ImInputClearable ghost color="danger" placeholder="ghost color=danger"/>
+          <ImInputClearable ghost color="success" placeholder="ghost color=success"/>
+          <ImInputClearable ghost color="#5e08ec" placeholder="ghost color=#5e08ec"/>
+        </div>
+      </div>
+    </DemoItem>
+
+    <DemoItem label="可编辑性">
+      <div>
+        <div class="demo-padding-10">
+          <ImInputClearable v-model="value"/>
+        </div>
+        <div class="demo-padding-10">
+          <ImInputClearable viewonly value="viewonly"/>
+          <ImInputClearable viewonly value="readonly"/>
+          <ImInputClearable viewonly value="disabled"/>
+        </div>
+        <div class="demo-padding-10">
+          <ImInputClearable v-model="value" viewonly color="danger" placeholder="viewonly color=danger"/>
+          <ImInputClearable v-model="value" readonly color="success" placeholder="readonly color=success"/>
+          <ImInputClearable v-model="value" disabled color="#5e08ec" placeholder="disabled color=#5e08ec"/>
+        </div>
+        <div class="demo-padding-10">
+          <ImInputClearable v-model="value" viewonly color="danger" placeholder="ghost color=danger"/>
+          <ImInputClearable v-model="value" readonly color="success" placeholder="ghost color=success"/>
+          <ImInputClearable v-model="value" disabled color="#5e08ec" placeholder="ghost color=#5e08ec"/>
+        </div>
+        <div class="demo-padding-10 input-bg">
+          <ImInputClearable v-model="value" viewonly ghost color="danger" placeholder="ghost color=danger"/>
+          <ImInputClearable v-model="value" readonly ghost color="success" placeholder="ghost color=success"/>
+          <ImInputClearable v-model="value" disabled ghost color="#5e08ec" placeholder="ghost color=#5e08ec"/>
+        </div>
+        <div class="demo-padding-10 input-bg">
+          <ImInputClearable v-model="value" viewonly ghost color="#34fa50" placeholder="ghost color=danger"/>
+          <ImInputClearable v-model="value" readonly ghost color="success" placeholder="ghost color=success"/>
+          <ImInputClearable v-model="value" disabled ghost color="#5e08ec" placeholder="ghost color=#5e08ec"/>
+        </div>
+      </div>
+    </DemoItem>
+
   </div>
 </template>
-
 <script>
-  /* eslint-disable */
-  import {ImInputClearable, ImInput} from '../../packages/input';
+  import {ImInputClearable} from '../../packages/input';
 
   export const InputClearable = {
     name: 'InputClearable',
-    components: {ImInputClearable, ImInput},
+    components: {ImInputClearable},
+    data() {
+      return {
+        value: '可编辑性输入框值',
+      };
+    },
   };
   export default InputClearable;
 </script>
-
-<style scoped>
-  .current-container {
-    padding: 10px;
+<style scoped lang="scss">
+  .input-bg {
+    background: #DDD;
   }
 </style>

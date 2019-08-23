@@ -6,18 +6,18 @@ import {ImWinClose} from '../win-ctrl';
 import {typeBoolean} from '../../utils/props';
 import {convertListeners} from '../../utils/vnode';
 import {inputExpandMixin} from '../../predefined/mixins';
+import {clsGap, clsGapBlock} from '../../utils/class';
 
-const subNs = 'input';
+const subNs = 'Input';
 const factory = nameFactory(subNs),
   clsInput = factory(),
   clsView = factory('viewonly'),
-  clsBlock = factory('block'),
   clsClear = factory('clearable'),
   clsClearIcon = factory('clearIcon');
 const inputColorCreator = addDynamicCSS(subNs, inputColorRegister);
 const inputBooleanCreator = cssBooleanCreator((name, val) => {
   return val ? factory(name) : null;
-}, 'block', 'ghost', 'dashed', 'radius');
+}, 'block', 'ghost', 'radius');
 
 function noneInput() {
 }
@@ -25,8 +25,12 @@ function noneInput() {
 const Default = {
   functional: true,
   name: factory.thisName('Default'),
+  props: {value: null},
   render(h, {data, parent}) {
-    const {on = READONLY, attrs = {}, props: {value, placeholder, readonly, disabled} = READONLY} = data;
+    const {
+      on = READONLY, attrs: {value: v, ...attrs} = READONLY,
+      props: {value, placeholder, readonly, disabled} = READONLY,
+    } = data;
     const {input = noneInput} = on;
     const onInput = convertListeners(input, parent);
     const domProps = {value, placeholder};
@@ -48,25 +52,26 @@ const Default = {
 }, Viewonly = {
   functional: true,
   name: factory.thisName('Viewonly'),
-  props: {
-    placeholder: {},
-  },
-  render(h, {data, children}) {
-    data.class.push(clsView);
-    return h('span', data, children);
+  props: {placeholder: null, value: null},
+  render(h, {data: {attrs: {value: v, ...attrs}, ...rest}, children}) {
+    rest.class.push(clsView);
+    rest.attrs = attrs;
+    return h('span', rest, children);
   },
 };
 
 export const ImInput = factory.create({
   functional: true, props,
   render(h, {data, props = READONLY, injections: {$providedProps = READONLY} = READONLY}) {
-    const {class: classArgs} = data, {viewonly, value, color, size} = props;
+    const {class: classArgs} = data, {viewonly, value, color, size, block} = props;
     const className = `${clsInput} ${inputColorCreator(color)} ${size ? factory(size) : ''}`;
     const computedClass = inputBooleanCreator(props, $providedProps);
 
     const settings = {
       ...data, props,
-      class: classArgs ? [classArgs, className, ...computedClass] : [className, ...computedClass],
+      class: classArgs
+        ? [{[clsGapBlock]: block}, clsGap, className, ...computedClass, classArgs]
+        : [{[clsGapBlock]: block}, clsGap, className, ...computedClass],
     };
     if (viewonly) {
       return h(Viewonly, settings, [value]);
@@ -85,7 +90,14 @@ export const ImInputClearable = factory.create('clearable', {
   render(h, context = this) {
     let {clearable, isEditable, $listeners, $props, $attrs, onInput, currentValue: value} = context;
     let {size} = $props;
-    return h('div', {class: [clsClear, {[clsBlock]: $props.block}, size ? factory(size) : null]}, [
+    return h('div', {
+      class: [
+        clsClear, clsGap,
+        {
+          [clsGapBlock]: $props.block,
+        },
+        size ? factory(size) : null],
+    }, [
       h(ImInput, {
         props: {...$props, value}, attrs: $attrs,
         on: {...$listeners, input: onInput},

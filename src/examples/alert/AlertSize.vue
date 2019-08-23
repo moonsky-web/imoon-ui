@@ -41,6 +41,12 @@
       </ImAlert>
     </DemoItem>
 
+    <DemoItem label="size=auto; 自定义尺寸">
+      <ImAlert size="auto" style="font-size: 24px;" color="#af59af" v-model="closeable">
+        size="auto" style="font-size: 24px;"
+      </ImAlert>
+    </DemoItem>
+
   </div>
 </template>
 <script>

@@ -43,30 +43,12 @@
     }
   }
 
-  &.#{$ns-input}-dashed {
-    border-style: dashed;
-  }
-
   &.#{$ns-input}-radius {
     @include set-border-radius(999px);
   }
 
-  & + #{&} {
-    margin-left: 8px;
-  }
-
   &:focus {
     z-index: 1;
-  }
-
-  &.#{$ns-input}-block {
-    @include set-display();
-    width: 100%;
-
-    & + #{&} {
-      margin-left: 0;
-      margin-top: 8px;
-    }
   }
 
   @include sizes();
@@ -82,12 +64,16 @@
     } @else {
       $color: map_get($color-map, $default-color-name);
     }
-    &.#{$ns-input}-ghost:hover,
-    &.#{$ns-input}-ghost:active,
-    &.#{$ns-input}-ghost:focus {
-      color: #000;
+    &.#{$ns-input}-ghost {
+      &:hover,
+      &:active,
+      &:focus {
+        color: #000;
+      }
+      &[disabled], &[readonly], &.#{$ns-input}-viewonly{
+        color: $color !important;
+      }
     }
-
 
     &:hover {
       z-index: 1;
@@ -110,10 +96,17 @@
   // other setting
   &[disabled], &[readonly], &.#{$ns-input}-viewonly {
     box-shadow: none !important;
+
+    &.#{$ns-input}-ghost {
+      background: transparent !important;
+    }
   }
 
   &.#{$ns-input}-viewonly {
     border-color: transparent !important;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
   }
 }
 

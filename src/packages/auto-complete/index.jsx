@@ -4,6 +4,7 @@ import {typeArray, typeBoolean} from '../../utils/props';
 import {filterArray} from '../../utils/array';
 import {ImTransition} from '../transition';
 import {inputExpandMixin} from '../../predefined/mixins';
+import {clsGap, clsGapBlock} from '../../utils/class';
 
 const subNs = 'AutoComplete',
   factory = nameFactory(subNs);
@@ -24,8 +25,8 @@ function getTextWithNone(option) {
   return String(option);
 }
 
-function getTextByValueKey(option, valueKey) {
-  return option[valueKey];
+function getTextByValueKey(option, prop) {
+  return option[prop];
 }
 
 function filterAll() {
@@ -37,13 +38,13 @@ function doFilter(sourceOptions, filter, limit) {
   return filterArray(sourceOptions, filter, limit);
 }
 
-function filterByValueKey(sourceOptions, valueKey, value, limit) {
-  const filter = value ? item => getTextByValueKey(item, valueKey).indexOf(value) >= 0 : filterAll;
+function filterByValueKey(sourceOptions, prop, value, limit) {
+  const filter = value ? item => getTextByValueKey(item, prop).indexOf(value) >= 0 : filterAll;
   return doFilter(sourceOptions, filter, limit);
 }
 
-function filterWithNone(sourceOptions, valueKey, value, limit) {
-  const filter = value ? item => getTextWithNone(item, valueKey).indexOf(value) >= 0 : filterAll;
+function filterWithNone(sourceOptions, prop, value, limit) {
+  const filter = value ? item => getTextWithNone(item, prop).indexOf(value) >= 0 : filterAll;
   return doFilter(sourceOptions, filter, limit);
 }
 
@@ -51,7 +52,7 @@ function isEmpty(options) {
   return !(options && options.length);
 }
 
-function toDefault(nowOpts) {
+function toDefault(h, nowOpts) {
   return isEmpty(nowOpts) ? (<li class={[clsLi, clsNone]}>无选项</li>) : nowOpts;
 }
 
@@ -69,7 +70,7 @@ export const ImAutoComplete = {
 
     // options
     options: typeArray(),
-    valueKey: String,
+    prop: String,
     limit: {
       type: Number,
       default: 10,
@@ -87,20 +88,20 @@ export const ImAutoComplete = {
     visibility(vm) {
       return vm.visible;
     },
-    getLimit() {
+    limitVal() {
       const {options, limit} = this;
       return limit < 1 ? options.length : limit;
     },
     getFilter() {
-      return this.valueKey ? filterByValueKey : filterWithNone;
+      return this.prop ? filterByValueKey : filterWithNone;
     },
     getText() {
-      const {valueKey} = this;
-      return valueKey ? option => getTextByValueKey(option, valueKey) : getTextWithNone;
+      const {prop} = this;
+      return prop ? option => getTextByValueKey(option, prop) : getTextWithNone;
     },
     getOptions() {
-      const {options, valueKey, currentValue, getLimit} = this;
-      return this.cacheOptions = this.getFilter(options, valueKey, currentValue, getLimit);
+      const {options, prop, currentValue} = this;
+      return this.cacheOptions = this.getFilter(options, prop, currentValue, this.limitVal);
     },
     getMaxIndex() {
       return this.cacheOptions.length - 1;
@@ -134,7 +135,7 @@ export const ImAutoComplete = {
     const optionsMeta = context.getOptionsMeta();
     data.props.clearable = context.clearable;
     return (
-      <div class={[clsAuto, {'display-block': block}]}>
+      <div class={[clsAuto, clsGap, {[clsGapBlock]: block}]}>
         <ImInputClearable
           ref="input" {...data}
           on-input={context.onInput}
@@ -149,7 +150,7 @@ export const ImAutoComplete = {
                   {[clsShow]: context.visibility}]}>
                 <div class={clsInner}>
                   <ul class={clsUl}>
-                    {toDefault(context.getOptions.map(optionMapper))}
+                    {toDefault(h, context.getOptions.map(optionMapper))}
                   </ul>
                 </div>
               </div>
@@ -207,11 +208,10 @@ export const ImAutoComplete = {
         this.resetIndex(this.getMaxIndex);
       }
     },
-    onKeydown(e) {
-      console.log(e)
-      const self = this, {keyCode} = e, fn = self.keypressMap[keyCode];
-      if (fn) {
-        fn();
+    onKeydown({keyCode}) {
+      const callback = this.keypressMap[keyCode];
+      if (callback) {
+        callback();
       }
     },
     onSelect(option) {
