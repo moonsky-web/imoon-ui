@@ -1,16 +1,16 @@
-@mixin size-of-input($name: $default-size-name) {
+@mixin size-of-input-number($name: $default-size-name) {
   $setting: map_get($size-map, $name);
   font-size: map_get($setting, 'fontSize');
   //@include set-liner-height(map_get($setting, $height), 1px);
   //@include set-padding-h(map_get($setting, 'inputPadding'));
 }
 
-@mixin sizes() {
-  @include size-of-input();
+@mixin sizes-of-input-expand() {
+  @include size-of-input-number();
   @each $name in map_keys($size-map) {
     @if ($name != $default-size-name) {
       &.#{$ns-input}-#{$name} {
-        @include size-of-input($name);
+        @include size-of-input-number($name);
       }
     }
   }
@@ -21,7 +21,7 @@
   display: inline-block;
   width: $default-input-width;
 
-  @include sizes();
+  @include sizes-of-input-item();
 
   & > .#{$ns-input}-clearable {
     & > .#{$ns-input} {

@@ -8,9 +8,9 @@
           <ImInput v-model="value"/>
         </div>
         <div class="demo-margin-v-10">
+          <ImInputNumber/>
           <ImInputClearable v-model="value"/>
           <ImInput v-model="value"/>
-          <ImInputNumber/>
         </div>
       </div>
     </DemoItem>

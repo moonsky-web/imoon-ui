@@ -7,7 +7,7 @@ export const inputBaseProps = {
   inputClass: [String, Object, Array],
   color: {
     type: String,
-    validator: autoColorValid,
+    validator: autoColorValid.isOptional,
   },
   size: {
     type: String,

@@ -14,10 +14,10 @@ const factory = nameFactory(subNs),
   clsView = factory('viewonly'),
   clsClear = factory('clearable'),
   clsClearIcon = factory('clearIcon');
-const inputColorCreator = addDynamicCSS(subNs, inputColorRegister);
+const inputColorCreator = addDynamicCSS(subNs, inputColorRegister, {supportColor: false});
 const inputBooleanCreator = cssBooleanCreator((name, val) => {
   return val ? factory(name) : null;
-}, 'block', 'ghost', 'radius');
+}, 'ghost', 'radius');
 
 function noneInput() {
 }
@@ -60,6 +60,8 @@ const Default = {
   },
 };
 
+export const inputFactory = factory;
+
 export const ImInput = factory.create({
   functional: true, props,
   render(h, {data, props = READONLY, injections: {$providedProps = READONLY} = READONLY}) {
@@ -93,9 +95,7 @@ export const ImInputClearable = factory.create('clearable', {
     return h('div', {
       class: [
         clsClear, clsGap,
-        {
-          [clsGapBlock]: $props.block,
-        },
+        {[clsGapBlock]: $props.block},
         size ? factory(size) : null],
     }, [
       h(ImInput, {

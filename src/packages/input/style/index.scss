@@ -6,7 +6,7 @@
   //@include set-padding-h(map_get($setting, 'inputPadding'));
 }
 
-@mixin sizes() {
+@mixin sizes-of-input-item() {
   @include size-of-input();
   @each $name in map_keys($size-map) {
     @if ($name != $default-size-name) {
@@ -20,7 +20,7 @@
 .#{$ns-input} {
   position: relative;
   padding: 0 1em;
-  border: 1px solid #aaa;
+  border: 1px solid $default-input-border-color;
   width: $default-input-width;
   @include set-display(inline-block);
   @include set-transition-duration();
@@ -31,6 +31,9 @@
   font-weight: normal;
   outline: none;
 
+  /*
+   ghost 默认状态是透明背景，默认边框颜色，默认字体颜色
+   */
   &.#{$ns-input}-ghost:not([disabled]) {
     background: transparent;
 
@@ -40,6 +43,7 @@
 
     &:active, &:focus {
       background: #fff;
+      color: #000;
     }
   }
 
@@ -51,30 +55,11 @@
     z-index: 1;
   }
 
-  @include sizes();
+  @include sizes-of-input-item();
 
-  // color setting
-  @mixin color-of-input($name: null) {
-    $color: map_get($color-map, $name);
-    @if ($color != null) {
-      border-color: $color;
-      &.#{$ns-input}-ghost {
-        color: $color;
-      }
-    } @else {
-      $color: map_get($color-map, $default-color-name);
-    }
-    &.#{$ns-input}-ghost {
-      &:hover,
-      &:active,
-      &:focus {
-        color: #000;
-      }
-      &[disabled], &[readonly], &.#{$ns-input}-viewonly{
-        color: $color !important;
-      }
-    }
-
+  // 颜色
+  @mixin color-of-input() {
+    $color: map_get($color-map, $default-color-name);
     &:hover {
       z-index: 1;
       border-color: hover-color($color);
@@ -87,19 +72,18 @@
   }
 
   @include color-of-input();
-  @each $name in map_keys($color-map) {
-    &.#{$ns-input}-#{$name} {
-      @include color-of-input($name);
-    }
-  }
 
-  // other setting
+  // 只读或只可看的设置
   &[disabled], &[readonly], &.#{$ns-input}-viewonly {
     box-shadow: none !important;
 
     &.#{$ns-input}-ghost {
       background: transparent !important;
     }
+  }
+
+  &[disabled], &[readonly] {
+    border-color: $default-input-border-color !important;
   }
 
   &.#{$ns-input}-viewonly {
@@ -115,12 +99,7 @@
   display: inline-block;
   width: $default-input-width;
   @include set-align-middle();
-  @include sizes();
-
-  &.#{$ns-input}-block {
-    @include set-display();
-    width: 100%;
-  }
+  @include sizes-of-input-item();
 
   & > .#{$ns-input}-clear-icon {
     position: absolute;

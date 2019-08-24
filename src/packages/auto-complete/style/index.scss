@@ -1,6 +1,9 @@
 .#{$ns-auto-complete} {
   position: relative;
   display: inline-block;
+  width: $default-input-width;
+
+  @include sizes-of-input-item();
 }
 
 .#{$ns-auto-complete}-outer {
@@ -12,7 +15,7 @@
   font-size: .9em;
   @include set-border-radius();
   box-shadow: 0 0 25px #666;
-  z-index: 1;
+  z-index: 2;
 
   &.#{$ns-auto-complete}-show {
     display: block;

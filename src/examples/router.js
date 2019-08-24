@@ -33,12 +33,6 @@ export const router = new Router({
       meta: {groupId: '[Input]'},
     },
     {
-      path: '/auto-complete',
-      name: 'AutoComplete',
-      component: () => import('./auto-complete/auto-complete.vue'),
-      meta: {groupId: '[Input]'},
-    },
-    {
       path: '/input-range',
       name: 'InputRange',
       component: () => import('./input-range/InputRange.vue'),

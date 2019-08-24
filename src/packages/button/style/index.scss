@@ -19,20 +19,6 @@
   outline: none;
   text-decoration: none;
 
-  & + #{&} {
-    margin-left: 8px;
-  }
-
-  &.#{$ns-btn}-block {
-    @include set-display();
-    width: 100%;
-
-    & + #{&} {
-      margin-left: 0;
-      margin-top: 8px;
-    }
-  }
-
   @mixin size-of-btn($name: $default-size-name) {
     $setting: map_get($size-map, $name);
     font-size: map_get($setting, 'fontSize');

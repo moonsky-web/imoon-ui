@@ -1,7 +1,7 @@
 import {nameFactory, runtimeError} from '../../utils';
 import {inputExpandMixin} from '../../predefined/mixins';
 import {isDef} from '../../utils/predicates';
-import {ImInputClearable} from '../input';
+import {ImInputClearable, inputFactory} from '../input';
 import {proxyDefaultValue} from '../../utils/proxy';
 import {clsGapBlock, clsGap} from '../../utils/class';
 
@@ -54,25 +54,25 @@ export const ImInputNumber = {
     };
   },
   render(h, context = this) {
-    const {onInput, onBlur, onStepUp, onStepDown, block} = context;
+    const {onInput, onBlur, onStepUp, onStepDown, block, isEditable, size = 'md'} = context;
     const inputData = inputExpandMixin.fromVm(context);
     inputData.attrs.type = 'number';
     inputData.attrs.step = context.innerStep;
     inputData.attrs.max = context.max;
     inputData.attrs.min = context.min;
     return (
-      <div class={[clsNumber, clsGap, {[clsGapBlock]: block}]}>
+      <div class={[clsNumber, clsGap, {[clsGapBlock]: block}, inputFactory(size)]}>
         <ImInputClearable
           ref="input"
           {...inputData}
           on-input={onInput}
           on-blur={onBlur}/>
-        <div
+        {isEditable ? <div
           class={[clsBtn, clsPlus]}
-          onClick={onStepUp}/>
-        <div
+          onClick={onStepUp}/> : null}
+        {isEditable ? <div
           class={[clsBtn, clsMinus]}
-          onClick={onStepDown}/>
+          onClick={onStepDown}/> : null}
       </div>
     );
   },

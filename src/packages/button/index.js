@@ -3,13 +3,14 @@ import {typeBoolean, typeNullBoolean, typeString} from '../../utils/props';
 import {colorRegister} from './style';
 import {autoColorValid, autoSizeValid} from '../../utils/validator';
 import {addDynamicCSS, cssBooleanCreator} from '../../utils/style';
+import {clsGap, clsGapBlock} from '../../utils/class';
 
 const subNs = 'btn', readonly = Object.freeze({});
 const creator = nameFactory(subNs), clsBtn = creator(), clsTxt = creator('text');
 const colorCreator = addDynamicCSS(subNs, colorRegister);
 const btnBooleanCreator = cssBooleanCreator((name, val) => {
   return val ? creator(name) : '';
-}, 'block', 'ghost', 'dashed', 'outline', 'radius');
+}, 'ghost', 'dashed', 'outline', 'radius');
 
 export const ImButton = {
   install(Vue) {
@@ -38,11 +39,13 @@ export const ImButton = {
   render(h, {
     props, data, children, injections: {$providedProps = readonly} = readonly,
   }) {
-    const {class: cls, attrs = {}} = data, {color, size, text, to, disabled} = props;
+    const {class: cls, attrs = {}} = data, {color, size, text, to, disabled, block} = props;
     const names = text ? [clsTxt] : btnBooleanCreator(props, $providedProps);
     const className = `${clsBtn} ${colorCreator(color)} ${size ? creator(size) : ''}`;
     const settings = {
-      ...data, attrs, class: cls ? [cls, className, ...names] : [className, ...names],
+      ...data, attrs, class: cls
+        ? [clsGap, {[clsGapBlock]: block}, className, ...names, cls]
+        : [clsGap, {[clsGapBlock]: block}, className, ...names],
     };
     let tag = 'button';
     if (to) {
