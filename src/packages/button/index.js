@@ -41,12 +41,13 @@ export const ImButton = {
   }) {
     const {class: cls, attrs = {}} = data, {color, size, text, to, disabled, block} = props;
     const names = text ? [clsTxt] : btnBooleanCreator(props, $providedProps);
-    const className = `${clsBtn} ${colorCreator(color)} ${size ? creator(size) : ''}`;
-    const settings = {
-      ...data, attrs, class: cls
-        ? [clsGap, {[clsGapBlock]: block}, className, ...names, cls]
-        : [clsGap, {[clsGapBlock]: block}, className, ...names],
-    };
+    const classes = [
+      clsBtn, clsGap, {[clsGapBlock]: block}, ...names,
+      `${colorCreator(color)} ${size ? creator(size) : ''}`,
+    ], settings = {...data, attrs, class: classes};
+    if (cls) {
+      classes.push(cls);
+    }
     let tag = 'button';
     if (to) {
       tag = 'a';

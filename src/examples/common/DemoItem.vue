@@ -4,7 +4,7 @@
     <div class="demo-item-desc">
       <slot name="desc">{{desc}}</slot>
     </div>
-    <div ref="content" :class="{'keep-display-flex':!nonFlex}">
+    <div class="demo-item-content" ref="content" :class="{'keep-display-flex':!nonFlex}">
       <slot></slot>
     </div>
     <div>
@@ -41,11 +41,27 @@
 
   .demo-item-label {
     padding: 0 10px;
-    line-height: 48px;
+    line-height: 42px;
+    margin-bottom: 20px;
+
+    &::after {
+      content: '';
+      margin: 0 auto;
+      display: block;
+      width: 100%;
+      border-bottom: 1px solid #aaa;
+    }
+  }
+
+  .demo-item-content {
+    padding: 0 8px;
   }
 
   .demo-item-desc {
+    margin-bottom: 18px;
     padding: 0 12px;
     line-height: 24px;
+    font-size: 14px;
+    color: #595959;
   }
 </style>

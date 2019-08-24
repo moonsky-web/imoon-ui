@@ -42,12 +42,12 @@ export const inputExpandMixin = {
 defineValueOf(inputExpandMixin, 'fromVm', function (vm) {
   const {
     placeholder, color, size, radius,
-    viewonly, readonly, disabled, ghost, dashed,
+    viewonly, readonly, disabled, ghost,
     autofocus, inputClass,
   } = vm, data = {
     props: {
       color, size, viewonly, block: true,
-      ghost, dashed, radius, autofocus,
+      ghost, radius, autofocus,
       placeholder, value: vm.currentValue,
     },
     attrs: {},

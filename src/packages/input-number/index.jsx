@@ -98,12 +98,14 @@ export const ImInputNumber = {
     getRefInput() {
       return this.$refs.input.getRefInput();
     },
-    onStepUp() {
+    onStepUp(e) {
+      e.stopPropagation();
       let input = this.getRefInput();
       input.stepUp();
       this.onInput(input.value);
     },
-    onStepDown() {
+    onStepDown(e) {
+      e.stopPropagation();
       let input = this.getRefInput();
       input.stepDown();
       this.onInput(input.value);

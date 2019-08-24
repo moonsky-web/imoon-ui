@@ -1,17 +1,99 @@
 <template>
-  <DemoContainer>
+  <DemoContainer :props="props">
     <div slot="detail">
       Button 演示
-    </div>
-    <div slot="api">
-      Button API
     </div>
   </DemoContainer>
 </template>
 
 <script>
+  import {autoSizeValid, COLOR_NAMES} from '../../utils/validator';
+
   export const Button = {
     name: 'Button',
+    computed: {
+      props() {
+        return [
+          {
+            name: 'color',
+            type: 'String',
+            values: [...COLOR_NAMES, '#rgb'],
+            default: null,
+            desc: '颜色，预定义颜色或 RGB 色值',
+          },
+          {
+            name: 'size',
+            type: 'String',
+            values: [...autoSizeValid.names, 'auto'],
+            default: null,
+            desc: '尺寸，预定义尺寸，或使用 font-size。',
+          },
+          {
+            name: 'block',
+            type: Boolean,
+            values: null,
+            default: false,
+            desc: '是否块级按钮',
+          },
+          {
+            name: 'ghost',
+            type: Boolean,
+            values: null,
+            default: false,
+            desc: '是否透明按钮（幽灵）',
+          },
+          {
+            name: 'dashed',
+            type: Boolean,
+            values: null,
+            default: false,
+            desc: '是否虚线边框',
+          },
+          {
+            name: 'outline',
+            type: Boolean,
+            values: null,
+            default: false,
+            desc: '是否外边框按钮',
+          },
+          {
+            name: 'radius',
+            type: Boolean,
+            values: null,
+            default: false,
+            desc: '是否圆角按钮',
+          },
+          {
+            name: 'text',
+            type: Boolean,
+            values: null,
+            default: false,
+            desc: '是否文字按钮',
+          },
+          {
+            name: 'to',
+            type: String,
+            values: null,
+            default: false,
+            desc: '路由导航',
+          },
+          {
+            name: 'disabled',
+            type: Boolean,
+            values: null,
+            default: false,
+            desc: '是否禁用',
+          },
+          {
+            name: 'icon',
+            type: String,
+            values: null,
+            default: false,
+            desc: '图标（未实现）',
+          },
+        ];
+      },
+    },
   };
   export default Button;
 </script>

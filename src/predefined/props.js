@@ -7,7 +7,7 @@ export const inputBaseProps = {
   inputClass: [String, Object, Array],
   color: {
     type: String,
-    validator: autoColorValid.isOptional,
+    validator: autoColorValid,
   },
   size: {
     type: String,
@@ -18,7 +18,6 @@ export const inputBaseProps = {
   disabled: typeBoolean(),
   block: typeBoolean(),
   ghost: typeBoolean(),
-  dashed: typeBoolean(),
   radius: typeBoolean(),
   autofocus: typeBoolean(),// 未实现
 };

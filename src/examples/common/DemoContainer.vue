@@ -6,36 +6,22 @@
     <router-view/>
     <slot name="api">
       <slot name="props">
-        <div v-if="props">
-          <h4 class="demo-api-sub-title">Props</h4>
-          <div>
-            <DemoTable :data="props" :columns="propsColumns"/>
-          </div>
-        </div>
+        <ApiItem label="Props" :data="props" :columns="propsColumns"/>
       </slot>
       <slot name="events">
-        <div v-if="events">
-          <h4 class="demo-api-sub-title">Events</h4>
-          <DemoTable :data="events" :columns="eventsColumns"/>
-        </div>
+        <ApiItem label="Events" :data="events" :columns="eventsColumns"/>
       </slot>
       <slot name="slots">
-        <div v-if="slots">
-          <h4 class="demo-api-sub-title">Slots</h4>
-          <DemoTable :data="slots" :columns="slotsColumns"/>
-        </div>
+        <ApiItem label="Slots" :data="slots" :columns="slotsColumns"/>
       </slot>
       <slot name="scopeSlots">
-        <div v-if="scopeSlots">
-          <h4 class="demo-api-sub-title">ScopeSlots</h4>
-          <div></div>
-        </div>
+        <ApiItem label="Scope slots" :data="[]" :columns="[]"/>
       </slot>
     </slot>
   </div>
 </template>
 <script>
-  import {isFunction as isFn, isPlainObject} from '../utils/predicates';
+  import {isFunction as isFn, isPlainObject} from '../../utils/predicates';
 
   function toStr(value) {
     return Array.isArray(value) ? value.join('| ') :
@@ -80,6 +66,7 @@
     name: 'DemoTable',
     functional: true,
     props: {
+      label: String,
       data: {
         type: Array,
         default() {
@@ -88,8 +75,8 @@
       },
       columns: Array,
     },
-    render(h, {props: {data, columns = PROPS_COLUMNS}}) {
-      return h('table', {
+    render(h, {props: {data, columns = PROPS_COLUMNS, label}}) {
+      const table = h('table', {
         class: 'demo-width-full demo-api-table',
       }, [
         h('colgroup', {}, columns.map(({col}) => h('col', {attrs: col}))),
@@ -119,12 +106,17 @@
           ]),
         ]),
       ]);
+
+      return data.length ? h('div', {}, [
+        label ? h('h4', {class: 'demo-api-sub-title'}, [label]) : null,
+        table,
+      ]) : null;
     },
   };
 
   export const DemoContainer = {
     name: 'DemoContainer',
-    components: {DemoTable},
+    components: {ApiItem: DemoTable},
     props: {
       props: Array,
       events: Array,
@@ -146,13 +138,46 @@
   };
   export default DemoContainer;
 </script>
-<style scoped>
+<style scoped lang="scss">
+  .demo-content-container {
+    padding: 0 20px 120px;
+  }
+
   .demo-api-sub-title {
-    padding: 0 12px;
+    padding: 24px 12px 0;
     line-height: 42px;
   }
 
-  .demo-content-container {
-    padding: 0 20px 120px;
+  .demo-api-table {
+    collapse: 0;
+    border: 1px solid #DDD;
+    border-collapse: collapse;
+
+    & th,
+    & td {
+      padding: 0 12px;
+      border: 1px solid #DDD;
+    }
+
+    & th {
+      line-height: 42px;
+      font-size: 14px;
+    }
+
+    & td {
+      line-height: 24px;
+
+      &.demo-api-td-values {
+        width: 220px;
+      }
+
+      & > .demo-api-td-data {
+        margin-top: 10px;
+        margin-bottom: 10px;
+        margin-right: 10px;
+        max-width: 200px;
+        word-break: keep-all;
+      }
+    }
   }
 </style>

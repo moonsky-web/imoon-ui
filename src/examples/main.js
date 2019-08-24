@@ -5,8 +5,8 @@ import {eachArray} from '../utils';
 /*
  * 自定义全局组件
  */
-import {DemoContainer} from './DemoContainer';
-import {DemoItem} from './DemoItem';
+import {DemoContainer} from './common/DemoContainer';
+import {DemoItem} from './common/DemoItem';
 
 import '../index.scss';
 

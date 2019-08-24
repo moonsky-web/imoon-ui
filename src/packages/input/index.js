@@ -28,6 +28,7 @@ const Default = {
   props: {value: null},
   render(h, {data, parent}) {
     const {
+      // eslint-disable-next-line
       on = READONLY, attrs: {value: v, ...attrs} = READONLY,
       props: {value, placeholder, readonly, disabled} = READONLY,
     } = data;
@@ -53,7 +54,10 @@ const Default = {
   functional: true,
   name: factory.thisName('Viewonly'),
   props: {placeholder: null, value: null},
-  render(h, {data: {attrs: {value: v, ...attrs}, ...rest}, children}) {
+  render(h, {
+    // eslint-disable-next-line
+    data: {attrs: {value: v, ...attrs}, ...rest}, children
+  }) {
     rest.class.push(clsView);
     rest.attrs = attrs;
     return h('span', rest, children);
@@ -66,15 +70,17 @@ export const ImInput = factory.create({
   functional: true, props,
   render(h, {data, props = READONLY, injections: {$providedProps = READONLY} = READONLY}) {
     const {class: classArgs} = data, {viewonly, value, color, size, block} = props;
-    const className = `${clsInput} ${inputColorCreator(color)} ${size ? factory(size) : ''}`;
-    const computedClass = inputBooleanCreator(props, $providedProps);
-
-    const settings = {
+    const classes = [
+      {[clsGapBlock]: block},
+      clsGap, clsInput,
+      `${inputColorCreator(color)} ${size ? factory(size) : ''}`,
+      ...inputBooleanCreator(props, $providedProps)], settings = {
       ...data, props,
-      class: classArgs
-        ? [{[clsGapBlock]: block}, clsGap, className, ...computedClass, classArgs]
-        : [{[clsGapBlock]: block}, clsGap, className, ...computedClass],
+      class: classes,
     };
+    if (classArgs) {
+      classes.push(classArgs);
+    }
     if (viewonly) {
       return h(Viewonly, settings, [value]);
     } else {

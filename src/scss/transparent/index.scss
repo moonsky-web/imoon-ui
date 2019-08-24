@@ -6,10 +6,6 @@
   border-color: transparent !important;
 }
 
-.transparent-bd {
-  border-color: transparent !important;
-}
-
 @each $name in $direction-names {
   .transparent-bd-#{$name} {
     border-#{$name}-color: transparent !important;

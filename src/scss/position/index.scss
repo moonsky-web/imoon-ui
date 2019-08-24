@@ -5,6 +5,6 @@ $position-values: (relative, absolute, fixed);
     position: $value;
   }
   .keep-position-#{$value} {
-    position: $value;
+    position: $value !important;
   }
 }

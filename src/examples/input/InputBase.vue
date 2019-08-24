@@ -3,9 +3,8 @@
     <DemoItem label="基本输入框">
       <div class="demo-padding-10">
         <div class="demo-margin-v-10">
-          <ImInput/>
-          <ImInput placeholder="placeholder"/>
-          <ImInput color="#5e08ec" placeholder="color=warn"/>
+          <ImInput v-model="inputBaseValue"/>
+          <ImInput placeholder="placeholder" v-model="inputBaseValue"/>
         </div>
       </div>
     </DemoItem>
@@ -13,80 +12,245 @@
     <DemoItem label="圆角边框输入框 :radius=true">
       <div class="demo-padding-10">
         <div class="demo-margin-v-10">
-          <ImInput radius placeholder="radius"/>
-          <ImInput radius placeholder="radius color=#5e08ec"/>
+          <ImInput radius v-model="inputBaseValue"/>
+          <ImInput radius placeholder=":radius=true" v-model="inputBaseValue"/>
         </div>
       </div>
     </DemoItem>
 
     <DemoItem label="幽灵输入框 :ghost=true">
+      <template #desc>
+        幽灵输入框主要用在有色背景上，默认背景为透明，但在输入的时候仍然会使用白背景，黑色字体的高对比度样式
+      </template>
       <div class="demo-padding-10 input-bg">
         <div class="demo-margin-v-10">
-          <ImInput ghost placeholder="ghost"/>
-          <ImInput ghost color="#5e08ec" placeholder="ghost color=#5e08ec"/>
+          <ImInput ghost placeholder="ghost" v-model="inputGhostValue"/>
+          <ImInput ghost placeholder="ghost" v-model="inputGhostValue"/>
+          <ImInput ghost color="#5e08ec" placeholder="ghost color=#5e08ec" v-model="inputGhostValue"/>
         </div>
       </div>
     </DemoItem>
 
-    <DemoItem label="可编辑性">
-      <div>
+    <DemoItem label="颜色切换" desc="请点击颜色按钮，或者在输入框输入 RGB 色值。">
+      <div class="">
         <div class="demo-padding-10">
-          <ImInput v-model="value"/>
+          <ImButton @click="colorValue = null;colorValueInput=null;">Clear</ImButton>
+          <ImButton
+            v-for="color in colors" @click="colorValue=color"
+            :key="color" :color="color">{{color}}
+          </ImButton>
         </div>
         <div class="demo-padding-10">
-          <ImInput viewonly value="viewonly"/>
-          <ImInput viewonly value="readonly"/>
-          <ImInput viewonly value="disabled"/>
-        </div>
-        <div class="demo-padding-10">
-          <ImInput v-model="value" viewonly placeholder="viewonly color=danger"/>
-          <ImInput v-model="value" readonly placeholder="readonly color=success"/>
-          <ImInput v-model="value" disabled color="#5e08ec" placeholder="disabled color=#5e08ec"/>
-        </div>
-        <div class="demo-padding-10">
-          <ImInput v-model="value" viewonly placeholder="ghost color=danger"/>
-          <ImInput v-model="value" readonly placeholder="ghost color=success"/>
-          <ImInput v-model="value" disabled color="#5e08ec" placeholder="ghost color=#5e08ec"/>
+          <ImInput
+            v-model="colorValueInput"
+            :color="colorValue" :placeholder="'color='+colorValue"/>
+          <ImInput
+            v-model="colorValueInput"
+            :color="colorValue" :placeholder="'radius color='+colorValue" radius/>
         </div>
         <div class="demo-padding-10 input-bg">
-          <ImInput v-model="value" viewonly ghost placeholder="ghost color=danger"/>
-          <ImInput v-model="value" readonly ghost placeholder="ghost color=success"/>
-          <ImInput v-model="value" disabled ghost color="#5e08ec" placeholder="ghost color=#5e08ec"/>
-        </div>
-        <div class="demo-padding-10 input-bg">
-          <ImInput v-model="value" viewonly ghost color="#34fa50" placeholder="ghost color=danger"/>
-          <ImInput v-model="value" readonly ghost placeholder="ghost color=success"/>
-          <ImInput v-model="value" disabled ghost color="#5e08ec" placeholder="ghost color=#5e08ec"/>
+          <ImInput
+            v-model="colorValueInput"
+            :color="colorValue" :placeholder="'ghost color='+colorValue" ghost/>
+          <ImInput
+            v-model="colorValueInput"
+            :color="colorValue" :placeholder="'ghost radius color='+colorValue" radius ghost/>
         </div>
       </div>
     </DemoItem>
 
-    <DemoItem label="不同尺寸演示 size=lg|md|sm|xs">
-      <div class="demo-padding-10">
+    <DemoItem label="块级输入框 :block=true">
+      <div class="demo-padding-10 demo-width-full">
         <div class="demo-margin-v-10">
-          <ImInput placeholder="ghost color=danger"/>
-          <ImInput size="lg" placeholder="ghost color=success"/>
-          <ImInput size="sm" color="#5e08ec" placeholder="ghost color=#5e08ec"/>
+          <ImInput block placeholder=":block=true"/>
         </div>
         <div class="demo-margin-v-10">
-          <ImInput placeholder="ghost color=danger"/>
-          <ImInput size="xs" placeholder="ghost color=success"/>
-          <ImInput size="md" color="#5e08ec" placeholder="ghost color=#5e08ec"/>
+          <ImInput placeholder=":block=false"/>
         </div>
+      </div>
+    </DemoItem>
+
+    <DemoItem label="viewonly" desc="当 :vireonly=true 时，页面完全不存在 input 元素，是用一个 span 模拟的元素" nonFlex>
+      <div class="demo-padding-10 demo-width-full">
+        <div class="demo-margin-v-10">
+          <ImButton @click="viewonly=!viewonly">viewonly={{viewonly}}</ImButton>
+<!--          <ImButton @click="viewonlyTransparentBd=!viewonlyTransparentBd">-->
+<!--            {{viewonlyTransparentBd?'隐藏':'显示'}}边框-->
+<!--          </ImButton>-->
+        </div>
+        <div class="demo-margin-v-10">
+          <ImInput
+            :viewonly="viewonly" :class="viewonlyClass"
+            v-model="viewonlyValue" placeholder="viewonly"/>
+          <ImInput
+            :viewonly="viewonly" radius v-model="viewonlyValue" placeholder="radius"/>
+          <ImInput
+            :viewonly="viewonly" color="danger" v-model="viewonlyValue" placeholder="color=danger"/>
+        </div>
+      </div>
+      <div class="demo-padding-10 input-bg">
+        <ImInput
+          :viewonly="viewonly" ghost :class="viewonlyClass"
+          v-model="viewonlyValue" placeholder="ghost"/>
+        <ImInput
+          :viewonly="viewonly" ghost :class="viewonlyClass"
+          color="danger" v-model="viewonlyValue" placeholder="ghost color=danger"/>
+        <ImInput
+          :viewonly="viewonly" ghost :class="viewonlyClass"
+          color="#508e24" v-model="viewonlyValue" placeholder="ghost color=#508e24"/>
+      </div>
+      <div class="demo-padding-10 input-bg">
+        <ImInput
+          :viewonly="viewonly" ghost :class="viewonlyClass"
+          color="primary" v-model="viewonlyValue" placeholder="ghost color=primary"/>
+        <ImInput
+          :viewonly="viewonly" ghost :class="viewonlyClass"
+          color="info" v-model="viewonlyValue" placeholder="ghost color=info"/>
+        <ImInput
+          :viewonly="viewonly" ghost :class="viewonlyClass"
+          color="#5e08ee" v-model="viewonlyValue" placeholder="ghost color=#5e08ee"/>
+      </div>
+      <div class="demo-padding-10 input-bg">
+        <ImInput
+          :viewonly="viewonly" radius ghost color="warn" v-model="viewonlyValue"
+          :class="viewonlyClass" placeholder="radius ghost color=warn"/>
+        <ImInput
+          :viewonly="viewonly" radius ghost color="base" v-model="viewonlyValue"
+          :class="viewonlyClass" placeholder="radius ghost color=base"/>
+        <ImInput
+          :viewonly="viewonly" radius ghost color="#50f00e" v-model="viewonlyValue"
+          :class="viewonlyClass" placeholder="radius ghost color=#50f00e"/>
+      </div>
+    </DemoItem>
+
+    <DemoItem label="readonly" desc="当 :readonly=true 时，元素仍然可以获取焦点" nonFlex>
+      <div class="demo-padding-10 demo-width-full">
+        <div class="demo-margin-v-10">
+          <ImButton @click="readonly=!readonly">readonly={{readonly}}</ImButton>
+          <ImButton @click="onResetReadonly">清空值</ImButton>
+        </div>
+        <div class="demo-margin-v-10">
+          <ImInput :readonly="readonly" @focus="onFocusReadonly" v-model="readonlyValue"
+                   placeholder="readonly on-focus"/>
+          <ImInput :readonly="readonly" radius v-model="readonlyValue" placeholder="radius"/>
+          <ImInput :readonly="readonly" color="danger" v-model="readonlyValue" placeholder="color=danger"/>
+        </div>
+      </div>
+      <div class="demo-padding-10 input-bg">
+        <ImInput :readonly="readonly" ghost v-model="readonlyValue" placeholder="ghost"/>
+        <ImInput :readonly="readonly" ghost color="danger" v-model="readonlyValue" placeholder="ghost color=danger"/>
+        <ImInput :readonly="readonly" ghost color="#508e24" v-model="readonlyValue" placeholder="ghost color=#508e24"/>
+      </div>
+      <div class="demo-padding-10 input-bg">
+        <ImInput :readonly="readonly" ghost color="primary" v-model="readonlyValue" placeholder="ghost color=primary"/>
+        <ImInput :readonly="readonly" ghost color="info" v-model="readonlyValue" placeholder="ghost color=info"/>
+        <ImInput :readonly="readonly" ghost color="#5e08ee" v-model="readonlyValue" placeholder="ghost color=#5e08ee"/>
+      </div>
+      <div class="demo-padding-10 input-bg">
+        <ImInput :readonly="readonly" radius ghost color="warn" v-model="readonlyValue"
+                 placeholder="radius ghost color=warn"/>
+        <ImInput :readonly="readonly" radius ghost color="base" v-model="readonlyValue"
+                 placeholder="radius ghost color=base"/>
+        <ImInput :readonly="readonly" radius ghost color="#50f00e" v-model="readonlyValue"
+                 placeholder="radius ghost color=#50f00e"/>
+      </div>
+    </DemoItem>
+
+    <DemoItem label="disabled" nonFlex>
+      <template #desc>
+        当 :disabled=true 时，元素仍然不可获取焦点，注意与 readonly 的区别
+      </template>
+      <div class="demo-padding-10 demo-width-full">
+        <div class="demo-margin-v-10">
+          <ImButton @click="disabled=!disabled">disabled={{disabled}}</ImButton>
+          <ImButton @click="onResetDisabled">清空值</ImButton>
+        </div>
+        <div class="demo-margin-v-10">
+          <ImInput :disabled="disabled" @focus="onFocusDisabled" v-model="disabledValue"
+                   placeholder="disabled on-focus"/>
+          <ImInput :disabled="disabled" radius v-model="disabledValue" placeholder="radius"/>
+          <ImInput :disabled="disabled" color="danger" v-model="disabledValue" placeholder="color=danger"/>
+        </div>
+      </div>
+      <div class="demo-padding-10 input-bg">
+        <ImInput :disabled="disabled" ghost v-model="disabledValue" placeholder="ghost"/>
+        <ImInput :disabled="disabled" ghost color="danger" v-model="disabledValue" placeholder="ghost color=danger"/>
+        <ImInput :disabled="disabled" ghost color="#508e24" v-model="disabledValue" placeholder="ghost color=#508e24"/>
+      </div>
+      <div class="demo-padding-10 input-bg">
+        <ImInput :disabled="disabled" ghost color="primary" v-model="disabledValue" placeholder="ghost color=primary"/>
+        <ImInput :disabled="disabled" ghost color="info" v-model="disabledValue" placeholder="ghost color=info"/>
+        <ImInput :disabled="disabled" ghost color="#5e08ee" v-model="disabledValue" placeholder="ghost color=#5e08ee"/>
+      </div>
+      <div class="demo-padding-10 input-bg">
+        <ImInput :disabled="disabled" radius ghost color="warn" v-model="disabledValue"
+                 placeholder="radius ghost color=warn"/>
+        <ImInput :disabled="disabled" radius ghost color="base" v-model="disabledValue"
+                 placeholder="radius ghost color=base"/>
+        <ImInput :disabled="disabled" radius ghost color="#50f00e" v-model="disabledValue"
+                 placeholder="radius ghost color=#50f00e"/>
       </div>
     </DemoItem>
   </div>
 </template>
 <script>
+  /* eslint-disable */
   import {ImInput} from '../../packages/input';
+  import {ImButton} from '../../packages/button';
+  import {autoColorValid} from '../../utils/validator';
+
+  const colors = ImInput.props.color.validator.colors;
 
   export const InputBase = {
     name: 'InputBase',
-    components: {ImInput},
+    components: {ImInput, ImButton},
     data() {
       return {
+        colors: [...colors],
+        colorValue: null,
+        colorValueInput: null,
+        inputBaseValue: null,
+        inputGhostValue: '初始值',
         value: '可编辑性输入框值',
+
+        viewonly: false,
+        viewonlyValue: 'viewonly',
+        viewonlyTransparentBd: false,
+
+        readonly: false,
+        readonlyValue: 'readonly',
+
+        disabled: false,
+        disabledValue: 'disabled',
       };
+    },
+    computed: {
+      viewonlyClass() {
+        return {'transparent-bd': this.viewonlyTransparentBd};
+      },
+    },
+    watch: {
+      colorValueInput(now, old) {
+        if (now && now !== old && autoColorValid.isOptional(now)) {
+          this.colorValue = now;
+        } else if (!now) {
+          this.colorValue = null;
+        }
+      },
+    },
+    methods: {
+      onFocusReadonly() {
+        console.log(`================: readonly focus, this.readonly=${this.readonly}`);
+      },
+      onResetReadonly() {
+        this.readonlyValue = this.readonlyValue ? '' : 'readonly';
+      },
+      onFocusDisabled() {
+        console.log(`================: disabled focus, this.disabled=${this.disabled}`);
+      },
+      onResetDisabled() {
+        this.disabledValue = this.disabledValue ? '' : 'disabled';
+      },
     },
   };
   export default InputBase;

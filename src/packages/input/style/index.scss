@@ -58,8 +58,23 @@
   @include sizes-of-input-item();
 
   // 颜色
-  @mixin color-of-input() {
-    $color: map_get($color-map, $default-color-name);
+  @mixin color-of-input($name: null) {
+    $color: null;
+    @if ($name == null) {
+      $color: map_get($color-map, $default-color-name);
+    } @else {
+      $color: map_get($color-map, $name);
+      border-color: $color;
+
+      &.#{$ns-input}-ghost {
+        color: $color;
+      }
+
+      &[disabled], &[readonly], &.#{$ns-input}-viewonly {
+        border-color: $color !important;
+        color: $color !important;
+      }
+    }
     &:hover {
       z-index: 1;
       border-color: hover-color($color);
@@ -73,6 +88,12 @@
 
   @include color-of-input();
 
+  @each $name in map_keys($color-map) {
+    &.#{$ns-input}-#{$name} {
+      @include color-of-input($name);
+    }
+  }
+
   // 只读或只可看的设置
   &[disabled], &[readonly], &.#{$ns-input}-viewonly {
     box-shadow: none !important;
@@ -82,12 +103,11 @@
     }
   }
 
-  &[disabled], &[readonly] {
+  &[disabled], &[readonly], &.#{$ns-input}-viewonly {
     border-color: $default-input-border-color !important;
   }
 
   &.#{$ns-input}-viewonly {
-    border-color: transparent !important;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;

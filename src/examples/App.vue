@@ -218,26 +218,6 @@
     border: solid 1px #DDD;
   }
 
-  .demo-api-table {
-    collapse: 0;
-    border: 1px solid #DDD;
-    border-collapse: collapse;
-
-    & th,
-    & td {
-      padding: 0 12px;
-      border: 1px solid #DDD;
-    }
-
-    & th {
-      line-height: 42px;
-    }
-
-    & td {
-      line-height: 32px;
-    }
-  }
-
   .demo-bg {
     background: #A2A5AA;
   }

@@ -1,4 +1,4 @@
-import {nameFactory, READONLY, runtimeError} from '../../utils';
+import {nameFactory, READONLY} from '../../utils';
 import {typeBoolean, typeString} from '../../utils/props';
 import {ImTransition} from '../transition';
 import {autoColorValid, autoSizeValid} from '../../utils/validator';
@@ -7,7 +7,7 @@ import {rgbaColor} from '../../utils/color';
 import {ImWinClose} from '../win-ctrl';
 import {alertVisibleName} from '../../default';
 
-const subNs = 'alert', EMPTY = [],
+const subNs = 'alert', EMPTY = Object.freeze([]),
   visible = alertVisibleName,
   updateVisible = `update:${visible}`;
 const creator = nameFactory(subNs),
@@ -20,6 +20,10 @@ const alertBooleanCreator = cssBooleanCreator((name, val) => {
   return val ? creator(name) : '';
 }, 'dashed', 'radius');
 
+const createTitle = (h, title) => h('div', {
+  class: clsTitle,
+}, [title]);
+
 export const ImAlert = creator.create({
   functional: true,
   model: {
@@ -29,6 +33,7 @@ export const ImAlert = creator.create({
   props: {
     [visible]: typeBoolean(true),
     title: typeString(),
+    description: typeString(),
     icon: typeString(),
     color: {
       type: String,
@@ -48,36 +53,34 @@ export const ImAlert = creator.create({
     const {visible} = props;
     if (visible) {
       const {[updateVisible]: updateSync, ...on} = listeners;
-      const {title, color, size} = props, {class: classArgs} = data;
+      const {title, description: desc, closeText, color, size} = props, {class: classArgs} = data;
 
       const className = `${clsAlert} ${alertColorCreator(color)} ${size ? creator(size) : ''}`;
       const computedClass = alertBooleanCreator(props, $providedProps);
       const mergedClass = classArgs ? [classArgs, className,
         ...computedClass] : [className, ...computedClass];
 
-      const {title: titleSlots = EMPTY, close = EMPTY, ...rest} = slots();
+      const {title: titleSlots = EMPTY, close = EMPTY, default: defaults = EMPTY} = slots();
 
+      const titleNode = titleSlots.length ? h('div', {class: clsTitle}, titleSlots)
+        : (defaults.length ? (title ? createTitle(h, title) : null) : (desc ? createTitle(h, title) : null));
+      const defaultNode = defaults.length ? defaults : (desc ? [desc] : [title]);
+      const closeNode = updateSync || close.length ? h('div', {
+        class: clsClose,
+        on: {
+          click: typeof (updateSync) === 'function' ? () => {
+            updateSync(false);
+          } : () => {
+            updateSync.forEach(fn => {
+              fn(false);
+            });
+          },
+        },
+      }, close.length ? close : [
+        closeText ? (0) : h(ImWinClose, READONLY),
+      ]) : null;
       return h(ImTransition, {on}, [
-        h('div', {...data, class: mergedClass}, [
-          titleSlots.length ? h('div', {
-            class: clsTitle,
-          }, titleSlots) : (title ? h('div', {
-            class: clsTitle,
-          }, [title]) : ''),
-          ...Object.values(rest).flat(),
-          updateSync ? h('div', {
-            class: clsClose,
-            on: {
-              click: typeof (updateSync) === 'function' ? function () {
-                updateSync(false);
-              } : function () {
-                updateSync.forEach(fn => {
-                  fn(false);
-                });
-              },
-            },
-          }, close.length ? close : [h(ImWinClose, READONLY)]) : null,
-        ]),
+        h('div', {...data, class: mergedClass}, [titleNode, ...defaultNode, closeNode]),
       ]);
     }
   },

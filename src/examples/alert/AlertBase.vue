@@ -9,6 +9,14 @@
       <ImAlert title="标题">这是一个带有标题的使用示例</ImAlert>
     </DemoItem>
 
+    <DemoItem label="只设置 title">
+      <ImAlert title="标题"/>
+    </DemoItem>
+
+    <DemoItem label="设置 title 和 description">
+      <ImAlert title="标题" description="内容：今天的表演很精彩"/>
+    </DemoItem>
+
     <DemoItem label="可控制显示或隐藏">
       <div class="demo-flex-1">
         <ImAlert :visible="switchVisible">可通过传入 visible 参数控制 Alert 的显示或隐藏</ImAlert>
