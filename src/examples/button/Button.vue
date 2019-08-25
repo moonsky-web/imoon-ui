@@ -89,7 +89,7 @@
             type: Boolean,
             values: null,
             default: false,
-            desc: '是否加载状态，loading 状态按钮不能触发事件',
+            desc: '是否加载状态，loading 状态按钮不能触发事件（未实现）',
           },
           {
             name: 'icon',

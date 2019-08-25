@@ -3,7 +3,7 @@ import {typeBoolean, typeNullBoolean, typeString} from '../../utils/props';
 import {colorRegister} from './style';
 import {autoColorValid, autoSizeValid} from '../../utils/validator';
 import {addDynamicCSS, cssBooleanCreator} from '../../utils/style';
-import {clsGap, clsGapBlock} from '../../utils/class';
+import {classBlock} from '../../utils/class';
 
 const subNs = 'btn', readonly = Object.freeze({});
 const creator = nameFactory(subNs), clsBtn = creator(), clsTxt = creator('text');
@@ -38,26 +38,30 @@ export const ImButton = {
     loading: typeBoolean(),
   },
   render(h, {
-    props, data, children, injections: {$providedProps = readonly} = readonly,
+    props, data, children, parent, injections: {$providedProps = readonly} = readonly,
   }) {
     const {class: cls, attrs = {}} = data, {color, size, text, to, disabled, block} = props;
     const names = text ? [clsTxt] : btnBooleanCreator(props, $providedProps);
     const classes = [
-      clsBtn, clsGap, {[clsGapBlock]: block}, ...names,
+      clsBtn, classBlock(block), ...names,
       `${colorCreator(color)} ${size ? creator(size) : ''}`,
     ], settings = {...data, attrs, class: classes};
     if (cls) {
       classes.push(cls);
     }
     let tag = 'button';
-    if (to) {
-      tag = 'a';
-      attrs.href = to;
-    }
     if (disabled) {
       settings.on = null;
       settings.nativeOn = null;
       attrs.disabled = 'disabled';
+    } else if (to) {
+      if (parent && parent.$router) {
+        settings.props = {to};
+        tag = 'RouterLink';
+      } else {
+        attrs.href = to;
+        tag = 'a';
+      }
     }
     return h(tag, settings, children);
   },

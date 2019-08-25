@@ -4,7 +4,12 @@
     <div class="demo-item-desc">
       <slot name="desc">{{desc}}</slot>
     </div>
-    <div class="demo-item-content" ref="content" :class="{'keep-display-flex':!notFlex}">
+    <div
+      class="demo-item-content"
+      ref="content"
+      :class="{
+        'keep-display-flex':!notFlex,
+        'demo-flex-column': flexColumn}">
       <slot></slot>
     </div>
     <div>
@@ -29,6 +34,7 @@
       label: String,
       desc: String,
       notFlex: Boolean,
+      flexColumn: Boolean,
     },
     computed: {
       currentPath() {
@@ -48,6 +54,10 @@
 </script>
 
 <style scoped lang="scss">
+  .demo-flex-column {
+    flex-direction: column;
+  }
+
   .demo-item-style {
     padding: 10px 20px 10px;
     margin: 30px 0;
@@ -56,7 +66,7 @@
     transition-duration: .3s;
 
     &:hover, &:focus-within {
-      box-shadow: 0 0 12px #aaa;
+      box-shadow: 0 0 12px #999;
     }
   }
 

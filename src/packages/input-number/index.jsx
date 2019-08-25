@@ -3,7 +3,7 @@ import {inputExpandMixin} from '../../predefined/mixins';
 import {isDef} from '../../utils/predicates';
 import {ImInputClearable, inputFactory} from '../input';
 import {proxyDefaultValue} from '../../utils/proxy';
-import {clsGap, clsGapBlock} from '../../utils/class';
+import {classBlock} from '../../utils/class';
 
 const subNs = 'InputNumber';
 const factory = nameFactory(subNs), name = factory.thisName();
@@ -61,7 +61,7 @@ export const ImInputNumber = {
     inputData.attrs.max = context.max;
     inputData.attrs.min = context.min;
     return (
-      <div class={[clsNumber, clsGap, {[clsGapBlock]: block}, inputFactory(size)]}>
+      <div class={[clsNumber, classBlock(block), inputFactory(size)]}>
         <ImInputClearable
           ref="input"
           {...inputData}

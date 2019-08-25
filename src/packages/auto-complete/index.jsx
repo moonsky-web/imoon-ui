@@ -4,7 +4,7 @@ import {typeArray, typeBoolean} from '../../utils/props';
 import {filterArray} from '../../utils/array';
 import {ImTransition} from '../transition';
 import {inputExpandMixin} from '../../predefined/mixins';
-import {clsGap, clsGapBlock} from '../../utils/class';
+import {classBlock} from '../../utils/class';
 import {contains} from '../../utils/predicates';
 import {proxyDefaultValue} from '../../utils/proxy';
 
@@ -162,7 +162,7 @@ export const ImAutoComplete = {
     const optionsMeta = context.getOptionsMeta();
     data.props.clearable = context.clearable;
     return (
-      <div class={[clsAuto, clsGap, {[clsGapBlock]: block}]}>
+      <div class={[clsAuto, classBlock(block)]}>
         <ImInputClearable
           ref="input" {...data}
           on-input={context.onInput}

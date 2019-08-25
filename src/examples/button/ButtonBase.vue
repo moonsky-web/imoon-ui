@@ -14,6 +14,9 @@
           <ImButton color="danger">Danger</ImButton>
           <ImButton color="#bace64">#bace64</ImButton>
         </div>
+        <div class="demo-margin-v-10">
+          <ImButton color="info" to="/alert/base">To Alert</ImButton>
+        </div>
       </div>
     </DemoItem>
     <DemoItem label="基本示例 2">
@@ -29,6 +32,28 @@
           <ImButton color="warn">警告按钮</ImButton>
           <ImButton color="danger">危险按钮</ImButton>
           <ImButton color="#bace64">色号按钮</ImButton>
+        </div>
+      </div>
+    </DemoItem>
+    <DemoItem label="文本">
+      <div>
+        <div class="demo-margin-v-10">
+          <ImButton text>Button</ImButton>
+          <ImButton text color="primary">Primary</ImButton>
+          <ImButton text color="base">Base</ImButton>
+          <ImButton text color="success">Success</ImButton>
+        </div>
+        <div class="demo-margin-v-10">
+          <ImButton text color="info">Info</ImButton>
+          <ImButton text color="warn">Warn</ImButton>
+          <ImButton text color="danger">Danger</ImButton>
+          <ImButton text color="#bace64">#bace64</ImButton>
+        </div>
+        <div class="demo-margin-v-10">
+          <ImButton text disabled>Info</ImButton>
+          <ImButton text disabled color="warn">Warn</ImButton>
+          <ImButton text disabled color="danger">Danger</ImButton>
+          <ImButton text disabled color="#bace64">#bace64</ImButton>
         </div>
       </div>
     </DemoItem>

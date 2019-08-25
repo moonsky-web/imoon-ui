@@ -90,8 +90,11 @@
     background: transparent;
   }
 
-  @mixin color-on-text($name: $default-color-name, $important: false) {
-    $color: get-color($name);
+  @mixin color-on-text($name: null, $important: false) {
+    $color: #333;
+    @if ($name != null) {
+      $color: get-color($name);
+    }
     @include set-prop(color, $color, $important);
     &:hover {
       color: hover-color($color, 16);
@@ -109,11 +112,11 @@
     @include set-prop(box-shadow, none, $important);
 
     @each $name in map_keys($color-map) {
-      @if ($name != $default-color-name) {
-        &.#{$ns-btn}-#{$name} {
-          @include color-on-text($name);
-        }
+      //@if ($name != $default-color-name) {
+      &.#{$ns-btn}-#{$name} {
+        @include color-on-text($name);
       }
+      //}
     }
   }
 
@@ -141,7 +144,14 @@
     border: 1px solid #aaa !important;
     color: #aaa !important;
     box-shadow: none !important;
-    pointer-events: none !important;
+    cursor: not-allowed;
+    //pointer-events: none !important;
+
+    &.#{$ns-btn}-text {
+      background: transparent !important;
+      border-color: transparent !important;
+    }
+
     //@include set-mouse-style(false, not-allowed);
   }
 

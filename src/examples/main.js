@@ -7,12 +7,14 @@ import {eachArray} from '../utils';
  */
 import {DemoContainer} from './common/DemoContainer';
 import {DemoItem} from './common/DemoItem';
+import {DemoSubItem} from './common/DemoSubItem';
 
 import '../index.scss';
 
 eachArray([
   DemoContainer,
   DemoItem,
+  DemoSubItem,
 ], component => {
   Vue.component(component.name, component);
 });

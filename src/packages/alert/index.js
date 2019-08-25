@@ -63,7 +63,7 @@ export const ImAlert = creator.create({
       const {title: titleSlots = EMPTY, close = EMPTY, default: defaults = EMPTY} = slots();
 
       const titleNode = titleSlots.length ? h('div', {class: clsTitle}, titleSlots)
-        : (defaults.length ? (title ? createTitle(h, title) : null) : (desc ? createTitle(h, title) : null));
+        : (defaults.length ? (title ? createTitle(h, title) : null) : (desc && title ? createTitle(h, title) : null));
       const defaultNode = defaults.length ? defaults : (desc ? [desc] : [title]);
       const closeNode = updateSync || close.length ? h('div', {
         class: clsClose,

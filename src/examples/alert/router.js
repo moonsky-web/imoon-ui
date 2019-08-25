@@ -1,7 +1,5 @@
 import {Alert} from './Alert';
 import {AlertBase} from './AlertBase';
-import {AlertColor} from './AlertColor';
-import {AlertSize} from './AlertSize';
 
 export const AlertRoutes = [
   {
@@ -15,22 +13,6 @@ export const AlertRoutes = [
         component: AlertBase,
         meta: {
           title: '基础演示',
-        },
-      },
-      {
-        path: '/alert/color',
-        name: AlertColor.name,
-        component: AlertColor,
-        meta: {
-          title: '颜色切换',
-        },
-      },
-      {
-        path: '/alert/size',
-        name: AlertSize.name,
-        component: AlertSize,
-        meta: {
-          title: '自定义尺寸',
         },
       },
       {path: '/alert', redirect: '/alert/base'},

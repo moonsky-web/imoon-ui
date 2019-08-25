@@ -6,7 +6,7 @@ import {ImWinClose} from '../win-ctrl';
 import {typeBoolean} from '../../utils/props';
 import {convertListeners} from '../../utils/vnode';
 import {inputExpandMixin} from '../../predefined/mixins';
-import {clsGap, clsGapBlock} from '../../utils/class';
+import {classBlock} from '../../utils/class';
 
 const subNs = 'Input';
 const factory = nameFactory(subNs),
@@ -70,8 +70,7 @@ export const ImInput = factory.create({
   render(h, {data, props = READONLY, injections: {$providedProps = READONLY} = READONLY}) {
     const {class: classArgs} = data, {viewonly, value, color, size, block} = props;
     const classes = [
-      {[clsGapBlock]: block},
-      clsGap, clsInput,
+      classBlock(block), clsInput,
       `${inputColorCreator(color)} ${size ? factory(size) : ''}`,
       ...inputBooleanCreator(props, $providedProps)], settings = {
       ...data, props,
@@ -99,8 +98,7 @@ export const ImInputClearable = factory.create('clearable', {
     let {size} = $props;
     return h('div', {
       class: [
-        clsClear, clsGap,
-        {[clsGapBlock]: $props.block},
+        clsClear, classBlock($props.block),
         size ? factory(size) : null],
     }, [
       h(ImInput, {
