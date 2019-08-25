@@ -38,6 +38,7 @@
           v-for="color in colors" @click="colorValue=color"
           :key="color" :color="color">{{color}}
         </ImButton>
+        <ImButton @click="onRandomColor" :color="colorValue">随机颜色</ImButton>
       </div>
       <div class="demo-padding-10">
         <ImInput
@@ -238,6 +239,7 @@
   import {ImInput} from '../../packages/input';
   import {ImButton} from '../../packages/button';
   import {autoColorValid} from '../../utils/validator';
+  import {getRandomColor} from '../util';
 
   const colors = ImInput.props.color.validator.colors;
   const sizes = ImInput.props.size.validator.sizes;
@@ -299,6 +301,9 @@
       },
       onResetDisabled() {
         this.disabledValue = this.disabledValue ? '' : 'disabled';
+      },
+      onRandomColor() {
+        this.colorValueInput = getRandomColor();
       },
     },
   };

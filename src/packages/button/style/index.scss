@@ -23,7 +23,7 @@
     $setting: map_get($size-map, $name);
     font-size: map_get($setting, 'fontSize');
     @include set-padding-h(map_get($setting, 'btnPadding'));
-    @include set-liner-height(map_get($setting, $height), 1px);
+    @include set-liner-height(map_get($setting, $height), 0px);
     //@include set-liner-height(map_get($setting, $height), 1px);
   }
 

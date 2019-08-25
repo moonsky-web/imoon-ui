@@ -141,6 +141,7 @@
         <ImButton color="#ac94de">按钮</ImButton>
         <ImButton color="#aa5511">按钮</ImButton>
         <ImButton color="#cafb09" style="color:#000;">按钮</ImButton>
+        <ImButton @click="onRandomColor" :color="randomColor">随机生成颜色: {{randomColor}}</ImButton>
       </div>
     </DemoItem>
     <DemoItem label="自定义尺寸">
@@ -156,17 +157,26 @@
 <script>
   /* eslint-disable */
   import {ImButton} from '../../packages/button';
+  import {getRandomColor} from '../util';
 
   export const ButtonBase = {
     name: 'ButtonBase',
     components: {ImButton},
     data() {
-      return {};
+      return {
+        randomColor: null,
+      };
     },
     methods: {
       onDisabledClick() {
         console.log('lllllllllllllllllll');
       },
+      onRandomColor() {
+        this.randomColor = getRandomColor();
+      },
+    },
+    created() {
+      this.onRandomColor();
     },
   };
   export default ButtonBase;

@@ -4,12 +4,18 @@
 $namespace: 'im';
 
 // 色号定义
-$color-primary: #008080; // 主色
+$current-colors: (
+    #008080,
+    #1b9859,
+    #dc3d3c,
+    #F81B29
+);
+$color-primary: #1b9859; // 主色
 $color-success: #008B45; // 成功提示
 $color-base: #849ba1; // 基础
 $color-info: #4169E1; // 信息
 $color-warn: #f59926; // 警告
-$color-danger: #dc3d3c; // 严重、危险、错误等
+$color-danger: #F81B29; // 严重、危险、错误等
 
 // 动画时长
 $transition-duration-fast: .2s;
