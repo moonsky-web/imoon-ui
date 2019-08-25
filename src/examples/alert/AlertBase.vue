@@ -2,7 +2,28 @@
   <div>
 
     <DemoItem label="基本示例">
-      <ImAlert>这是一个基本使用示例</ImAlert>
+      <template #desc>
+        这是一个绑定有生命周期的 Alert，课通过控制台查看
+      </template>
+      <div class="demo-flex-1">
+        <ImAlert
+          v-model="firstVisible"
+          @onBeforeCreate="onBeforeCreate"
+          @onCreating="onCreating"
+          @onCreated="onCreated"
+          @onCreate="onCreate"
+          @onBeforeClose="onBeforeClose"
+          @onClosing="onClosing"
+          @onClose="onClose"
+          @onClosed="onClosed"
+        >这是一个基本使用示例
+        </ImAlert>
+      </div>
+      <div class="demo-default-box">
+        <ImButton @click="firstVisible=!firstVisible">
+          {{firstVisible?'隐藏':'显示'}}
+        </ImButton>
+      </div>
     </DemoItem>
 
     <DemoItem label="带有标题示例">
@@ -70,6 +91,7 @@
   </div>
 </template>
 <script>
+  /* eslint-disable */
   import {ImButton} from '../../packages/button';
   import {ImAlert} from '../../packages/alert';
 
@@ -78,10 +100,37 @@
     components: {ImAlert, ImButton},
     data() {
       return {
+        firstVisible: true,
         switchVisible: true,
         closeable: true,
         closeableWithModel: true,
       };
+    },
+    methods: {
+      onBeforeCreate() {
+        console.log('onBeforeCreate');
+      },
+      onCreating() {
+        console.log('onCreating');
+      },
+      onCreate() {
+        console.log('onCreate');
+      },
+      onCreated() {
+        console.log('onCreated');
+      },
+      onBeforeClose() {
+        console.log('onBeforeClose');
+      },
+      onClosing() {
+        console.log('onClosing');
+      },
+      onClose() {
+        console.log('onClose');
+      },
+      onClosed() {
+        console.log('onClosed');
+      },
     },
   };
   export default AlertBase;

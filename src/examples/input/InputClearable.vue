@@ -19,6 +19,9 @@
     </DemoItem>
 
     <DemoItem label="幽灵输入框 :ghost=true">
+      <template #desc>
+        幽灵输入框主要用在有色背景上，默认背景为透明，但在输入的时候仍然会使用白色背景，黑色字体的高对比度样式
+      </template>
       <div class="demo-padding-10 input-bg">
         <div class="demo-margin-v-10">
           <ImInputClearable ghost placeholder="ghost" v-model="inputGhostValue"/>
@@ -56,6 +59,40 @@
       </div>
     </DemoItem>
 
+    <DemoItem label="不同尺寸" notFlex>
+      <div>
+        <ImButton @click="sizeValue = null">Clear</ImButton>
+        <ImButton
+          v-for="size in sizes" @click="sizeValue=size"
+          :key="size" :size="size">{{size}}
+        </ImButton>
+      </div>
+      <div class="demo-padding-10">
+        <ImInputClearable :size="sizeValue" :placeholder="'size='+sizeValue"/>
+        <ImInputClearable :size="sizeValue" :placeholder="'radius size='+sizeValue" radius/>
+      </div>
+      <div class="demo-padding-10">
+        <ImInputClearable color="danger" :size="sizeValue" :placeholder="'size='+sizeValue"/>
+        <ImInputClearable color="warn" :size="sizeValue" :placeholder="'radius size='+sizeValue" radius/>
+      </div>
+      <div class="demo-padding-10">
+        <ImInputClearable color="#123456" :size="sizeValue" :placeholder="'size='+sizeValue"/>
+        <ImInputClearable color="#ad4" :size="sizeValue" :placeholder="'radius size='+sizeValue" radius/>
+      </div>
+      <div class="demo-padding-10 input-bg">
+        <ImInputClearable :size="sizeValue" :placeholder="'ghost size='+sizeValue" ghost/>
+        <ImInputClearable :size="sizeValue" :placeholder="'ghost radius size='+sizeValue" radius ghost/>
+      </div>
+      <div class="demo-padding-10 input-bg">
+        <ImInputClearable color="danger" :size="sizeValue" :placeholder="'ghost size='+sizeValue" ghost/>
+        <ImInputClearable color="warn" :size="sizeValue" :placeholder="'ghost radius size='+sizeValue" radius ghost/>
+      </div>
+      <div class="demo-padding-10 input-bg">
+        <ImInputClearable color="#123456" :size="sizeValue" :placeholder="'ghost size='+sizeValue" ghost/>
+        <ImInputClearable color="#ad4" :size="sizeValue" :placeholder="'ghost radius size='+sizeValue" radius ghost/>
+      </div>
+    </DemoItem>
+
     <DemoItem label="块级输入框 :block=true">
       <div class="demo-padding-10 demo-width-full">
         <div class="demo-margin-v-10">
@@ -67,15 +104,26 @@
       </div>
     </DemoItem>
 
-    <DemoItem label="viewonly" desc="当 :vireonly=true 时，页面完全不存在 input 元素，是用一个 span 模拟的元素" nonFlex>
+    <DemoItem label="viewonly" desc="当 :vireonly=true 时，页面完全不存在 input 元素，是用一个 span 模拟的元素" notFlex>
       <div class="demo-padding-10 demo-width-full">
         <div class="demo-margin-v-10">
           <ImButton @click="viewonly=!viewonly">viewonly={{viewonly}}</ImButton>
+          <ImButton @click="onResetViewonly">清空值</ImButton>
         </div>
         <div class="demo-margin-v-10">
           <ImInputClearable :viewonly="viewonly" v-model="viewonlyValue" placeholder="viewonly"/>
           <ImInputClearable :viewonly="viewonly" radius v-model="viewonlyValue" placeholder="radius"/>
           <ImInputClearable :viewonly="viewonly" color="danger" v-model="viewonlyValue" placeholder="color=danger"/>
+        </div>
+        <div class="demo-margin-v-10">
+          <ImInputClearable
+            :viewonly="viewonly" color="#123456" :class="viewonlyClass"
+            v-model="viewonlyValue" placeholder="viewonly color=#123456"/>
+          <ImInputClearable
+            :viewonly="viewonly" radius color="warn"
+            v-model="viewonlyValue" placeholder="radius color=warn"/>
+          <ImInputClearable
+            :viewonly="viewonly" color="info" v-model="viewonlyValue" placeholder="color=info"/>
         </div>
       </div>
       <div class="demo-padding-10 input-bg">
@@ -98,7 +146,7 @@
       </div>
     </DemoItem>
 
-    <DemoItem label="readonly" desc="当 :readonly=true 时，元素仍然可以获取焦点" nonFlex>
+    <DemoItem label="readonly" desc="当 :readonly=true 时，元素仍然可以获取焦点" notFlex>
       <div class="demo-padding-10 demo-width-full">
         <div class="demo-margin-v-10">
           <ImButton @click="readonly=!readonly">readonly={{readonly}}</ImButton>
@@ -131,7 +179,7 @@
       </div>
     </DemoItem>
 
-    <DemoItem label="disabled" nonFlex>
+    <DemoItem label="disabled" notFlex>
       <template #desc>
         当 :disabled=true 时，元素仍然不可获取焦点，注意与 readonly 的区别
       </template>
@@ -175,6 +223,7 @@
   import {autoColorValid} from '../../utils/validator';
 
   const colors = ImInput.props.color.validator.colors;
+  const sizes = ImInput.props.size.validator.sizes;
 
   export const InputClearable = {
     name: 'InputClearable',
@@ -182,8 +231,13 @@
     data() {
       return {
         colors: [...colors],
+        sizes: [...sizes],
+
         colorValue: null,
         colorValueInput: null,
+
+        sizeValue: null,
+
         inputBaseValue: null,
         inputGhostValue: '初始值',
         value: '可编辑性输入框值',
@@ -198,6 +252,11 @@
         disabledValue: 'disabled',
       };
     },
+    computed: {
+      viewonlyClass() {
+        return {'transparent-bd': this.viewonlyTransparentBd};
+      },
+    },
     watch:{
       colorValueInput(now, old){
         if (now && now !== old && autoColorValid.isOptional(now)) {
@@ -208,6 +267,9 @@
       }
     },
     methods: {
+      onResetViewonly() {
+        this.viewonlyValue = this.viewonlyValue ? '' : 'readonly';
+      },
       onFocusReadonly() {
         console.log(`================: readonly focus, this.readonly=${this.readonly}`);
       },

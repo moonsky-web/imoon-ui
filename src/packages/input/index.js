@@ -11,13 +11,12 @@ import {clsGap, clsGapBlock} from '../../utils/class';
 const subNs = 'Input';
 const factory = nameFactory(subNs),
   clsInput = factory(),
-  clsView = factory('viewonly'),
   clsClear = factory('clearable'),
   clsClearIcon = factory('clearIcon');
-const inputColorCreator = addDynamicCSS(subNs, inputColorRegister, {supportColor: false});
-const inputBooleanCreator = cssBooleanCreator((name, val) => {
-  return val ? factory(name) : null;
-}, 'ghost', 'radius');
+const inputColorCreator = addDynamicCSS(subNs, inputColorRegister);
+const inputBooleanCreator = cssBooleanCreator(
+  (name, val) => val ? factory(name) : null,
+  'ghost', 'radius');
 
 function noneInput() {
 }
@@ -56,10 +55,10 @@ const Default = {
   props: {placeholder: null, value: null},
   render(h, {
     // eslint-disable-next-line
-    data: {attrs: {value: v, ...attrs}, ...rest}, children
+    data: {attrs: {value, ...attrs}, ...rest}, children,
   }) {
-    rest.class.push(clsView);
     rest.attrs = attrs;
+    attrs.viewonly = 1;
     return h('span', rest, children);
   },
 };

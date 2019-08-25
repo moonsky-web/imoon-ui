@@ -24,7 +24,7 @@
           {
             name: 'size',
             type: 'String',
-            values: [...autoSizeValid.names, 'auto'],
+            values: [...autoSizeValid.sizes, 'auto'],
             default: null,
             desc: '尺寸，预定义尺寸，或使用 font-size。',
           },
@@ -83,6 +83,13 @@
             values: null,
             default: false,
             desc: '是否禁用',
+          },
+          {
+            name: 'loading',
+            type: Boolean,
+            values: null,
+            default: false,
+            desc: '是否加载状态，loading 状态按钮不能触发事件',
           },
           {
             name: 'icon',

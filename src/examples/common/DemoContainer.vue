@@ -6,16 +6,24 @@
     <router-view/>
     <slot name="api">
       <slot name="props">
-        <ApiItem label="Props" :data="props" :columns="propsColumns"/>
+        <ApiItem
+          label="Props" :desc="propsDesc" :data="props"
+          :columns="propsColumns" :placeholder="propsPlaceholder"/>
       </slot>
       <slot name="events">
-        <ApiItem label="Events" :data="events" :columns="eventsColumns"/>
+        <ApiItem
+          label="Events" :desc="eventsDesc" :data="events"
+          :columns="eventsColumns" :placeholder="eventsPlaceholder"/>
       </slot>
       <slot name="slots">
-        <ApiItem label="Slots" :data="slots" :columns="slotsColumns"/>
+        <ApiItem
+          label="Slots" :desc="slotsDesc" :data="slots"
+          :columns="slotsColumns" :placeholder="slotsPlaceholder"/>
       </slot>
       <slot name="scopeSlots">
-        <ApiItem label="Scope slots" :data="[]" :columns="[]"/>
+        <ApiItem
+          label="Scope slots" :desc="scopeSlotsDesc" :data="[]"
+          :columns="[]" :placeholder="scopeSlotsPlaceholder"/>
       </slot>
     </slot>
   </div>
@@ -67,6 +75,8 @@
     functional: true,
     props: {
       label: String,
+      desc: String,
+      placeholder: String,
       data: {
         type: Array,
         default() {
@@ -75,24 +85,20 @@
       },
       columns: Array,
     },
-    render(h, {props: {data, columns = PROPS_COLUMNS, label}}) {
+    render(h, {props: {data, columns = PROPS_COLUMNS, label, desc, placeholder}}) {
       const table = h('table', {
         class: 'demo-width-full demo-api-table',
       }, [
         h('colgroup', {}, columns.map(({col}) => h('col', {attrs: col}))),
         h('thead', {}, columns.map(column => h('th', {}, [
-          h('div', {}, [
-            h('div', {}, [column.name]),
-          ]),
+          h('div', {}, [h('div', {}, [column.name])]),
         ]))),
         h('tbody', {}, data.length ? data.map(row => h('tr', {
           class: '',
         }, columns.map(({prop, render = defaultRender}) => h('td', {
           class: {'demo-api-td-values': prop === 'values'},
         }, [
-          h('p', {
-            class: 'demo-api-td-data',
-          }, [
+          h('p', {class: 'demo-api-td-data'}, [
             render(h, row[prop]) || defaultRender(h, row[prop]),
           ]),
         ])))) : [
@@ -100,15 +106,14 @@
             h('td', {
               class: 'demo-align-center',
               attrs: {colspan: columns.length},
-            }, [
-              h('p', {}, ['无信息']),
-            ]),
+            }, [h('p', {}, [placeholder || '无信息'])]),
           ]),
         ]),
       ]);
 
-      return data.length ? h('div', {}, [
+      return (data.length || label || desc) ? h('div', {}, [
         label ? h('h4', {class: 'demo-api-sub-title'}, [label]) : null,
+        desc ? h('div', {class: 'demo-api-sub-desc'}, [desc]) : null,
         table,
       ]) : null;
     },
@@ -119,9 +124,20 @@
     components: {ApiItem: DemoTable},
     props: {
       props: Array,
+      propsDesc: String,
+      propsPlaceholder: String,
+
       events: Array,
+      eventsDesc: String,
+      eventsPlaceholder: String,
+
       slots: Array,
+      slotsDesc: String,
+      slotsPlaceholder: String,
+
       scopeSlots: Array,
+      scopeSlotsDesc: String,
+      scopeSlotsPlaceholder: String,
     },
     data() {
       return {
@@ -146,6 +162,11 @@
   .demo-api-sub-title {
     padding: 24px 12px 0;
     line-height: 42px;
+  }
+
+  .demo-api-sub-desc {
+    padding: 12px;
+    line-height: 24px;
   }
 
   .demo-api-table {

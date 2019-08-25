@@ -21,7 +21,7 @@ export function autoSizeValid(v, allowAutoSize = true) {
 
 defineDefaultGetter(sizeValid, defaultSizeName);
 defineDefaultGetter(autoSizeValid, defaultSizeName);
-defineGetterSetter(autoSizeValid, 'names', () => [...SIZE_NAMES]);
+defineGetterSetter(autoSizeValid, 'sizes', () => [...SIZE_NAMES]);
 
 /*
  * color validator

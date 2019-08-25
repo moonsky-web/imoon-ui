@@ -34,7 +34,7 @@
   /*
    ghost 默认状态是透明背景，默认边框颜色，默认字体颜色
    */
-  &.#{$ns-input}-ghost:not([disabled]) {
+  &.#{$ns-input}-ghost:not([disabled]):not([readonly]):not([viewonly]) {
     background: transparent;
 
     &:hover {
@@ -68,11 +68,13 @@
 
       &.#{$ns-input}-ghost {
         color: $color;
+        &[viewonly]{
+          border-color: transparent !important;
+        }
       }
 
-      &[disabled], &[readonly], &.#{$ns-input}-viewonly {
+      &[disabled], &[readonly] {
         border-color: $color !important;
-        color: $color !important;
       }
     }
     &:hover {
@@ -95,7 +97,7 @@
   }
 
   // 只读或只可看的设置
-  &[disabled], &[readonly], &.#{$ns-input}-viewonly {
+  &[disabled], &[readonly], &[viewonly] {
     box-shadow: none !important;
 
     &.#{$ns-input}-ghost {
@@ -103,11 +105,12 @@
     }
   }
 
-  &[disabled], &[readonly], &.#{$ns-input}-viewonly {
+  &[disabled], &[readonly] {
     border-color: $default-input-border-color !important;
   }
 
-  &.#{$ns-input}-viewonly {
+  &[viewonly] {
+    border-color: transparent !important;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
@@ -120,6 +123,7 @@
   width: $default-input-width;
   @include set-align-middle();
   @include sizes-of-input-item();
+  @include set-transition-duration();
 
   & > .#{$ns-input}-clear-icon {
     position: absolute;

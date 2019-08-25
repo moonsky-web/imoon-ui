@@ -3,7 +3,7 @@ import {inputExpandMixin} from '../../predefined/mixins';
 import {isDef} from '../../utils/predicates';
 import {ImInputClearable, inputFactory} from '../input';
 import {proxyDefaultValue} from '../../utils/proxy';
-import {clsGapBlock, clsGap} from '../../utils/class';
+import {clsGap, clsGapBlock} from '../../utils/class';
 
 const subNs = 'InputNumber';
 const factory = nameFactory(subNs), name = factory.thisName();

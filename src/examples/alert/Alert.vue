@@ -1,5 +1,10 @@
 <template>
-  <DemoContainer :props="props" :slots="slots" :events="events">
+  <DemoContainer
+    :props="props"
+    :slots="slots"
+    :events="events"
+    :eventsDesc="eventsDesc"
+    eventsPlaceholder="参考 ImTransition 或 vue transition 组件生命周期事件">
     <div slot="detail">
       Alert 演示
     </div>
@@ -11,6 +16,11 @@
 
   export const Alert = {
     name: 'Alert',
+    data() {
+      const eventsDesc = 'Alert 的事件是依赖于 ImTransition 组件的，' +
+        '故支持所有 ImTransition 事件，同时也支持所有 vue transition 组件的所有钩子。';
+      return {eventsDesc};
+    },
     computed: {
       events() {
         return [];
@@ -64,7 +74,7 @@
           {
             name: 'size',
             type: 'String',
-            values: [...autoSizeValid.names, 'auto'],
+            values: [...autoSizeValid.sizes, 'auto'],
             default: null,
             desc: '尺寸，预定义尺寸，或使用 font-size。',
           },

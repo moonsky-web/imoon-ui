@@ -8,9 +8,9 @@ import {clsGap, clsGapBlock} from '../../utils/class';
 const subNs = 'btn', readonly = Object.freeze({});
 const creator = nameFactory(subNs), clsBtn = creator(), clsTxt = creator('text');
 const colorCreator = addDynamicCSS(subNs, colorRegister);
-const btnBooleanCreator = cssBooleanCreator((name, val) => {
-  return val ? creator(name) : '';
-}, 'ghost', 'dashed', 'outline', 'radius');
+const btnBooleanCreator = cssBooleanCreator(
+  (name, val) => val ? creator(name) : '',
+  'ghost', 'dashed', 'outline', 'radius');
 
 export const ImButton = {
   install(Vue) {
@@ -35,6 +35,7 @@ export const ImButton = {
     radius: typeNullBoolean(),
     to: typeString(),
     disabled: typeBoolean(),
+    loading: typeBoolean(),
   },
   render(h, {
     props, data, children, injections: {$providedProps = readonly} = readonly,

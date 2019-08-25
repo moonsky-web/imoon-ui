@@ -5,9 +5,31 @@ import {filterArray} from '../../utils/array';
 import {ImTransition} from '../transition';
 import {inputExpandMixin} from '../../predefined/mixins';
 import {clsGap, clsGapBlock} from '../../utils/class';
+import {contains} from '../../utils/predicates';
+import {proxyDefaultValue} from '../../utils/proxy';
 
-const subNs = 'AutoComplete',
-  factory = nameFactory(subNs);
+const subNs = 'AutoComplete', factory = nameFactory(subNs),
+  PLACEMENTS = (() => {
+    const leftBottom = () => ({style: {left: '0', top: '125%'}, name: 'slideUp'}),
+      leftTop = () => ({style: {left: '0', bottom: '125%'}, name: 'slideDown'}),
+      rightBottom = () => ({style: {right: '0', top: '125%'}, name: 'slideUp'}),
+      rightTop = () => ({style: {right: '0', bottom: '125%'}, name: 'slideDown'}),
+      auto = (self, input) => {
+        if ((input = self.getRefInput())) {
+          const rect = input.getBoundingClientRect();
+          const {innerWidth: winW, innerHeight: winH} = window;
+          const first = winW - rect.right < 100 ? 'r' : 'l',
+            last = winH - rect.bottom < 250 ? 't' : 'b';
+          return placements[`${first}${last}`]();
+        }
+        return leftBottom();
+      };
+    const placements = {
+      leftTop, leftBottom, rightTop, rightBottom, auto,
+      lt: leftTop, lb: leftBottom, rt: rightTop, rb: rightBottom,
+    };
+    return proxyDefaultValue(placements, auto);
+  })(), placementsNames = Object.keys(PLACEMENTS);
 const clsAuto = factory(),
   clsShow = factory('show'),
   clsOuter = factory('outer'),
@@ -18,8 +40,7 @@ const clsAuto = factory(),
   clsSerial = factory('serial'),
   clsContent = factory('content'),
   clsOption = factory('option'),
-  clsHover = factory('hover'),
-  name = factory.thisName();
+  clsHover = factory('hover');
 
 function getTextWithNone(option) {
   return String(option);
@@ -60,7 +81,7 @@ export const ImAutoComplete = {
   install(Vue) {
     factory.install(Vue, ImAutoComplete);
   },
-  name,
+  name: factory.thisName(),
   mixins: [inputExpandMixin],
   props: {
     optionsClass: [String, Object, Array],
@@ -76,6 +97,12 @@ export const ImAutoComplete = {
       default: 10,
     },
     showSerial: typeBoolean(true),
+    placement: {
+      type: String,
+      validator(value) {
+        return contains(placementsNames, value);
+      },
+    },
   },
   data() {
     return {
@@ -166,17 +193,7 @@ export const ImAutoComplete = {
       return $el;
     },
     getOptionsMeta() {
-      const input = this.getRefInput();
-      if (input) {
-        const rect = input.getBoundingClientRect();
-        const {innerWidth: winW, innerHeight: winH} = window, style = {};
-        const isBottom = winH - rect.bottom < 250;
-        style[isBottom ? 'bottom' : 'top'] = '125%';
-        style[winW - rect.right < 100 ? 'right' : 'left'] = '0';
-        return {style, name: isBottom ? 'slideDown' : 'slideUp'};
-      } else {
-        return {style: {top: '125%', left: '0'}, name: 'slideUp'};
-      }
+      return PLACEMENTS[this.placement](this);
     },
     resetIndex(value = 0) {
       this.currentIndex = value;
@@ -224,14 +241,18 @@ export const ImAutoComplete = {
       this.visible = true;
       this.currentValue = value;
     },
+    onDomClick({target}) {
+      if (!this.$el.contains(target)) {
+        this.onBlur();
+      }
+    },
   },
   mounted() {
     const self = this;
-    document.addEventListener('click', function ({target}) {
-      if (!self.$el.contains(target)) {
-        self.onBlur();
-      }
-    }, true);
+    document.addEventListener('click', self.onDomClick, true);
+  },
+  destroyed() {
+    document.removeEventListener('click', self.onDomClick, true);
   },
 };
 

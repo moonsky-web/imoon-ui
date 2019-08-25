@@ -15,6 +15,7 @@ const namesCached = {}, eventsHook = {},
 });
 
 eachObject(transitionHooks, (optionalName, vueKey) => {
+  eventsHook[vueKey] = vueKey;
   if (Array.isArray(optionalName)) {
     optionalName.forEach(name => {
       eventsHook[name] = vueKey;
