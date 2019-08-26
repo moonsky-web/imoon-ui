@@ -68,21 +68,27 @@
       </div>
     </DemoItem>
     <DemoItem label="loading">
-      <div class="demo-padding-v-5">
-        <ImButton @click="onAlert">弹窗</ImButton>
-        <ImButton @click="onAlert" loading>弹窗</ImButton>
-      </div>
-      <div class="demo-padding-v-5">
-        <ImButton @click="onAlert" color="danger">弹窗</ImButton>
-        <ImButton @click="onAlert" color="danger" loading>弹窗</ImButton>
-      </div>
-      <div class="demo-padding-v-5">
-        <ImButton @click="onAlert" color="#123456">弹窗</ImButton>
-        <ImButton @click="onAlert" color="#123456" loading>弹窗</ImButton>
-      </div>
-      <div class="demo-padding-v-5">
-        <ImButton @click="onAlert" color="#123456" text>弹窗</ImButton>
-        <ImButton @click="onAlert" color="#123456" text loading>弹窗</ImButton>
+      <div>
+        <div class="demo-padding-v-5">
+          <ImButton @click="onAlert">弹窗</ImButton>
+          <ImButton @click="onAlert" loading>弹窗</ImButton>
+          <ImButton @click="onAlert" color="danger">弹窗</ImButton>
+          <ImButton @click="onAlert" color="danger" loading>弹窗</ImButton>
+          <ImButton @click="onAlert" color="#123456">弹窗</ImButton>
+          <ImButton @click="onAlert" color="#123456" loading>弹窗</ImButton>
+          <ImButton @click="onAlert" color="#123456" text>弹窗</ImButton>
+          <ImButton @click="onAlert" color="#123456" text loading>弹窗</ImButton>
+        </div>
+        <div class="demo-padding-v-5">
+          <ImButton @click="onAlert" color="warn">弹窗</ImButton>
+          <ImButton @click="onAlert" color="warn" loading>弹窗</ImButton>
+          <ImButton @click="onAlert" color="info">弹窗</ImButton>
+          <ImButton @click="onAlert" color="info" loading>弹窗</ImButton>
+          <ImButton @click="onAlert" color="base">弹窗</ImButton>
+          <ImButton @click="onAlert" color="base" loading>弹窗</ImButton>
+          <ImButton @click="onAlert" color="#123456" text>弹窗</ImButton>
+          <ImButton @click="onAlert" color="#123456" text loading>弹窗</ImButton>
+        </div>
       </div>
     </DemoItem>
     <DemoItem label="圆角按钮 :radius=true">

@@ -292,8 +292,8 @@
   }
 
   .demo-padding-v-5 {
-    padding-left: 5px;
-    padding-right: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
   }
 
   .demo-padding-h-10 {
@@ -302,8 +302,8 @@
   }
 
   .demo-padding-h-5 {
-    padding-top: 5px;
-    padding-bottom: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
   }
 
   .demo-padding-bottom-10 {
