@@ -96,10 +96,10 @@
       $color: get-color($name);
     }
     @include set-prop(color, $color, $important);
-    &:hover {
+    &:not([loading]):hover {
       color: hover-color($color, 16);
     }
-    &:active {
+    &:not([loading]):active {
       color: active-color($color, 16);
     }
   }
@@ -140,10 +140,6 @@
   &[loading] {
     opacity: .6;
     cursor: not-allowed;
-
-    &.#{$ns-btn}-text {
-      color: #123;
-    }
 
     &::after {
       content: '';

@@ -11,9 +11,9 @@ export function colorRegister(colorClass, color, namespaced) {
       box-shadow: 0 0 0 1px ${hoverRgba(color)};z-index:1;}
     ${clazz}${not}:active{background:${active(color)};border-color:${active(color)};
       box-shadow: 0 0 0 3px ${activeRgba(color)};}
-    ${classNs}-text${not}{color:${color}}
-    ${classNs}-text${not}:hover{color:${hover(color,12)}}
-    ${classNs}-text${not}:active{color:${active(color,12)}}
+    ${classNs}-text{color:${color}}
+    ${classNs}-text:hover{color:${hover(color,12)}}
+    ${classNs}-text:active{color:${active(color,12)}}
     ${classNs}-auto${not}:hover{box-shadow: 0 0 0 .1em ${hoverRgba(color)};}
     ${classNs}-auto${not}:active{box-shadow: 0 0 0 .2em ${activeRgba(color)};}
     ${classNs}-outline,${classNs}-dashed{color:${color};background:#fff;}
