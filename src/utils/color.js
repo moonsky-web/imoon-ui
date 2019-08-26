@@ -1,5 +1,6 @@
 import {executeParse, isColor} from './color/regexp';
 import {activeAmount, activeOpacity, hoverAmount, hoverOpacity} from '../default';
+import {toInt} from './index';
 
 // default color
 const COLOR = '#FAFAFA';
@@ -88,6 +89,15 @@ export function hoverRgba(color, amount = hoverAmount, opacity = hoverOpacity) {
 
 export function activeRgba(color, amount = activeAmount, opacity = activeOpacity) {
   return rgbaColor(active(color, amount), opacity);
+}
+
+export function valueOf(color) {
+  let toHex = v => {
+    v = v.toString(16);
+    return v.length === 1 ? `0${v}` : v;
+  };
+  return executeParse(color, rgbColorMap, rgbColorMap, null,
+      list => `#${toHex(list[0])}${toHex(list[1])}${toHex(list[2])}`);
 }
 
 // isColorStr

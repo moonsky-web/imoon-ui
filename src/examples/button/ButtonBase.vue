@@ -70,24 +70,27 @@
     <DemoItem label="loading">
       <div>
         <div class="demo-padding-v-5">
-          <ImButton @click="onAlert">弹窗</ImButton>
-          <ImButton @click="onAlert" loading>弹窗</ImButton>
-          <ImButton @click="onAlert" color="danger">弹窗</ImButton>
-          <ImButton @click="onAlert" color="danger" loading>弹窗</ImButton>
-          <ImButton @click="onAlert" color="#123456">弹窗</ImButton>
-          <ImButton @click="onAlert" color="#123456" loading>弹窗</ImButton>
-          <ImButton @click="onAlert" color="#123456" text>弹窗</ImButton>
-          <ImButton @click="onAlert" color="#123456" text loading>弹窗</ImButton>
+          下列按钮都绑定了同一事件：{{currentValue}}
         </div>
         <div class="demo-padding-v-5">
-          <ImButton @click="onAlert" color="warn" text>弹窗</ImButton>
-          <ImButton @click="onAlert" color="warn" text loading>弹窗</ImButton>
-          <ImButton @click="onAlert" color="info">弹窗</ImButton>
-          <ImButton @click="onAlert" color="info" loading>弹窗</ImButton>
-          <ImButton @click="onAlert" color="base" text>弹窗</ImButton>
-          <ImButton @click="onAlert" color="base" text loading>弹窗</ImButton>
-          <ImButton @click="onAlert" color="#f59926" text>弹窗</ImButton>
-          <ImButton @click="onAlert" color="#f59926" text loading>弹窗</ImButton>
+          <ImButton
+            v-for="(color, index) in colors" :key="color" @click="onClickChange(index)"
+            :color="color">{{color||'default'}}</ImButton>
+        </div>
+        <div class="demo-padding-v-5">
+          <ImButton
+            v-for="(color, index) in colors" :key="color" @click="onClickChange(index)"
+            :color="color" loading>{{color||'default'}}</ImButton>
+        </div>
+        <div class="demo-padding-v-5">
+          <ImButton
+            v-for="(color, index) in colors" :key="color" @click="onClickChange(index)"
+            :color="color" text>{{color||'default'}}</ImButton>
+        </div>
+        <div class="demo-padding-v-5">
+          <ImButton
+            v-for="(color, index) in colors" :key="color" @click="onClickChange(index)"
+            :color="color" text loading>{{color||'default'}}</ImButton>
         </div>
       </div>
     </DemoItem>
@@ -223,7 +226,9 @@
     components: {ImButton},
     data() {
       return {
+        colors: [null, ...ImButton.props.color.validator.colors, '#123456'],
         randomColor: null,
+        currentValue: null,
       };
     },
     methods: {
@@ -233,12 +238,16 @@
       onRandomColor() {
         this.randomColor = getRandomColor();
       },
-      onAlert() {
-        alert('你点击了弹窗');
+      onClickChange(index) {
+        this.currentValue = Math.random();
+        if (index === this.colors.length - 1) {
+          this.colors[index] = getRandomColor().toUpperCase();
+        }
       },
     },
     created() {
       this.onRandomColor();
+      this.onClickChange();
     },
   };
   export default ButtonBase;

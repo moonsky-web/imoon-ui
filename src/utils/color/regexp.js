@@ -11,14 +11,13 @@ const REGEXP = {
     return /^#([\dA-F]{2})([\dA-F]{2})([\dA-F]{2})$/i;
   },
   get rgb() {
-    return /rgb\((\d{1,3}),(\d{1,3}),(\d{1,3})\)/;
+    return /rgb\((\d{1,3}),(\d{1,3}),(\d{1,3})\)/i;
   },
   get rgba() {
-    // return /rgba\((\d{1,3},)(\d{1,3},)(\d{1,3},)(\d(?:\.\d)?)\)/;
-    return /rgba\((\d{1,3},)(\d{1,3},)(\d{1,3},)(0?(?:\.\d+))\)/;
+    return /rgba\((\d{1,3},)(\d{1,3},)(\d{1,3},)(0?(?:\.\d+))\)/i;
   },
   get transparent() {
-    return /rgba\((\d{1,3},){3}0}\)/;
+    return /rgba\((\d{1,3},){3}0}\)/i;
   },
 };
 
