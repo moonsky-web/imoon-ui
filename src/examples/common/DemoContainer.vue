@@ -37,7 +37,7 @@
   }
 
   function defaultRender(h, value) {
-    return toStr(value);
+    return isFn(value) ? value(h) : (isPlainObject(value) ? h(value) : toStr(value));
   }
 
   const EMPTY = [], PROPS_COLUMNS = [
@@ -57,12 +57,7 @@
         return isFn(value) ? value(h) : toStr(value);
       },
     },
-    {
-      //desc:String
-      prop: 'desc', name: '说明', render(h, value) {
-        return isFn(value) ? value(h) : (isPlainObject(value) ? h(value) : toStr(value));
-      },
-    },
+    {prop: 'desc', name: '说明'},//desc:String
   ], SLOTS_COLUMNS = [
     {prop: 'name', name: '插槽名'},
     {prop: 'desc', name: '说明'},

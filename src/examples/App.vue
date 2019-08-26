@@ -113,7 +113,7 @@
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     /*-webkit-font-smoothing: antialiased;*/
     /*-moz-osx-font-smoothing: grayscale;*/
-    color: #2C3E50;
+    /*color: #2C3E50;*/
     height: 100vh;
     display: flex;
     flex-direction: column;
@@ -292,6 +292,16 @@
   }
 
   .demo-padding-v-5 {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+
+  .demo-padding-h-10 {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .demo-padding-h-5 {
     padding-top: 5px;
     padding-bottom: 5px;
   }

@@ -41,21 +41,21 @@
     background: $color;
     border-color: $color;
     @include set-color-white-btn();
-    &:hover {
+    &:not([loading]):hover {
       z-index: 1;
       background: hover-color($color);
       border-color: hover-color($color);
       box-shadow: 0 0 0 1px rgba(hover-color($color), $hover-opacity);
     }
-    &:active {
+    &:not([loading]):active {
       background: active-color($color);
       border-color: active-color($color);
       box-shadow: 0 0 0 3px rgba(active-color($color), $active-opacity);
     }
-    &.#{$ns-btn}-auto:hover {
+    &.#{$ns-btn}-auto:not([loading]):hover {
       box-shadow: 0 0 0 .1em rgba(hover-color($color), $hover-opacity);
     }
-    &.#{$ns-btn}-auto:active {
+    &.#{$ns-btn}-auto:not([loading]):active {
       box-shadow: 0 0 0 .2em rgba(active-color($color), $active-opacity);
     }
   }
@@ -112,11 +112,9 @@
     @include set-prop(box-shadow, none, $important);
 
     @each $name in map_keys($color-map) {
-      //@if ($name != $default-color-name) {
       &.#{$ns-btn}-#{$name} {
         @include color-on-text($name);
       }
-      //}
     }
   }
 
@@ -139,20 +137,42 @@
     @include set-border-radius(999px);
   }
 
-  &.#{$ns-btn}[disabled] {
+  &[loading] {
+    opacity: .5;
+    cursor: not-allowed;
+
+    &.#{$ns-btn}-text {
+      color: #123;
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      display: block;
+      top: 50%;
+      left: 50%;
+      padding: 5px;
+      font-size: 0;
+      border: 2px solid transparent;
+      transform: translate(-50%, -50%);
+      border-radius: 100%;
+      border-top-color: #f2f2f2;
+      border-bottom-color: #f2f2f2;
+      animation: defaultTransformCenterRotate .4s infinite linear;
+    }
+  }
+
+  &[disabled] {
     background: #f2f2f2 !important;
     border: 1px solid #aaa !important;
     color: #aaa !important;
     box-shadow: none !important;
     cursor: not-allowed;
-    //pointer-events: none !important;
 
     &.#{$ns-btn}-text {
       background: transparent !important;
       border-color: transparent !important;
     }
-
-    //@include set-mouse-style(false, not-allowed);
   }
 
   &.#{$ns-btn}-auto {

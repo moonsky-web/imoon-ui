@@ -74,8 +74,15 @@
             name: 'to',
             type: String,
             values: null,
-            default: false,
+            default: null,
             desc: '路由导航',
+          },
+          {
+            name: 'href',
+            type: String,
+            values: null,
+            default: null,
+            desc: '普通 a 标签的 href 属性，当和 to 同时出现时，to 优先',
           },
           {
             name: 'disabled',
@@ -89,14 +96,16 @@
             type: Boolean,
             values: null,
             default: false,
-            desc: '是否加载状态，loading 状态按钮不能触发事件（未实现）',
+            desc: '是否加载状态，loading 状态按钮不能触发事件',
           },
           {
             name: 'icon',
             type: String,
             values: null,
             default: false,
-            desc: '图标（未实现）',
+            desc(h) {
+              return h('span', {}, ['图标', h('span', {style: {color: 'red'}}, ['(未实现)'])]);
+            },
           },
         ];
       },

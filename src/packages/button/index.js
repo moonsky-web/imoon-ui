@@ -34,34 +34,39 @@ export const ImButton = {
     outline: typeNullBoolean(),
     radius: typeNullBoolean(),
     to: typeString(),
+    href: String,
     disabled: typeBoolean(),
     loading: typeBoolean(),
   },
   render(h, {
     props, data, children, parent, injections: {$providedProps = readonly} = readonly,
   }) {
-    const {class: cls, attrs = {}} = data, {color, size, text, to, disabled, block} = props;
+    const {class: cls, attrs = {}} = data,
+      {color, size, text, block, to, href, disabled, loading} = props;
     const names = text ? [clsTxt] : btnBooleanCreator(props, $providedProps);
     const classes = [
-      clsBtn, classBlock(block), ...names,
-      `${colorCreator(color)} ${size ? creator(size) : ''}`,
+      clsBtn, ...names, classBlock(block), cls || '',
+      colorCreator(color), size ? creator(size) : '',
     ], settings = {...data, attrs, class: classes};
-    if (cls) {
-      classes.push(cls);
-    }
-    let tag = 'button';
-    if (disabled) {
-      settings.on = null;
+    let tag = to || href ? 'a' : 'button';
+
+    if (disabled || loading) {
       settings.nativeOn = null;
-      attrs.disabled = 'disabled';
+      settings.on = null;
+      if (disabled) {
+        attrs.disabled = 'disabled';
+      } else {
+        attrs.loading = 'loading';
+      }
     } else if (to) {
       if (parent && parent.$router) {
         settings.props = {to};
         tag = 'RouterLink';
       } else {
         attrs.href = to;
-        tag = 'a';
       }
+    } else if (href) {
+      attrs.href = href;
     }
     return h(tag, settings, children);
   },

@@ -60,7 +60,10 @@
         </DemoSubItem>
         <DemoSubItem title="$ 设置 description 和 default slot">
           <template #desc>
-            这个库所有可能会出现属性和插槽冲突的地方，都以插槽优先，因为插槽可以定义更多行为。如：
+            <span class="demo-color-warn">
+              <strong>注</strong>
+              这个库所有可能会出现属性和插槽冲突的地方，都以插槽优先，因为插槽可以定义更多行为。如：
+            </span>
           </template>
           <ImAlert
             v-model="attrVisible" description="内容：description"
@@ -70,7 +73,8 @@
             </span>
             <ImButton
               size="xs" :color="currentColor"
-              @click="onCurrentColor">点一下试试</ImButton>
+              @click="onCurrentColor">点一下试试
+            </ImButton>
           </ImAlert>
         </DemoSubItem>
         <DemoSubItem title="# 设置 title、 description 和 default slot">
@@ -95,7 +99,9 @@
         这里点击“切换颜色”会随机生成一个色号供查看。
       </template>
       <div class="demo-flex-1">
-        <ImAlert v-model="customColorVisible" :color="customColor">这是一个基本使用示例</ImAlert>
+        <ImAlert v-model="customColorVisible" :color="customColor">
+          这是一个随机生成颜色的示例，当前色值：{{customColor || 'null'}}
+        </ImAlert>
       </div>
       <div class="demo-default-box">
         <ImButton :color="customColor" @click="onCustomColor" block>切换颜色</ImButton>
@@ -191,6 +197,10 @@
   export default AlertBase;
 </script>
 <style scoped lang="scss">
+
+  .demo-color-warn {
+    color: #af6d1b;
+  }
 
   .demo-alert-table {
     width: 100%;

@@ -14,9 +14,6 @@
           <ImButton color="danger">Danger</ImButton>
           <ImButton color="#bace64">#bace64</ImButton>
         </div>
-        <div class="demo-margin-v-10">
-          <ImButton color="info" to="/alert/base">To Alert</ImButton>
-        </div>
       </div>
     </DemoItem>
     <DemoItem label="基本示例 2">
@@ -55,6 +52,37 @@
           <ImButton text disabled color="danger">Danger</ImButton>
           <ImButton text disabled color="#bace64">#bace64</ImButton>
         </div>
+      </div>
+    </DemoItem>
+    <DemoItem label="路由和超链接">
+      <template #desc>
+        通过给 ImButton 组件设置 to 或 href 属性，将
+      </template>
+      <div>
+        <DemoSubItem title="路由" desc="设置 to 属性">
+          <ImButton color="info" to="/alert/base">To Alert</ImButton>
+        </DemoSubItem>
+        <DemoSubItem title="超链接" desc="设置 href 属性">
+          <ImButton color="info" target="_blank" href="https://www.baidu.com">To Baidu</ImButton>
+        </DemoSubItem>
+      </div>
+    </DemoItem>
+    <DemoItem label="loading">
+      <div class="demo-padding-v-5">
+        <ImButton @click="onAlert">弹窗</ImButton>
+        <ImButton @click="onAlert" loading>弹窗</ImButton>
+      </div>
+      <div class="demo-padding-v-5">
+        <ImButton @click="onAlert" color="danger">弹窗</ImButton>
+        <ImButton @click="onAlert" color="danger" loading>弹窗</ImButton>
+      </div>
+      <div class="demo-padding-v-5">
+        <ImButton @click="onAlert" color="#123456">弹窗</ImButton>
+        <ImButton @click="onAlert" color="#123456" loading>弹窗</ImButton>
+      </div>
+      <div class="demo-padding-v-5">
+        <ImButton @click="onAlert" color="#123456" text>弹窗</ImButton>
+        <ImButton @click="onAlert" color="#123456" text loading>弹窗</ImButton>
       </div>
     </DemoItem>
     <DemoItem label="圆角按钮 :radius=true">
@@ -198,6 +226,9 @@
       },
       onRandomColor() {
         this.randomColor = getRandomColor();
+      },
+      onAlert() {
+        alert('你点击了弹窗');
       },
     },
     created() {
