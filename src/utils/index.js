@@ -57,22 +57,25 @@ function getClassName(subNs, defaultNamespace = namespace) {
     }
   }
 
-  const thisName = namespacedComponentName ? (capitalize ? function (componentName) {
-    return firstUpper(componentName, componentNs);
-  } : function (componentName) {
-    return firstLower(componentName, componentNs);
-  }) : function (componentName, alwaysNamespaced = false) {
-    return alwaysNamespaced
+  const thisName = namespacedComponentName
+    ? (capitalize
+      ? (componentName => firstUpper(componentName, componentNs))
+      : (componentName => firstLower(componentName, componentNs)))
+    : ((componentName, alwaysNamespaced = false) => alwaysNamespaced
       ? firstUpper(componentName, componentNs || 'im')
-      : `${firstUpperCase(componentName)}`;
-  };
+      : `${firstUpperCase(componentName)}`);
 
   className.install = installComponent;
-
+  /**
+   * 创建一个逐渐，target 和 src 分别是逐渐构造和名字，部分前后
+   * @param target
+   * @param src
+   * @returns {*}
+   */
   className.create = (target, src) => {
     [target, src] = isString(target) ? [src, target] : [target, src];
-    target.install = Vue => installComponent(Vue, target);
-    target.name = thisName(src);
+    target.install = target.install || (Vue => installComponent(Vue, target));
+    target.name = target.name || thisName(src);
     return target;
   };
 

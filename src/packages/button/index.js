@@ -6,18 +6,14 @@ import {addDynamicCSS, cssBooleanCreator} from '../../utils/style';
 import {classBlock} from '../../utils/class';
 import {clearEvent} from '../../utils/dom';
 
-const subNs = 'btn', readonly = Object.freeze({});
-const creator = nameFactory(subNs), clsBtn = creator(), clsTxt = creator('text');
+const subNs = 'button', readonly = Object.freeze({});
+const factory = nameFactory(subNs), clsBtn = factory(), clsTxt = factory('text');
 const colorCreator = addDynamicCSS(subNs, colorRegister);
 const btnBooleanCreator = cssBooleanCreator(
-  (name, val) => val ? creator(name) : '',
+  (name, val) => val ? factory(name) : '',
   'ghost', 'dashed', 'outline', 'radius');
 
-export const ImButton = {
-  install(Vue) {
-    creator.install(Vue, ImButton);
-  },
-  name: creator.thisName(),
+export const ImButton = factory.create({
   functional: true,
   props: {
     color: {
@@ -39,16 +35,17 @@ export const ImButton = {
     disabled: typeBoolean(),
     loading: typeBoolean(),
     append: typeBoolean(),
+    replace: typeBoolean(),
   },
   render(h, {
     props, data, children, parent, injections: {$providedProps = readonly} = readonly,
   }) {
     const {class: cls, attrs = {}} = data,
-      {color, size, text, block, append, to, href, disabled, loading} = props;
+      {color, size, text, block, append, replace, to, href, disabled, loading} = props;
     const names = text ? [clsTxt] : btnBooleanCreator(props, $providedProps);
     const classes = [
       clsBtn, ...names, classBlock(block), cls || '',
-      colorCreator(color), size ? creator(size) : '',
+      colorCreator(color), size ? factory(size) : '',
     ], settings = {...data, attrs, class: classes};
     let tag = to || href ? 'a' : 'button';
 
@@ -64,7 +61,7 @@ export const ImButton = {
       }
     } else if (to) {
       if (parent && parent.$router) {
-        settings.props = {to, append};
+        settings.props = {to, append, replace};
         tag = 'RouterLink';
       } else {
         attrs.href = to;
@@ -74,6 +71,6 @@ export const ImButton = {
     }
     return h(tag, settings, children);
   },
-};
+});
 
 export default ImButton;

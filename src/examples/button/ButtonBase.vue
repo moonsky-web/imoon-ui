@@ -232,7 +232,7 @@
   /* eslint-disable */
   import {ImButton} from '../../packages/button';
   import {getRandomColor} from '../util';
-
+console.log(ImButton)
   export const ButtonBase = {
     name: 'ButtonBase',
     components: {ImButton},
