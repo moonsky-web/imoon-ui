@@ -19,14 +19,12 @@ const REGEXP = {
   get transparent() {
     return /rgba\((\d{1,3},){3}0}\)/i;
   },
-};
+}, mapToDecimal = toFloat, originOut = v => v;
 
 function reset(colorReg) {
   colorReg.lastIndex = 0;
   return colorReg;
 }
-
-const mapToDecimal = toFloat;
 
 /**
  * 字符串数字转换成十六进制数
@@ -68,7 +66,7 @@ export function isColor(str) {
  * @param resultCall 接受一个数组，这个数字是 rgbMap 或 rgbaMap 的返回值，最终结果处理函数，如存在的话会覆盖透明色默认值
  * @returns {*}
  */
-export function executeParse(color, rgbMap, rgbaMap, ifRgba0, resultCall) {
+export function doParse(color, rgbMap, rgbaMap, ifRgba0, resultCall) {
   return parseColor6(color, rgbMap, resultCall) ||
     parseColor3(color, rgbMap, resultCall) ||
     parseRgb(color, rgbMap, resultCall) ||
@@ -124,4 +122,8 @@ function returnColor(parsed) {
  */
 function toHexAndPadStart0(numStr) {
   return padStart(numStr.toString(16), 2, '0');
+}
+
+export function toHexColor(color) {
+  return doParse(color, originOut, originOut, null, returnColor);
 }

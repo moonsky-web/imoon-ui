@@ -1,17 +1,14 @@
-import {executeParse, isColor} from './color/regexp';
+import {doParse, isColor, toHexColor as valueOf} from './color/regexp';
 import {activeAmount, activeOpacity, hoverAmount, hoverOpacity} from '../default';
-import {toInt} from './index';
 
 // default color
-const COLOR = '#FAFAFA';
+const COLOR = '#FAFAFA', roundNum = Math.round, originOut = p => p;
 
 // inner function
 
 function maxTo(num, to = 255) {
   return num < to ? (num > 0 ? num : 0) : to;
 }
-
-const roundNum = Math.round;
 
 /*
  * [begin] export function
@@ -22,12 +19,12 @@ const invertRgbMap = parsed => parsed.map(num => 255 - num);
 const invertRgbaMap = parsed => parsed.map((num, idx) => (idx > 2 ? 1 : 255) - num);
 
 export function invertColor(color) {
-  return executeParse(color, invertRgbMap, invertRgbaMap);
+  return doParse(color, invertRgbMap, invertRgbaMap);
 }
 
 // lighten 亮化
 export function lighten(color, amount) {
-  return !amount ? color : executeParse(color,
+  return !amount ? color : doParse(color,
     parsed => parsed.map(num => maxTo(num + amount, 255)),
     parsed => parsed.map((num, idx) => idx > 2 ? num : maxTo(num + amount, 255)),
     COLOR);
@@ -39,7 +36,7 @@ export function hover(color, amount = hoverAmount) {
 
 // darken 暗化
 export function darken(color, amount) {
-  return !amount ? color : executeParse(color,
+  return !amount ? color : doParse(color,
     parsed => parsed.map(num => maxTo(num - amount, 255)),
     parsed => parsed.map((num, idx) => idx > 2 ? num : maxTo(num - amount, 255)),
     COLOR);
@@ -59,16 +56,13 @@ export function centeredColor(color, amount, defaultColor) {
       : (bit > (255 - amount) ? bit - amount : bit + amount));
   }
 
-  return executeParse(color, parsed => parsed.map(colorAmount),
+  return doParse(color, parsed => parsed.map(colorAmount),
     parsed => parsed.map((num, idx) => idx > 2 ? num : colorAmount(num)),
     defaultColor || COLOR);
 }
 
-// rgbColor
-const rgbColorMap = p => p;
-
 export function rgbColor(color) {
-  return executeParse(color, rgbColorMap, rgbColorMap, list => `rgb(${list[0]},${list[1]},${list[2]})`);
+  return doParse(color, originOut, originOut, list => `rgb(${list[0]},${list[1]},${list[2]})`);
 }
 
 // rgbaColor
@@ -79,7 +73,7 @@ export function rgbaColor(color, opacity) {
     p[3] = opacity;
   }
 
-  return opacity ? executeParse(color, parsed, parsed, null,
+  return opacity ? doParse(color, parsed, parsed, null,
     list => `rgba(${list[0]},${list[1]},${list[2]},${list[3]})`) : color;
 }
 
@@ -91,14 +85,7 @@ export function activeRgba(color, amount = activeAmount, opacity = activeOpacity
   return rgbaColor(active(color, amount), opacity);
 }
 
-export function valueOf(color) {
-  let toHex = v => {
-    v = v.toString(16);
-    return v.length === 1 ? `0${v}` : v;
-  };
-  return executeParse(color, rgbColorMap, rgbColorMap, null,
-      list => `#${toHex(list[0])}${toHex(list[1])}${toHex(list[2])}`);
-}
+export const toHexColor = valueOf;
 
 // isColorStr
 export const isColorStr = isColor;

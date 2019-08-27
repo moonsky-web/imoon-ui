@@ -72,7 +72,7 @@
   @mixin color-on-white-bg($name: $default-color-name,$important: false) {
     $color: get-color($name);
     @include set-prop(color, $color, $important);
-    &:hover {
+    &:not([loading]):hover {
       @include set-color-white-btn();
       background: hover-color($color);
     }
@@ -139,7 +139,7 @@
 
   &[loading] {
     opacity: .6;
-    cursor: not-allowed;
+    cursor: wait;
 
     &::after {
       content: '';

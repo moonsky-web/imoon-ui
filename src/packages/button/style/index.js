@@ -18,8 +18,8 @@ export function colorRegister(colorClass, color, namespaced) {
     ${classNs}-auto${not}:active{box-shadow: 0 0 0 .2em ${activeRgba(color)};}
     ${classNs}-outline,${classNs}-dashed{color:${color};background:#fff;}
     ${classNs}-ghost{color:${color};background:transparent;}
-    ${classNs}-outline:hover,${classNs}-dashed:hover,
-    ${classNs}-ghost:hover{color:#fff;background:${hover(color)};}`;
+    ${classNs}-outline${not}:hover,${classNs}-dashed${not}:hover,
+    ${classNs}-ghost${not}:hover{color:#fff;background:${hover(color)};}`;
 }
 
 export default colorRegister;

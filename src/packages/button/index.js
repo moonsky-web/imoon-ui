@@ -4,6 +4,7 @@ import {colorRegister} from './style';
 import {autoColorValid, autoSizeValid} from '../../utils/validator';
 import {addDynamicCSS, cssBooleanCreator} from '../../utils/style';
 import {classBlock} from '../../utils/class';
+import {clearEvent} from '../../utils/dom';
 
 const subNs = 'btn', readonly = Object.freeze({});
 const creator = nameFactory(subNs), clsBtn = creator(), clsTxt = creator('text');
@@ -37,12 +38,13 @@ export const ImButton = {
     href: String,
     disabled: typeBoolean(),
     loading: typeBoolean(),
+    append: typeBoolean(),
   },
   render(h, {
     props, data, children, parent, injections: {$providedProps = readonly} = readonly,
   }) {
     const {class: cls, attrs = {}} = data,
-      {color, size, text, block, to, href, disabled, loading} = props;
+      {color, size, text, block, append, to, href, disabled, loading} = props;
     const names = text ? [clsTxt] : btnBooleanCreator(props, $providedProps);
     const classes = [
       clsBtn, ...names, classBlock(block), cls || '',
@@ -52,7 +54,9 @@ export const ImButton = {
 
     if (disabled || loading) {
       settings.nativeOn = null;
-      settings.on = null;
+      settings.on = {
+        click: clearEvent,
+      };
       if (disabled) {
         attrs.disabled = 'disabled';
       } else {
@@ -60,7 +64,7 @@ export const ImButton = {
       }
     } else if (to) {
       if (parent && parent.$router) {
-        settings.props = {to};
+        settings.props = {to, append};
         tag = 'RouterLink';
       } else {
         attrs.href = to;

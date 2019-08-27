@@ -1,101 +1,17 @@
 <template>
   <div>
-    <DemoItem label="基本示例 1">
-      <div>
-        <div class="demo-margin-v-10">
-          <ImButton>Button</ImButton>
-          <ImButton color="primary">Primary</ImButton>
-          <ImButton color="base">Base</ImButton>
-          <ImButton color="success">Success</ImButton>
-        </div>
-        <div class="demo-margin-v-10">
-          <ImButton color="info">Info</ImButton>
-          <ImButton color="warn">Warn</ImButton>
-          <ImButton color="danger">Danger</ImButton>
-          <ImButton color="#bace64">#bace64</ImButton>
-        </div>
-      </div>
-    </DemoItem>
-    <DemoItem label="基本示例 2">
-      <div>
-        <div class="demo-margin-v-10">
-          <ImButton>主色按钮</ImButton>
-          <ImButton color="primary">主色按钮</ImButton>
-          <ImButton color="base">基础按钮</ImButton>
-          <ImButton color="success">成功按钮</ImButton>
-        </div>
-        <div class="demo-margin-v-10">
-          <ImButton color="info">信息按钮</ImButton>
-          <ImButton color="warn">警告按钮</ImButton>
-          <ImButton color="danger">危险按钮</ImButton>
-          <ImButton color="#bace64">色号按钮</ImButton>
-        </div>
-      </div>
-    </DemoItem>
-    <DemoItem label="文本">
-      <div>
-        <div class="demo-margin-v-10">
-          <ImButton text>Button</ImButton>
-          <ImButton text color="primary">Primary</ImButton>
-          <ImButton text color="base">Base</ImButton>
-          <ImButton text color="success">Success</ImButton>
-        </div>
-        <div class="demo-margin-v-10">
-          <ImButton text color="info">Info</ImButton>
-          <ImButton text color="warn">Warn</ImButton>
-          <ImButton text color="danger">Danger</ImButton>
-          <ImButton text color="#bace64">#bace64</ImButton>
-        </div>
-        <div class="demo-margin-v-10">
-          <ImButton text disabled>Info</ImButton>
-          <ImButton text disabled color="warn">Warn</ImButton>
-          <ImButton text disabled color="danger">Danger</ImButton>
-          <ImButton text disabled color="#bace64">#bace64</ImButton>
-        </div>
-      </div>
-    </DemoItem>
-    <DemoItem label="路由和超链接">
-      <template #desc>
-        通过给 ImButton 组件设置 to 或 href 属性，将
-      </template>
-      <div>
-        <DemoSubItem title="路由" desc="设置 to 属性">
-          <ImButton color="info" to="/alert/base">To Alert</ImButton>
-        </DemoSubItem>
-        <DemoSubItem title="超链接" desc="设置 href 属性">
-          <ImButton color="info" target="_blank" href="https://www.baidu.com">To Baidu</ImButton>
-        </DemoSubItem>
-      </div>
-    </DemoItem>
-    <DemoItem label="loading">
-      <div>
-        <div class="demo-padding-v-5">
-          下列按钮都绑定了同一事件：{{currentValue}}
-        </div>
+    <DemoItem label="基本示例">
+      <div class="demo-padding-h-10">
         <div class="demo-padding-v-5">
           <ImButton
-            v-for="(color, index) in colors" :key="color" @click="onClickChange(index)"
-            :color="color">{{color||'default'}}</ImButton>
-        </div>
-        <div class="demo-padding-v-5">
-          <ImButton
-            v-for="(color, index) in colors" :key="color" @click="onClickChange(index)"
-            :color="color" loading>{{color||'default'}}</ImButton>
-        </div>
-        <div class="demo-padding-v-5">
-          <ImButton
-            v-for="(color, index) in colors" :key="color" @click="onClickChange(index)"
-            :color="color" text>{{color||'default'}}</ImButton>
-        </div>
-        <div class="demo-padding-v-5">
-          <ImButton
-            v-for="(color, index) in colors" :key="color" @click="onClickChange(index)"
-            :color="color" text loading>{{color||'default'}}</ImButton>
+            v-for="(color) in colors" :key="color"
+            :color="color">{{color||'default'}}
+          </ImButton>
         </div>
       </div>
     </DemoItem>
     <DemoItem label="圆角按钮 :radius=true">
-      <div>
+      <div class="demo-padding-10">
         <div class="demo-margin-v-10">
           <ImButton radius>主色按钮</ImButton>
           <ImButton radius color="primary">主色按钮</ImButton>
@@ -143,20 +59,116 @@
       </div>
     </DemoItem>
     <DemoItem label="幽灵按钮 :ghost=true">
+      <template #desc>
+        幽灵按钮将默认背景色设置为透明，可用于深色背景上。
+      </template>
+      <div class="demo-padding-10 button-bg">
+        <div class="demo-margin-v-10">
+          <ImButton ghost>主色按钮</ImButton>
+          <ImButton ghost color="primary">主色按钮</ImButton>
+          <ImButton ghost color="base">基础按钮</ImButton>
+          <ImButton ghost color="success">成功按钮</ImButton>
+        </div>
+        <div class="demo-margin-v-10">
+          <ImButton ghost color="info">信息按钮</ImButton>
+          <ImButton ghost color="warn">警告按钮</ImButton>
+          <ImButton ghost color="danger">危险按钮</ImButton>
+          <ImButton ghost color="#bace64">色号按钮</ImButton>
+        </div>
+      </div>
+    </DemoItem>
+    <DemoItem label="路由和超链接">
+      <template #desc>
+        通过给 ImButton 组件设置 to 或 href 属性，将
+      </template>
       <div>
-        <div class="demo-padding-10 button-bg">
-          <div class="demo-margin-v-10">
-            <ImButton ghost>主色按钮</ImButton>
-            <ImButton ghost color="primary">主色按钮</ImButton>
-            <ImButton ghost color="base">基础按钮</ImButton>
-            <ImButton ghost color="success">成功按钮</ImButton>
-          </div>
-          <div class="demo-margin-v-10">
-            <ImButton ghost color="info">信息按钮</ImButton>
-            <ImButton ghost color="warn">警告按钮</ImButton>
-            <ImButton ghost color="danger">危险按钮</ImButton>
-            <ImButton ghost color="#bace64">色号按钮</ImButton>
-          </div>
+        <DemoSubItem title="路由" desc="设置 to 属性">
+          <ImButton v-for="color in colors" :key="color" :color="color" to="/alert/base">路由</ImButton>
+        </DemoSubItem>
+        <DemoSubItem title="超链接" desc="设置 href 属性">
+          <ImButton v-for="color in colors" :key="color" :color="color" target="_blank" href="https://www.baidu.com">链接</ImButton>
+        </DemoSubItem>
+        <DemoSubItem title="普通按钮" desc="尺寸对比">
+          <ImButton v-for="color in colors" :key="color" :color="color">按钮</ImButton>
+        </DemoSubItem>
+      </div>
+    </DemoItem>
+    <DemoItem label="loading">
+      <div class="demo-padding-h-10" @click="onClickChange">
+        <div class="demo-padding-v-5">
+          下列按钮都绑定了同一事件（生成一个随机数）：{{currentValue}}
+        </div>
+        <div class="demo-padding-v-5">
+          <ImButton
+            v-for="(color, index) in colors" :key="color" @click="onClickChange(index)"
+            :color="color">{{color||'default'}}
+          </ImButton>
+        </div>
+        <div class="demo-padding-v-5">
+          <ImButton
+            v-for="(color, index) in colors" :key="color" @click="onClickChange(index)"
+            :color="color" loading>{{color||'default'}}
+          </ImButton>
+        </div>
+        <div class="demo-padding-v-5">
+          <ImButton
+            v-for="(color, index) in colors" :key="color" @click="onClickChange(index)"
+            :color="color" text>{{color||'default'}}
+          </ImButton>
+        </div>
+        <div class="demo-padding-v-5">
+          <ImButton
+            v-for="(color, index) in colors" :key="color" @click="onClickChange(index)"
+            :color="color" text loading>{{color||'default'}}
+          </ImButton>
+        </div>
+        <div class="demo-padding-v-5">
+          <ImButton
+            v-for="(color, index) in colors" :key="color" @click="onClickChange(index)"
+            :color="color" radius>{{color||'default'}}
+          </ImButton>
+        </div>
+        <div class="demo-padding-v-5">
+          <ImButton
+            v-for="(color, index) in colors" :key="color" @click="onClickChange(index)"
+            :color="color" radius loading>{{color||'default'}}
+          </ImButton>
+        </div>
+        <div class="demo-padding-v-5">
+          <ImButton
+            v-for="(color, index) in colors" :key="color" @click="onClickChange(index)"
+            :color="color" radius dashed>{{color||'default'}}
+          </ImButton>
+        </div>
+        <div class="demo-padding-v-5">
+          <ImButton
+            v-for="(color, index) in colors" :key="color" @click="onClickChange(index)"
+            :color="color" radius dashed loading>{{color||'default'}}
+          </ImButton>
+        </div>
+        <div class="demo-padding-v-5 button-bg">
+          <ImButton
+            v-for="(color, index) in colors" :key="color" @click="onClickChange(index)"
+            :color="color" radius ghost>{{color||'default'}}
+          </ImButton>
+        </div>
+        <div class="demo-padding-v-5 button-bg">
+          <ImButton
+            v-for="(color, index) in colors" :key="color" @click="onClickChange(index)"
+            :color="color" radius ghost loading>{{color||'default'}}
+          </ImButton>
+        </div>
+        <div class="demo-padding-v-5 button-bg">
+          <ImButton
+            v-for="(color, index) in colors" :key="color" @click="onClickChange(index)"
+            :color="color" radius ghost dashed>{{color||'default'}}
+          </ImButton>
+        </div>
+        <div class="demo-padding-v-5 button-bg">
+          <ImButton
+            v-for="(color, index) in colors" :key="color" @click="onClickChange(index)"
+            :color="color" radius ghost dashed loading>{{color||'default'}}
+          </ImButton>
         </div>
       </div>
     </DemoItem>

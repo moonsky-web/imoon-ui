@@ -78,6 +78,13 @@
             desc: '路由导航',
           },
           {
+            name: 'append',
+            type: Boolean,
+            values: null,
+            default: null,
+            desc: '相当于 VueRouter append',
+          },
+          {
             name: 'href',
             type: String,
             values: null,
