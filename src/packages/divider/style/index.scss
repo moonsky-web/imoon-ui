@@ -1,0 +1,35 @@
+.#{$ns-divider} {
+  $divider-gap-h: 14px;
+  $divider-gap-v: 20px;
+
+  position: relative;
+  margin-top: $divider-gap-v;
+  margin-bottom: $divider-gap-v;
+  border-top: 1px solid $color-base;
+
+  &.#{$ns-divider}-dashed {
+    border-top-style: dashed;
+  }
+
+  & > .#{$ns-divider}-left,
+  & > .#{$ns-divider}-center,
+  & > .#{$ns-divider}-right {
+    position: absolute;
+    transform: translateY(-50%);
+    background: #fff;
+    padding: 0 $divider-gap-h;
+  }
+
+  & > .#{$ns-divider}-left {
+    left: $divider-gap-h;
+  }
+
+  & > .#{$ns-divider}-center {
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  & > .#{$ns-divider}-right {
+    right: $divider-gap-h;
+  }
+}

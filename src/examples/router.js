@@ -5,6 +5,7 @@ import Home from './Home.vue';
 import {AlertRoutes} from './alert/router';
 import {ButtonRoutes} from './button/router';
 import {InputRoutes} from './input/router';
+import {DividerRoutes} from './divider/router';
 
 Vue.use(Router);
 
@@ -18,6 +19,7 @@ export const router = new Router({
     ...AlertRoutes,
     ...ButtonRoutes,
     ...InputRoutes,
+    ...DividerRoutes,
     {
       path: '/icon',
       name: 'Icon',
