@@ -17,16 +17,42 @@
           {
             name: 'color',
             type: 'String',
-            values: [...COLOR_NAMES, '#rgb'],
             default: null,
-            desc: '颜色，预定义颜色或 RGB 色值',
+            desc(h) {
+              return h('div', {}, [
+                '预定义颜色 [ ',
+                ...COLOR_NAMES.reduce((total, now, idx, arr) => {
+                  total.push(h('code', {class: 'demo-api-prop-code'}, [now]));
+                  if (idx < arr.length - 1) {
+                    total.push(',');
+                  }
+                  return total;
+                }, []),
+                ' ] 或 RGB 色值',
+              ]);
+            },
           },
           {
             name: 'size',
             type: 'String',
             values: [...autoSizeValid.sizes, 'auto'],
             default: null,
-            desc: '尺寸，预定义尺寸，或使用 font-size。',
+            // desc: '预定义尺寸，或使用 font-size。',
+            desc(h) {
+              return h('div', {}, [
+                '预定义尺寸 [ ',
+                ...autoSizeValid.sizes.reduce((total, now, idx, arr) => {
+                  total.push(h('code', {class: 'demo-api-prop-code'}, [now]));
+                  if (idx < arr.length - 1) {
+                    total.push(',');
+                  }
+                  return total;
+                }, []),
+                ' ] 或 ',
+                h('code', {class: 'demo-api-prop-code'}, ['auto']),
+                ' 色值',
+              ]);
+            },
           },
           {
             name: 'block',
@@ -40,7 +66,7 @@
             type: Boolean,
             values: null,
             default: false,
-            desc: '是否透明按钮（幽灵）',
+            desc: '是否透明按钮（幽灵按钮）',
           },
           {
             name: 'dashed',
@@ -75,7 +101,24 @@
             type: String,
             values: null,
             default: null,
-            desc: '路由导航',
+            desc(h) {
+              return h('div', {}, [
+                h('a', {
+                  attrs: {
+                    href: 'https://router.vuejs.org/zh/guide/essentials/navigation.html',
+                    target: '_blank',
+                  },
+                }, ['VueRouter 编程式导航']),
+                '，如果没有使用路由，将直接设为超链接'
+              ]);
+            },
+          },
+          {
+            name: 'replace',
+            type: Boolean,
+            values: null,
+            default: null,
+            desc: '相当于 VueRouter replace',
           },
           {
             name: 'append',
@@ -111,7 +154,7 @@
             values: null,
             default: false,
             desc(h) {
-              return h('span', {}, ['图标', h('span', {style: {color: 'red'}}, ['(未实现)'])]);
+              return h('span', {}, ['图标', h('span', {style: {color: 'red'}}, [' (未实现) '])]);
             },
           },
         ];
@@ -121,6 +164,19 @@
   export default Button;
 </script>
 
-<style scoped>
+<style lang="scss">
+  .demo-api-prop-code {
+    display: inline-block;
+    padding: 0 4px;
+    height: 16px;
+    line-height: 18px;
+    background: rgba(132, 155, 161, .1);
+    color: rgb(105, 123, 108);
+    border: 1px solid rgba(132, 155, 161, .4);
+    border-radius: 4px;
 
+    & + #{&} {
+      margin-left: 5px;
+    }
+  }
 </style>

@@ -1,5 +1,5 @@
 import {nameFactory} from '../../utils';
-import {typeBoolean, typeNullBoolean, typeString} from '../../utils/props';
+import {typeBoolean, typeNullBoolean} from '../../utils/props';
 import {colorRegister} from './style';
 import {autoColorValid, autoSizeValid} from '../../utils/validator';
 import {addDynamicCSS, cssBooleanCreator} from '../../utils/style';
@@ -30,7 +30,7 @@ export const ImButton = factory.create({
     dashed: typeNullBoolean(),
     outline: typeNullBoolean(),
     radius: typeNullBoolean(),
-    to: typeString(),
+    to: [String, Object],
     href: String,
     disabled: typeBoolean(),
     loading: typeBoolean(),

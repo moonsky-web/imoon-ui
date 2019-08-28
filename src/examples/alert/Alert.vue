@@ -66,17 +66,41 @@
           },
           {
             name: 'color',
-            type: 'String',
-            values: [...COLOR_NAMES, '#rgb'],
+            type: String,
             default: null,
-            desc: '颜色，预定义颜色或 RGB 色值',
+            desc(h) {
+              return h('div', {}, [
+                '预定义颜色 [ ',
+                ...COLOR_NAMES.reduce((total, now, idx, arr) => {
+                  total.push(h('code', {class: 'demo-api-prop-code'}, [now]));
+                  if (idx < arr.length - 1) {
+                    total.push(',');
+                  }
+                  return total;
+                }, []),
+                ' ] 或 RGB 色值',
+              ]);
+            },
           },
           {
             name: 'size',
             type: 'String',
-            values: [...autoSizeValid.sizes, 'auto'],
             default: null,
-            desc: '尺寸，预定义尺寸，或使用 font-size。',
+            desc(h) {
+              return h('div', {}, [
+                '预定义尺寸 [ ',
+                ...autoSizeValid.sizes.reduce((total, now, idx, arr) => {
+                  total.push(h('code', {class: 'demo-api-prop-code'}, [now]));
+                  if (idx < arr.length - 1) {
+                    total.push(',');
+                  }
+                  return total;
+                }, []),
+                ' ] 或 ',
+                h('code', {class: 'demo-api-prop-code'}, ['auto']),
+                ' 色值',
+              ]);
+            },
           },
           {
             name: 'dashed',

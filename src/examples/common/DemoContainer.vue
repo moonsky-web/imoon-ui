@@ -46,17 +46,9 @@
       //type:String|Array
       prop: 'type', name: '类型', render(h, value) {
         return isFn(value) ? value.name : toStr(value);
-      },
+      }, class: 'demo-api-table-type'
     },
     {prop: 'default', name: '默认值'},//values:String
-    {
-      //values:String|Array
-      prop: 'values', name: '可选值',
-      col: {width: '220px'},
-      render(h, value) {
-        return isFn(value) ? value(h) : toStr(value);
-      },
-    },
     {prop: 'desc', name: '说明'},//desc:String
   ], SLOTS_COLUMNS = [
     {prop: 'name', name: '插槽名'},
@@ -90,8 +82,8 @@
         ]))),
         h('tbody', {}, data.length ? data.map(row => h('tr', {
           class: '',
-        }, columns.map(({prop, render = defaultRender}) => h('td', {
-          class: {'demo-api-td-values': prop === 'values'},
+        }, columns.map(({prop, class: cls, attrs, render = defaultRender}) => h('td', {
+          class: [cls, {'demo-api-td-values': prop === 'values'}], attrs,
         }, [
           h('p', {class: 'demo-api-td-data'}, [
             render(h, row[prop]) || defaultRender(h, row[prop]),
@@ -168,6 +160,7 @@
     collapse: 0;
     border: 1px solid #DDD;
     border-collapse: collapse;
+    font-size: 12px;
 
     & th,
     & td {
@@ -187,11 +180,15 @@
         width: 220px;
       }
 
+      & .demo-api-table-type{
+        width: 90px;
+      }
+
       & > .demo-api-td-data {
-        margin-top: 10px;
-        margin-bottom: 10px;
+        margin-top: 5px;
+        margin-bottom: 5px;
         margin-right: 10px;
-        max-width: 200px;
+        /*max-width: 200px;*/
         word-break: keep-all;
       }
     }
