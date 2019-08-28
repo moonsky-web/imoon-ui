@@ -22,24 +22,24 @@
           {
             name: 'dashed',
             type: Boolean,
-            default: null,
+            default: false,
             desc: '是否是虚线分割线',
           },
           {
             name: 'left',
-            type: Boolean,
+            type: String,
             default: null,
             desc: '分割线左标签',
           },
           {
             name: 'center',
-            type: Boolean,
+            type: String,
             default: null,
             desc: '分割线中标签',
           },
           {
             name: 'right',
-            type: Boolean,
+            type: String,
             default: null,
             desc: '分割线右标签',
           },
