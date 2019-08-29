@@ -87,7 +87,9 @@
     </DemoItem>
     <DemoItem label="路由和超链接">
       <template #desc>
-        通过给 ImButton 组件设置 to 或 href 属性，将 ImButton 变为一个链接
+        通过给 ImButton 组件设置 to 或 href 属性，将 ImButton 变为一个链接:wq
+
+
       </template>
       <div>
         <DemoSubItem title="路由" desc="设置 to 属性">

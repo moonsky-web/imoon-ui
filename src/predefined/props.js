@@ -19,5 +19,5 @@ export const inputBaseProps = {
   block: typeBoolean(),
   ghost: typeBoolean(),
   radius: typeBoolean(),
-  autofocus: typeBoolean(),// 未实现
+  autofocus: typeBoolean(),
 };

@@ -3,9 +3,10 @@
     <DemoItem label="基本输入框">
       <div class="demo-padding-10">
         <div class="demo-margin-v-10">
-          <ImInput autofocus v-model="inputBaseValue"/>
+          <ImInput autofocus v-model.lazy.trim="inputBaseValue"/>
           <ImInput placeholder="placeholder" v-model="inputBaseValue"/>
         </div>
+        <div>文本内容：[{{inputBaseValue}}]</div>
       </div>
     </DemoItem>
 

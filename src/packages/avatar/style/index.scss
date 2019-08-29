@@ -1,0 +1,47 @@
+.#{$ns-avatar} {
+  position: relative;
+  overflow: hidden;
+  border-radius: 5px;
+
+  height: 100px;
+  width: 100px;
+
+  box-shadow: 0 0 30px;
+
+  & > #{&}-image {
+    width: 100px;
+  }
+
+  &#{&}-radius {
+    border-radius: 999px;
+  }
+
+  $action-height: 25px;
+
+  & > #{&}-action {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 0;
+    font-size: $action-height - 5px;
+    line-height: $action-height;
+    color: #fff;
+    cursor: pointer;
+    text-align: center;
+    background: rgba(0, 0, 0, .5);
+    transition-duration: $transition-duration-base;
+
+    &:hover {
+      background: rgba(0, 0, 0, .4);
+    }
+
+    &:active {
+      background: rgba(0, 0, 0, .6);
+    }
+  }
+
+  &:hover > #{&}-action {
+    height: $action-height;
+  }
+}

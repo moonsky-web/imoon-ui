@@ -17,7 +17,9 @@
     components: {ImIcon, ImButton},
     computed: {
       props() {
-        return [];
+        return [
+          {name: 'name', type: String},
+        ];
       },
     },
   };
