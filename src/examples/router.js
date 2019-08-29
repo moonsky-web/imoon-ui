@@ -2,12 +2,23 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './Home.vue';
 
-import {AlertRoutes} from './alert/router';
-import {ButtonRoutes} from './button/router';
-import {InputRoutes} from './input/router';
-import {DividerRoutes} from './divider/router';
+import {AlertRoute} from './alert/router';
+import {ButtonRoute} from './button/router';
+import {InputRoute} from './input/router';
+import {DividerRoute} from './divider/router';
+import {IconRoute} from './icon/router';
 
 Vue.use(Router);
+
+function setGroupId(route, id) {
+  let {meta} = route;
+  if (!meta && id) {
+    route.meta = {groupId: id};
+  } else if (id) {
+    meta.groupId = id;
+  }
+  return route;
+}
 
 export const router = new Router({
   routes: [
@@ -16,18 +27,11 @@ export const router = new Router({
       name: 'home',
       component: Home,
     },
-    ...AlertRoutes,
-    ...ButtonRoutes,
-    ...InputRoutes,
-    ...DividerRoutes,
-    {
-      path: '/icon',
-      name: 'Icon',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './icon/iconDemo.vue'),
-    },
+    setGroupId(AlertRoute, '基本'),
+    setGroupId(ButtonRoute, '基本'),
+    setGroupId(InputRoute, '基本'),
+    setGroupId(DividerRoute, '基本'),
+    setGroupId(IconRoute, '基本'),
     {
       path: '/input-item',
       name: 'InputItem Demo',

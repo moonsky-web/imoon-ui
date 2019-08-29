@@ -7,9 +7,9 @@
     <div
       class="demo-item-content"
       ref="content"
-      :class="{
+      :class="[containerClass, {
         'keep-display-flex':!notFlex,
-        'demo-flex-column': flexColumn}">
+        'demo-flex-column': flexColumn}]">
       <slot></slot>
     </div>
     <div>
@@ -35,6 +35,7 @@
       desc: String,
       notFlex: Boolean,
       flexColumn: Boolean,
+      containerClass: {},
     },
     computed: {
       currentPath() {
@@ -62,7 +63,7 @@
     padding: 10px 20px 10px;
     margin: 30px 0;
     border-radius: 8px;
-    box-shadow: 0 0 6px #ccc;
+    box-shadow: 0 0 6px #CCC;
     transition-duration: .3s;
 
     &:hover, &:focus-within {
@@ -80,7 +81,7 @@
       margin: 0 auto;
       display: block;
       width: 100%;
-      border-bottom: 1px solid #aaa;
+      border-bottom: 1px solid #AAA;
     }
   }
 
@@ -117,7 +118,7 @@
     border-radius: 5px;
 
     &:hover {
-      background: #f2f2f2;
+      background: #F2F2F2;
     }
   }
 

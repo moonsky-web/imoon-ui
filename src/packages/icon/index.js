@@ -1,26 +1,15 @@
 import {nameFactory} from '../../utils';
 
-const creator = nameFactory('icon'), iconName = creator();
+const factory = nameFactory('icon'), iconName = factory();
 
-export const ImIcon = {
-  install(Vue) {
-    creator.install(Vue, ImIcon);
-  },
-  name: creator.thisName(),
+export const ImIcon = factory.create({
   functional: true,
   props: {
-    name: {
-      type: String,
-      required: true,
-    },
+    name: String,
   },
-  render(h, {props: {name}, attrs, listeners}) {
-    return h('i', {
-      attrs,
-      on: listeners,
-      class: [iconName, creator(name)],
-    }, []);
+  render(h, {props: {name}, data: {class: cls, ...setting}}) {
+    return name ? h('i', {...setting, class: [cls, iconName, factory(name)]}) : null;
   },
-};
+});
 
 export default ImIcon;

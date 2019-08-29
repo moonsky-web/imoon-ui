@@ -5,9 +5,14 @@ import {autoColorValid, autoSizeValid} from '../../utils/validator';
 import {addDynamicCSS, cssBooleanCreator} from '../../utils/style';
 import {classBlock} from '../../utils/class';
 import {clearEvent} from '../../utils/dom';
+import {ImIcon} from '../icon';
 
-const subNs = 'button', readonly = Object.freeze({});
-const factory = nameFactory(subNs), clsBtn = factory(), clsTxt = factory('text');
+const subNs = 'button',
+  OBJ = Object.freeze({}), ARR = [];
+const factory = nameFactory(subNs),
+  clsBtn = factory(),
+  clsSpan = factory('span'),
+  clsTxt = factory('text');
 const colorCreator = addDynamicCSS(subNs, colorRegister);
 const btnBooleanCreator = cssBooleanCreator(
   (name, val) => val ? factory(name) : '',
@@ -36,12 +41,13 @@ export const ImButton = factory.create({
     loading: typeBoolean(),
     append: typeBoolean(),
     replace: typeBoolean(),
+    icon: String,
   },
   render(h, {
-    props, data, children, parent, injections: {$providedProps = readonly} = readonly,
+    props, data, children = ARR, parent, injections: {$providedProps = OBJ} = OBJ,
   }) {
     const {class: cls, attrs = {}} = data,
-      {color, size, text, block, append, replace, to, href, disabled, loading} = props;
+      {color, size, text, block, icon, append, replace, to, href, disabled, loading} = props;
     const names = text ? [clsTxt] : btnBooleanCreator(props, $providedProps);
     const classes = [
       clsBtn, ...names, classBlock(block), cls || '',
@@ -69,7 +75,11 @@ export const ImButton = factory.create({
     } else if (href) {
       attrs.href = href;
     }
-    return h(tag, settings, children);
+    return h(tag, settings, icon ? [h(ImIcon, {
+      props: {name: icon},
+    }), children.length ? [
+      h('span', {class: clsSpan}, children)] : null,
+    ] : children);
   },
 });
 

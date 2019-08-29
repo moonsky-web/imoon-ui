@@ -90,6 +90,10 @@
     background: transparent;
   }
 
+  & > #{&}-span {
+    margin-left: 3px;
+  }
+
   @mixin color-on-text($name: null, $important: false) {
     $color: #333;
     @if ($name != null) {

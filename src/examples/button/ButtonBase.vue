@@ -10,6 +10,13 @@
         </div>
       </div>
     </DemoItem>
+    <DemoItem label="Icon 图标">
+      <div>
+        <ImButton><span style="vertical-align: middle"><ImIcon name="close"/></span>关闭</ImButton>
+        <ImButton icon="close"></ImButton>
+        <ImButton radius icon="folder-open">代开</ImButton>
+      </div>
+    </DemoItem>
     <DemoItem label="圆角按钮 :radius=true">
       <div class="demo-padding-10">
         <div class="demo-margin-v-10">
@@ -86,7 +93,9 @@
           <ImButton v-for="color in colors" :key="color" :color="color" to="/alert/base">路由</ImButton>
         </DemoSubItem>
         <DemoSubItem title="超链接" desc="设置 href 属性">
-          <ImButton v-for="color in colors" :key="color" :color="color" target="_blank" href="https://www.baidu.com">链接</ImButton>
+          <ImButton v-for="color in colors" :key="color" :color="color" target="_blank" href="https://www.baidu.com">
+            链接
+          </ImButton>
         </DemoSubItem>
         <DemoSubItem title="普通按钮" desc="尺寸对比">
           <ImButton v-for="color in colors" :key="color" :color="color">按钮</ImButton>
@@ -231,11 +240,12 @@
 <script>
   /* eslint-disable */
   import {ImButton} from '../../packages/button';
+  import {ImIcon} from '../../packages/icon';
   import {getRandomColor} from '../util';
-console.log(ImButton)
+
   export const ButtonBase = {
     name: 'ButtonBase',
-    components: {ImButton},
+    components: {ImButton, ImIcon},
     data() {
       return {
         colors: [null, ...ImButton.props.color.validator.colors, '#123456'],
