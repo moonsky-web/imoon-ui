@@ -3,7 +3,7 @@
     <DemoItem label="基本输入框">
       <div class="demo-padding-10">
         <div class="demo-margin-v-10">
-          <ImInputClearable v-model="inputBaseValue"/>
+          <ImInputClearable autofocus v-model="inputBaseValue"/>
           <ImInputClearable placeholder="placeholder" v-model="inputBaseValue"/>
         </div>
       </div>

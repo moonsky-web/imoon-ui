@@ -1,8 +1,7 @@
 <template>
-  <DemoContainer :props="props">
-    <div slot="detail">
-      Button 演示
-    </div>
+  <DemoContainer
+    label="Button 演示"
+    :props="props">
   </DemoContainer>
 </template>
 
@@ -109,7 +108,7 @@
                     target: '_blank',
                   },
                 }, ['VueRouter 编程式导航']),
-                '，如果没有使用路由，将直接设为超链接'
+                '，如果没有使用路由，将直接设为超链接',
               ]);
             },
           },
@@ -153,9 +152,7 @@
             type: String,
             values: null,
             default: false,
-            desc(h) {
-              return h('span', {}, ['图标', h('span', {style: {color: 'red'}}, [' (未实现) '])]);
-            },
+            desc: '图标',
           },
         ];
       },

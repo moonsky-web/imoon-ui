@@ -35,7 +35,7 @@
         <router-view/>
       </div>
     </div>
-    <div class="app-footer">
+    <div class="app-footer" v-if="false">
 
     </div>
   </div>

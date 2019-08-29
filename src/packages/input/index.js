@@ -67,7 +67,10 @@ export const inputFactory = factory;
 
 export const ImInput = factory.create({
   functional: true, props,
-  render(h, {data, props = READONLY, injections: {$providedProps = READONLY} = READONLY}) {
+  render(h, {
+    data, props = READONLY, parent,
+    injections: {$providedProps = READONLY} = READONLY,
+  }) {
     const {class: classArgs} = data, {viewonly, value, color, size, block} = props;
     const classes = [
       classBlock(block), clsInput,
@@ -82,7 +85,14 @@ export const ImInput = factory.create({
     if (viewonly) {
       return h(Viewonly, settings, [value]);
     } else {
-      return h(Default, settings);
+      if (props.autofocus) {
+        settings.ref = 'input';
+        parent.$nextTick(() => {
+          $input.fnContext.$refs.input.focus();
+        });
+      }
+      const $input = h(Default, settings);
+      return $input;
     }
   },
 });

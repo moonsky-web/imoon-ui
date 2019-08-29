@@ -1,12 +1,12 @@
 <template>
   <div>
-    <DemoContainer :props="props" :slots="slots">
-      <div slot="detail">
-        ImDivider 分割线演示
-        <div class="demo-divider-desc">
-          ImDivider 是一个很简单的组件，用法也很简单，不提供多种颜色的切换
-        </div>
-      </div>
+    <DemoContainer
+      label="ImDivider 分割线演示"
+      :props="props"
+      :slots="slots">
+      <template #detail>
+        ImDivider 是一个很简单的组件，用法也很简单，不提供多种颜色的切换
+      </template>
     </DemoContainer>
   </div>
 </template>
@@ -70,8 +70,4 @@
   export default Divider;
 </script>
 <style lang="scss" scoped>
-  .demo-divider-desc {
-    padding: 16px;
-    font-size: 14px;
-  }
 </style>

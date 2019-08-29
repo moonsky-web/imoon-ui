@@ -26,15 +26,23 @@
 
 <style lang="scss">
   .demo-item {
+    padding: 20px 0 0;
     list-style: none;
-    margin: 10px 0;
-    padding: 0;
+    margin: 10px 10px 10px 0;
     display: inline-block;
     width: 100px;
     text-align: center;
     box-sizing: border-box;
     height: 140px;
     vertical-align: middle;
+    box-shadow: 0 0 0 #fff;
+    transition-duration: .3s;
+    border-radius: 8px;
+
+    &:hover {
+      /*box-shadow: 0 0 12px #2C3E50;*/
+      box-shadow: 0 0 12px #aaa;
+    }
   }
 
   .demo-icon {

@@ -1,13 +1,11 @@
 <template>
   <DemoContainer
+    label="ImAlert 演示"
     :props="props"
     :slots="slots"
     :events="events"
     :eventsDesc="eventsDesc"
     eventsPlaceholder="参考 ImTransition 或 vue transition 组件生命周期事件">
-    <div slot="detail">
-      Alert 演示
-    </div>
   </DemoContainer>
 </template>
 

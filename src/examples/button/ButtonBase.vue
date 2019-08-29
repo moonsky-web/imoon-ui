@@ -13,6 +13,7 @@
     <DemoItem label="Icon 图标">
       <div>
         <ImButton><span style="vertical-align: middle"><ImIcon name="close"/></span>关闭</ImButton>
+        <ImButton icon="close">关闭</ImButton>
         <ImButton icon="close"></ImButton>
         <ImButton radius icon="folder-open">代开</ImButton>
       </div>
@@ -86,7 +87,7 @@
     </DemoItem>
     <DemoItem label="路由和超链接">
       <template #desc>
-        通过给 ImButton 组件设置 to 或 href 属性，将
+        通过给 ImButton 组件设置 to 或 href 属性，将 ImButton 变为一个链接
       </template>
       <div>
         <DemoSubItem title="路由" desc="设置 to 属性">

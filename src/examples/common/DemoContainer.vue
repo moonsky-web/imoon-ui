@@ -1,8 +1,9 @@
 <template>
   <div class="demo-content-container">
-    <slot name="detail">
-      {{getMetaOrRouteName}}
-    </slot>
+    <slot name="label">{{getMetaOrRouteName}}</slot>
+    <div class="demo-container-detail" v-if="$slots.detail">
+      <slot name="detail"/>
+    </div>
     <router-view/>
     <slot name="api">
       <slot name="props">
@@ -46,7 +47,7 @@
       //type:String|Array
       prop: 'type', name: '类型', render(h, value) {
         return isFn(value) ? value.name : toStr(value);
-      }, class: 'demo-api-table-type'
+      }, class: 'demo-api-table-type',
     },
     {prop: 'default', name: '默认值'},//values:String
     {prop: 'desc', name: '说明'},//desc:String
@@ -110,6 +111,8 @@
     name: 'DemoContainer',
     components: {ApiItem: DemoTable},
     props: {
+      label: String,
+
       props: Array,
       propsDesc: String,
       propsPlaceholder: String,
@@ -135,7 +138,7 @@
     },
     computed: {
       getMetaOrRouteName() {
-        return '';
+        return this.label;
       },
     },
   };
@@ -144,6 +147,11 @@
 <style scoped lang="scss">
   .demo-content-container {
     padding: 0 20px 120px;
+  }
+
+  .demo-container-detail {
+    padding: 16px;
+    font-size: 14px;
   }
 
   .demo-api-sub-title {
@@ -180,7 +188,7 @@
         width: 220px;
       }
 
-      & .demo-api-table-type{
+      & .demo-api-table-type {
         width: 90px;
       }
 
