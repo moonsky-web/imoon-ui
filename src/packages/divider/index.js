@@ -20,15 +20,17 @@ export const ImDivider = factory.create({
   props: {
     vertical: typeBoolean(),
     dashed: typeBoolean(),
-    left: typeString(),
     center: typeString(),
     right: typeString(),
+    left: typeString(),
   },
   render(h, {
-    props: {vertical, dashed, left: leftText, center: centerText, right: rightText},
+    props: {vertical, dashed, left: leftText,
+      center: centerText, right: rightText},
     data: {class: cls, ...setting}, slots,
   }) {
-    setting.class = [cls, {[clsDashed]: dashed}, vertical ? clsVertical : clsDivider];
+    setting.class = [cls, {[clsDashed]: dashed},
+      vertical ? clsVertical : clsDivider];
     if (vertical) {
       return h('div', setting);
     } else {

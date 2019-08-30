@@ -270,7 +270,7 @@
     },
     methods: {
       onResetViewonly() {
-        this.viewonlyValue = this.viewonlyValue ? '' : 'readonly';
+        this.viewonlyValue = this.viewonlyValue ? '' : 'viewonly';
       },
       onFocusReadonly() {
         console.log(`================: readonly focus, this.readonly=${this.readonly}`);

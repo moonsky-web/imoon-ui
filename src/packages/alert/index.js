@@ -6,23 +6,26 @@ import {addDynamicCSS, cssBooleanCreator} from '../../utils/style';
 import {rgbaColor} from '../../utils/color';
 import {ImWinClose} from '../win-ctrl';
 import {alertVisibleName} from '../../default';
+import {ImIcon} from '../icon';
 
 const subNs = 'alert', EMPTY = Object.freeze([]),
   visible = alertVisibleName,
   updateVisible = `update:${visible}`;
 const creator = nameFactory(subNs),
   clsAlert = creator(),
+  clsIcon = creator('icon'),
   clsClose = creator('close'),
   clsTitle = creator('title');
+const iconMap = {
+  success: 'check-circle', info: 'info-circle',
+  warn: 'warning-circle', danger: 'close-circle',
+};
 const alertColorCreator = addDynamicCSS(subNs, (className, color, namespaced) =>
-  `.${namespaced}.${className}{color:${color};background:${rgbaColor(color, 0.1)};}`);
-const alertBooleanCreator = cssBooleanCreator((name, val) => {
-  return val ? creator(name) : '';
-}, 'dashed', 'radius');
-
-const createTitle = (h, title) => h('div', {
-  class: clsTitle,
-}, [title]);
+    `.${namespaced}.${className}{color:${color};background:${rgbaColor(color, 0.1)};}`),
+  alertBooleanCreator = cssBooleanCreator(
+    (name, val) => val ? creator(name) : '', 'dashed', 'radius'),
+  createTitle = (h, title) => h('div', {class: clsTitle}, [title]),
+  createIcon = (h, name) => name ? h(ImIcon, {props: {name}, class: clsIcon}) : null;
 
 export const ImAlert = creator.create({
   functional: true,
@@ -53,7 +56,10 @@ export const ImAlert = creator.create({
     const {visible} = props;
     if (visible) {
       const {[updateVisible]: updateSync, ...on} = listeners;
-      const {title, description: desc, closeText, color, size} = props, {class: classArgs} = data;
+      const {
+        title, description: desc, closeText, color, size,
+        icon = iconMap[color],
+      } = props, {class: classArgs} = data;
 
       const className = `${clsAlert} ${alertColorCreator(color)} ${size ? creator(size) : ''}`;
       const computedClass = alertBooleanCreator(props, $providedProps);
@@ -62,9 +68,11 @@ export const ImAlert = creator.create({
 
       const {title: titleSlots = EMPTY, close = EMPTY, default: defaults = EMPTY} = slots();
 
-      const titleNode = titleSlots.length ? h('div', {class: clsTitle}, titleSlots)
-        : (defaults.length ? (title ? createTitle(h, title) : null) : (desc && title ? createTitle(h, title) : null));
-      const defaultNode = defaults.length ? defaults : (desc ? [desc] : [title]);
+      const titleNode = titleSlots.length ? h('div', {class: clsTitle}, [createIcon(h, icon), ...titleSlots])
+        : (defaults.length ? (title ? createTitle(h, title) : null)
+          : (desc && title ? createTitle(h, title) : null));
+      const defaultNode = defaults.length ? [createIcon(h, icon), ...defaults]
+        : (desc ? [createIcon(h, icon), desc] : [createIcon(h, icon), title]);
       const closeNode = updateSync || close.length ? h('div', {
         class: clsClose,
         on: {

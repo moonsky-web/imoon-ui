@@ -26,7 +26,7 @@
           可能会影响内容显示的有三种方式，title、description 和默认 slot 都可能，接下来会一一展示。
         </p>
       </template>
-      <ImAlert title="标题">这是一个带有标题的使用示例</ImAlert>
+      <ImAlert title="标题" color="danger">这是一个带有标题的使用示例</ImAlert>
     </DemoItem>
 
     <DemoItem label="分别设置 title、description 和默认 slot 演示">

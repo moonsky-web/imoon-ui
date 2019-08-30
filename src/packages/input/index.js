@@ -1,4 +1,4 @@
-import {nameFactory, READONLY} from '../../utils';
+import {nameFactory} from '../../utils';
 import {addDynamicCSS, cssBooleanCreator} from '../../utils/style';
 import {inputColorRegister} from './style';
 import {inputBaseProps as props} from '../../predefined/props';
@@ -8,15 +8,14 @@ import {convertListeners} from '../../utils/vnode';
 import {inputExpandMixin} from '../../predefined/mixins';
 import {classBlock} from '../../utils/class';
 
-const subNs = 'Input';
+const subNs = 'Input', OBJ = {};
 const factory = nameFactory(subNs),
   clsInput = factory(),
   clsClear = factory('clearable'),
   clsClearIcon = factory('clearIcon');
 const inputColorCreator = addDynamicCSS(subNs, inputColorRegister);
-const inputBooleanCreator = cssBooleanCreator(
-  (name, val) => val ? factory(name) : null,
-  'ghost', 'radius');
+const inputBooleanCreator = cssBooleanCreator((name, val) =>
+  val ? factory(name) : null, 'ghost', 'radius');
 
 function noneInput() {
 }
@@ -28,8 +27,8 @@ const Default = {
   render(h, {data, parent}) {
     const {
       // eslint-disable-next-line
-      on = READONLY, attrs: {value: v, ...attrs} = READONLY,
-      props: {value, placeholder, readonly, disabled} = READONLY,
+      on = OBJ, attrs: {value: v, ...attrs} = OBJ,
+      props: {value, placeholder, readonly, disabled} = OBJ,
     } = data;
     const {input = noneInput} = on;
     const onInput = convertListeners(input, parent);
@@ -68,15 +67,15 @@ export const inputFactory = factory;
 export const ImInput = factory.create({
   functional: true, props,
   render(h, {
-    data, props = READONLY, parent,
-    injections: {$providedProps = READONLY} = READONLY,
+    data, props = OBJ,
+    injections: {$providedProps = OBJ} = OBJ,
   }) {
-    const {class: classArgs} = data, {viewonly, value, color, size, block} = props;
+    const {class: classArgs, attrs = {}} = data, {viewonly, value, color, size, block} = props;
     const classes = [
       classBlock(block), clsInput,
       `${inputColorCreator(color)} ${size ? factory(size) : ''}`,
       ...inputBooleanCreator(props, $providedProps)], settings = {
-      ...data, props,
+      ...data, props, attrs,
       class: classes,
     };
     if (classArgs) {
@@ -86,13 +85,9 @@ export const ImInput = factory.create({
       return h(Viewonly, settings, [value]);
     } else {
       if (props.autofocus) {
-        settings.ref = 'input';
-        parent.$nextTick(() => {
-          $input.fnContext.$refs.input.focus();
-        });
+        attrs.autofocus = props.autofocus;
       }
-      const $input = h(Default, settings);
-      return $input;
+      return h(Default, settings);
     }
   },
 });
@@ -104,7 +99,8 @@ export const ImInputClearable = factory.create('clearable', {
     clearable: typeBoolean(true),
   },
   render(h, context = this) {
-    let {clearable, isEditable, $listeners, $props, $attrs, onInput, currentValue: value} = context;
+    let {clearable, isEditable, $listeners, $props,
+      $attrs, onInput, currentValue: value} = context;
     let {size} = $props;
     return h('div', {
       class: [

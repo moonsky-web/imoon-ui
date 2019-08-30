@@ -119,7 +119,7 @@
             type: 'String',
             values: null,
             default: null,
-            desc: '图标（未实现）',
+            desc: '图标（未完善）',
           },
         ];
       },

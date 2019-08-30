@@ -3,7 +3,7 @@
   @include set-display();
   width: 100%;
   padding: .8em 2.5em .8em 1.2em;
-  border: 1px solid;
+  //border: 1px solid;
   @include set-border-box();
   @include set-border-radius();
 
@@ -27,6 +27,12 @@
     margin-bottom: .3em;
     font-size: 1.1em;
     font-weight: bolder;
+  }
+
+  & > .#{$ns-alert}-icon {
+    margin-right: .2em;
+    font-size: 1.3em;
+    vertical-align: middle;
   }
 
   & > .#{$ns-alert}-close {

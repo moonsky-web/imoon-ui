@@ -104,7 +104,7 @@
       </div>
     </DemoItem>
 
-    <DemoItem label="viewonly" desc="当 :vireonly=true 时，页面完全不存在 input 元素，是用一个 span 模拟的元素" notFlex>
+    <DemoItem label="viewonly" desc="当 :viewonly=true 时，页面完全不存在 input 元素，是用一个 span 模拟的元素" notFlex>
       <div class="demo-padding-10 demo-width-full">
         <div class="demo-margin-v-10">
           <ImButton @click="viewonly=!viewonly">viewonly={{viewonly}}</ImButton>
@@ -289,7 +289,7 @@
     },
     methods: {
       onResetViewonly() {
-        this.viewonlyValue = this.viewonlyValue ? '' : 'readonly';
+        this.viewonlyValue = this.viewonlyValue ? '' : 'viewonly';
       },
       onFocusReadonly() {
         console.log(`================: readonly focus, this.readonly=${this.readonly}`);
