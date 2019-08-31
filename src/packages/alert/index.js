@@ -22,8 +22,7 @@ const iconMap = {
 };
 const alertColorCreator = addDynamicCSS(subNs, (className, color, namespaced) =>
     `.${namespaced}.${className}{color:${color};background:${rgbaColor(color, 0.1)};}`),
-  alertBooleanCreator = cssBooleanCreator(
-    (name, val) => val ? creator(name) : '', 'dashed', 'radius'),
+  alertBooleanCreator = cssBooleanCreator((name, val) => val ? creator(name) : '', 'radius'),
   createTitle = (h, title) => h('div', {class: clsTitle}, [title]),
   createIcon = (h, name) => name ? h(ImIcon, {props: {name}, class: clsIcon}) : null;
 
@@ -46,7 +45,6 @@ export const ImAlert = creator.create({
       type: String,
       validator: autoSizeValid,
     },
-    dashed: typeBoolean(),
     radius: typeBoolean(),
   },
   render(h, {

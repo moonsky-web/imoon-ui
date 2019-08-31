@@ -1,6 +1,7 @@
 import {nameFactory} from '../../utils';
 import {ImIcon} from '../icon';
-import {typeBoolean} from '../../utils/props';
+import {typeBoolean, typeString} from '../../utils/props';
+import {onEvent} from '../../utils/dom';
 
 const avatar = 'avatar';
 
@@ -18,7 +19,7 @@ export const ImAvatar = factory.create({
      */
     src: String,
     alt: String,
-    icon: String,
+    icon: typeString('user'),
     /**
      * 默认图标
      */
@@ -34,11 +35,16 @@ export const ImAvatar = factory.create({
     actionUrl: String,
     radius: typeBoolean(),
   },
+  data() {
+    return {
+      unloaded: false,
+    };
+  },
   render(h, context = this) {
-    const {$props: props, click} = context;
+    const {$props: props, click, unloaded, icon: name} = context;
     const {src, radius} = props;
     return h('div', {class: [clsAvatar, {[clsRadius]: radius}]}, [
-      h('img', {class: clsImage, attrs: {src}}),
+      unloaded ? h(ImIcon, {props: {name}}) : h('img', {class: clsImage, attrs: {src}, ref: 'img'}),
       h('div', {class: clsAction, on: {click}}, [h(ImIcon, {props: {name: 'camera'}})]),
     ]);
   },
@@ -46,5 +52,10 @@ export const ImAvatar = factory.create({
     click() {
       console.log('change image ...');
     },
+  },
+  mounted() {
+    onEvent(this.$refs.img, 'error', (...args) => {
+      this.unloaded = true;
+    });
   },
 });

@@ -27,9 +27,11 @@
           :columns="[]" :placeholder="scopeSlotsPlaceholder"/>
       </slot>
     </slot>
+    <ImBackTop target=".app-main"/>
   </div>
 </template>
 <script>
+  import {ImBackTop} from '../../packages/back-top';
   import {isFunction as isFn, isPlainObject} from '../../utils/predicates';
 
   function toStr(value) {
@@ -109,7 +111,7 @@
 
   export const DemoContainer = {
     name: 'DemoContainer',
-    components: {ApiItem: DemoTable},
+    components: {ApiItem: DemoTable, ImBackTop},
     props: {
       label: String,
 
