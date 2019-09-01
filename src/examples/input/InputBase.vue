@@ -4,7 +4,7 @@
       <div class="demo-padding-10">
         <div class="demo-margin-v-10">
           <ImInput autofocus v-model.lazy.trim="inputBaseValue"/>
-          <ImInput v-focus placeholder="placeholder" v-model="inputBaseValue"/>
+          <ImInput placeholder="placeholder" v-model="inputBaseValue"/>
         </div>
         <div>文本内容：[{{inputBaseValue}}]</div>
       </div>
