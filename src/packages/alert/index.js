@@ -5,13 +5,13 @@ import {autoColorValid, autoSizeValid} from '../../utils/validator';
 import {addDynamicCSS, cssBooleanCreator} from '../../utils/style';
 import {rgbaColor} from '../../utils/color';
 import {ImWinClose} from '../win-ctrl';
-import {alertVisibleName} from '../../default';
+import {defaultProp} from '../../default';
 import {ImIcon} from '../icon';
 
-const subNs = 'alert', EMPTY = Object.freeze([]),
-  visible = alertVisibleName,
+const alert = 'alert', EMPTY = Object.freeze([]),
+  visible = defaultProp('visible', alert),
   updateVisible = `update:${visible}`;
-const creator = nameFactory(subNs),
+const creator = nameFactory(alert),
   clsAlert = creator(),
   clsIcon = creator('icon'),
   clsClose = creator('close'),
@@ -20,7 +20,7 @@ const iconMap = {
   success: 'check-circle', info: 'info-circle',
   warn: 'warning-circle', danger: 'close-circle',
 };
-const alertColorCreator = addDynamicCSS(subNs, (className, color, namespaced) =>
+const alertColorCreator = addDynamicCSS(alert, (className, color, namespaced) =>
     `.${namespaced}.${className}{color:${color};background:${rgbaColor(color, 0.1)};}`),
   alertBooleanCreator = cssBooleanCreator(
     (name, val) => val ? creator(name) : '', 'dashed', 'radius'),

@@ -6,6 +6,7 @@ import {addDynamicCSS, cssBooleanCreator} from '../../utils/style';
 import {classBlock} from '../../utils/class';
 import {clearEvent} from '../../utils/dom';
 import {ImIcon} from '../icon';
+import {defaultProp} from '../../default';
 
 const subNs = 'button',
   OBJ = Object.freeze({}), ARR = [];
@@ -24,10 +25,12 @@ export const ImButton = factory.create({
     color: {
       type: String,
       validator: autoColorValid,
+      default: defaultProp('color', subNs),
     },
     size: {
       type: String,
       validator: autoSizeValid,
+      default: defaultProp('size', subNs),
     },
     text: typeBoolean(),
     block: typeNullBoolean(),

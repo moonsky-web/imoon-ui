@@ -1,3 +1,5 @@
+import {contains, isPrimitive} from './utils/predicates';
+
 /**
  * 组件名命名空间
  * @type {string}
@@ -88,5 +90,29 @@ export const DEFAULTS = {
   activeOpacity,
   transitionHooks,
 };
+
+const defaultOptions = {
+  color: 'primary',
+  size: 'md',
+  visible: 'visible',
+}, specialKeys = ['size', 'color'];
+
+export function defaultProp(type, subject) {
+  const {
+    [`$$${namespace}-default-options`]:
+      options = defaultOptions,
+    // eslint-disable-next-line
+  } = Vue.protorype;
+  const {[type]: types} = options;
+  if (contains(specialKeys, type)) {
+    const {[subject]: opts} = options;
+    if (opts) {
+      if (opts[type] !== undefined) {
+        return opts[type];
+      }
+    }
+  }
+  return isPrimitive(types) ? types : types[subject];
+}
 
 export default DEFAULTS;

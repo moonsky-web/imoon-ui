@@ -52,7 +52,9 @@ export function isRegExp(value) {
 
 export function isPrimitive(value) {
   let type = typeof value;
-  return type === 'string' || type === 'number' || type === 'boolean';
+  return type === 'string' ||
+    type === 'number' ||
+    type === 'boolean';
 }
 
 export function isOrigin(value) {

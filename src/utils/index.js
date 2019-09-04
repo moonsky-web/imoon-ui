@@ -17,7 +17,8 @@ export function nextId() {
  * @returns {string}
  */
 function firstUpper(componentName, ns = namespace) {
-  return `${firstUpperCase(ns)}${componentName ? firstUpperCase(componentName) : ''}`;
+  return `${firstUpperCase(ns)}${componentName
+    ? firstUpperCase(componentName) : ''}`;
 }
 
 /**
@@ -27,7 +28,8 @@ function firstUpper(componentName, ns = namespace) {
  * @returns {string}
  */
 function firstLower(componentName, ns = namespace) {
-  return `${firstLowerCase(ns)}${componentName ? firstUpperCase(componentName) : ''}`;
+  return `${firstLowerCase(ns)}${componentName 
+    ? firstUpperCase(componentName) : ''}`;
 }
 
 /**
@@ -117,8 +119,9 @@ export function runtimeError(msg, type) {
 }
 
 export function eachObject(obj, fn) {
-  for (let key in obj) {
-    let item = obj[key];
+  const keys = Object.keys(obj), len = keys.length;
+  for (let i = 0; i < len; i++) {
+    const key = keys[i], item = obj[key];
     if (fn.call(item, item, key, obj) === false) {
       break;
     }
@@ -128,7 +131,7 @@ export function eachObject(obj, fn) {
 
 export function eachCount(count, fn) {
   for (let i = 0; i < count; i++) {
-    if (fn.call(i, i) === false) {
+    if (fn.call(i, i, i, count) === false) {
       break;
     }
   }
