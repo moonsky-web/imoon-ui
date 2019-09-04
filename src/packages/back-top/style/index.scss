@@ -1,0 +1,17 @@
+.#{$ns-back-top} {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  height: 38px;
+  width: 38px;
+  line-height: 38px;
+  text-align: center;
+  border-radius: 100%;
+  box-shadow: 0 0 12px #123;
+  transition-duration: $transition-duration-base;
+  cursor: pointer;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+}

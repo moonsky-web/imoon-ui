@@ -33,6 +33,7 @@
       </div>
       <div class="app-main">
         <router-view/>
+<!--        <ImBackTop/>-->
       </div>
     </div>
     <div class="app-footer" v-if="false">
@@ -41,6 +42,8 @@
   </div>
 </template>
 <script>
+  import {ImBackTop} from '../packages/back-top';
+
   const NONE_OBJ = {}, EMPTY = [];
 
   function excludeUnnamedRoutes(routes) {
@@ -59,6 +62,7 @@
 
   export default {
     name: 'App',
+    components: {ImBackTop},
     computed: {
       currentRoutes() {
         const {$router: {options: {routes: sourceRoutes = []} = NONE_OBJ} = NONE_OBJ} = this;

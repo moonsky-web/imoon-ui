@@ -5,7 +5,7 @@
       <div class="demo-width-20"></div>
       <ImAvatar :src="src"></ImAvatar>
       <div class="demo-width-20"></div>
-      <ImAvatar :src="src"></ImAvatar>
+      <ImAvatar :src="src + '0'"></ImAvatar>
     </DemoItem>
   </div>
 </template>

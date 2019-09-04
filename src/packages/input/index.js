@@ -85,7 +85,7 @@ export const ImInput = factory.create({
       return h(Viewonly, settings, [value]);
     } else {
       if (props.autofocus) {
-        attrs.autofocus = props.autofocus;
+        // attrs.autofocus = props.autofocus;
       }
       return h(Default, settings);
     }

@@ -241,6 +241,7 @@
   import {ImButton} from '../../packages/button';
   import {autoColorValid} from '../../utils/validator';
   import {getRandomColor} from '../util';
+  import {focus} from '../../predefined/directives';
 
   const colors = ImInput.props.color.validator.colors;
   const sizes = ImInput.props.size.validator.sizes;
@@ -248,6 +249,7 @@
   export const InputBase = {
     name: 'InputBase',
     components: {ImInput, ImButton},
+    directives: {focus},
     data() {
       return {
         colors: [...colors],
