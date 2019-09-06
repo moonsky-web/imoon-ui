@@ -1,10 +1,6 @@
 import {nameFactory} from '../../utils';
 
-export const ImRenderer = {
-  install(Vue) {
-    nameFactory.install(Vue, ImRenderer);
-  },
-  name: nameFactory().thisName('Renderer'),
+export const ImRenderer = nameFactory('Renderer').create({
   functional: true,
   props: {
     render: {
@@ -16,6 +12,6 @@ export const ImRenderer = {
   render(h, ctx) {
     return ctx.props.render(h, ctx);
   },
-};
+});
 
 export default ImRenderer;

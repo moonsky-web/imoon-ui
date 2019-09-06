@@ -63,7 +63,8 @@ function functionalRender(h, context) {
  * -     其中的 tag 属性时渲染的节点名，text 属性是文本内容
  * -     其他属性都是属性，如 class、style
  * - Function：渲染函数，接受一个参数 $createElement
- * @type {{name: string, props: {attrs: {type: any[], default: null}, text: StringConstructor, tag: any[]}, render: Descriptor.render}}
+ * @type {{name: string, props: {attrs: {type: any[], default: null},
+ * text: StringConstructor, tag: any[]}, render: ImDescriptor.render}}
  */
 export const ImDescriptor = {
   install(Vue) {

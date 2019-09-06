@@ -1,4 +1,5 @@
 import {contains, isPrimitive} from './utils/predicates';
+import Vue from 'vue';
 
 /**
  * 组件名命名空间
@@ -97,12 +98,11 @@ const defaultOptions = {
   visible: 'visible',
 }, specialKeys = ['size', 'color'];
 
+export const optionsKey = '$$imoon-default-options';
+
 export function defaultProp(type, subject) {
-  const {
-    [`$$${namespace}-default-options`]:
-      options = defaultOptions,
-    // eslint-disable-next-line
-  } = Vue.protorype;
+  // const {[optionsKey]: opts} = Vue.protorype;
+  const options = defaultOptions;
   const {[type]: types} = options;
   if (contains(specialKeys, type)) {
     const {[subject]: opts} = options;

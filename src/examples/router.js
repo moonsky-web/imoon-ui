@@ -8,6 +8,7 @@ import {InputRoute} from './input/router';
 import {DividerRoute} from './divider/router';
 import {IconRoute} from './icon/router';
 import {AvatarRoute} from './avatar/route';
+import {PropsProviderRoute} from './propsmanager';
 
 Vue.use(Router);
 
@@ -34,6 +35,7 @@ export const router = new Router({
     setGroupId(DividerRoute, '1. 组件'),
     setGroupId(IconRoute, '1. 组件'),
     setGroupId(AvatarRoute, '1. 组件'),
+    setGroupId(PropsProviderRoute, '2. 服务'),
     {
       path: '/input-item',
       name: 'InputItem Demo',
